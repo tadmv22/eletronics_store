@@ -1,0 +1,29 @@
+(Edvan)
+Usuários
+    Login
+    Cadastro
+    * Meus pedidos
+    ** adicionar tipo usuário ( admin e cliente)
+
+
+(Marcelo)
+Produtos (admin)
+    Criar Produto
+    Atualizar Produto
+    Deletar Produto
+    Pegar Produto por Id
+    Listar Produtos (* Páginação )
+
+(Ver depois)
+Pedidos
+    Adicionar produto ao pedido
+    Remover produto ao pedido
+    Alterar quantidade do produto 
+    Listar produtos do pedido 
+    Finalizar pedido
+
+    Alterar status pedido (admin)
+
+    Pegar um pedido por Id de um usuário 
+    Listar pedidos do usuário
+
