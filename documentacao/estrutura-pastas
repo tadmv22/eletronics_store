@@ -1,0 +1,17 @@
+Pastas: src/main/resources/
+static/: os arquivos estáticos como CSS, JavaScript, imagens, etc.
+templates/: os templates HTML (Thymeleaf, JSP, etc.) que serão servidos ao cliente.
+
+
+1. src/main/java/com/yourcompany/ecommerce/
+Este é o diretório raiz do código-fonte Java do projeto, onde todas as classes da aplicação são organizadas.
+
+service/: Contém as classes que implementam a lógica de negócio. Aqui ficam as regras para processar as requisições e coordenar as operações entre os diferentes componentes do sistema. Exemplo: ProductService, OrderService.
+
+dao/: Contém as classes responsáveis por interagir com o banco de dados. Aqui você pode ter interfaces que herdam de JpaRepository ou CrudRepository do Spring Data. Exemplo: ProductRepository, UserRepository.
+
+model/: Contém as classes que representam os dados no sistema (entidades). Cada classe aqui normalmente corresponde a uma tabela no banco de dados. Exemplo: Product, User, Order.
+
+dto/: Contém os objetos de transferência de dados (DTOs). São usados para mover dados entre camadas da aplicação, especialmente entre o frontend e o backend. Exemplo: ProductDTO, OrderDTO.
+
+exception/: Contém classes de exceção personalizadas para tratar erros específicos do negócio. Exemplo: ProductNotFoundException, OrderException.
