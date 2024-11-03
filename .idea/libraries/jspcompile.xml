@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jspcompile">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/WebApplication/lib/jsp-compiler/jspcompile.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

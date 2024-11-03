@@ -1,0 +1,13 @@
+DROP DATABASE IF EXISTS eletronics_store;
+CREATE DATABASE eletronics_store;
+USE eletronics_store;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at DATE NOT NULL DEFAULT (NOW())
+);

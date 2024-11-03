@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="jsp-compilation-syscp">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/WebApplication/lib/jsp-compilation-syscp/javax.faces.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebApplication/lib/jsp-compilation-syscp/ant.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebApplication/lib/jsp-compilation-syscp/servlet4.0-jsp2.3-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebApplication/lib/jsp-compilation-syscp/jstl-impl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebApplication/lib/jsp-compilation-syscp/glassfish-jspparser-5.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
