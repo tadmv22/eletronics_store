@@ -32,13 +32,16 @@ public class AuthFilter implements Filter {
         String currentSessionUser = (String) session.getAttribute("currentSessionUser");
 
         String path = ((HttpServletRequest) request).getRequestURI();
-
-        if (path.contains("/resources")) {
+        
+        boolean isPublicRouter = path.contains("/auth/login") || path.contains("/users/create");
+        
+        
+        if (path.contains("/public")) {
             chain.doFilter(request, response);
             return;
         }
-        if (currentSessionUser == null && !path.contains("/login")) {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/app/users/login.jsp", true);
+        if (currentSessionUser == null && !isPublicRouter) {
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/app/auth/login.jsp", true);
             return;
         }
 

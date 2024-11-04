@@ -98,10 +98,17 @@ label {
     display: block;
 }
 
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
 .form-error {
     color: #f04438;
     font-size: 14px;
-
+    margin-bottom: 4px;
+    margin-top: 4px;
 }
 
 .header-main {
@@ -168,6 +175,7 @@ label {
 #login {
     display: grid;
     grid-template-columns: 1fr;
+    place-items: center;
     padding: 20px;
     height: 100%;
     width: 100%;
@@ -211,14 +219,17 @@ main .logo img {
     max-width: 380px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
     width: 100%;
+    gap: 6px;
 }
 
 .form-conteudo div {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+}
+
+#login .botao {
+    margin-top: 26px;
 }
 
 .esquece-senha {
@@ -252,10 +263,6 @@ main .logo img {
         gap: 32px;
     }
 
-    .form-conteudo {
-        gap: 16px;
-    }
-
     aside {
         display: none;
     }
@@ -272,9 +279,5 @@ main .logo img {
 
     .form-container {
         gap: 32px;
-    }
-
-    .form-conteudo {
-        gap: 16px;
     }
 }
