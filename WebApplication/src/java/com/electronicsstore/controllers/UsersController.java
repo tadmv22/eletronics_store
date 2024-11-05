@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebServlet(name = "UsersController", urlPatterns = {"/users/login", "/users/create"})
+@WebServlet(name = "UsersController", urlPatterns = {"/users/create"})
 public class UsersController extends HttpServlet {
 
     @Override
@@ -21,9 +21,7 @@ public class UsersController extends HttpServlet {
         String path = ((HttpServletRequest) request).getRequestURI();
 
         try {
-            if (path.contains("/users/login")) {
-                this.login(request, response);
-            } else if (path.contains("/users/create")) {
+            if (path.contains("/users/create")) {
                 this.create(request, response);
             } else {
                 throw new ServletException("Rota invalida");
@@ -32,36 +30,6 @@ public class UsersController extends HttpServlet {
             Logger.getLogger(UsersController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-
-    }
-
-    private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-
-        if (email == null || email.isBlank()) {
-            response.sendRedirect("/app/users/login.jsp?error=1");
-            return;
-        }
-
-        if (password == null || password.isBlank()) {
-            response.sendRedirect("/app/users/login.jsp?error=2");
-            return;
-        }
-
-        try {
-            UserService userService = new UserService();
-            CurrentUser currentUser = userService.Login(email, password);
-            if (currentUser != null) {
-                this.setCurrentUserInSession(request, currentUser);
-                response.sendRedirect("/index.jsp");
-               
-            } else {
-                response.sendRedirect("/app/users/login.jsp?error=3");
-            }
-        } catch (IOException | ClassNotFoundException ex) {
-            throw new ServletException(ex);
-        }
 
     }
 
