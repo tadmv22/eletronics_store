@@ -1,7 +1,9 @@
 package com.electronicsstore.controllers;
 
 import com.electronicsstore.dto.CurrentUser;
+import com.electronicsstore.models.User;
 import com.electronicsstore.services.UserService;
+import com.electronicsstore.utils.ErrorMensagem;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -42,11 +44,21 @@ public class UsersController extends HttpServlet {
 
         try {
             if (!address.isBlank() || name == null || !name.isBlank() || email == null || !email.isBlank() || !password.isBlank() || address == null) {
-                response.sendRedirect("/app/users/register.jsp?error=4", true);
+                request.setAttribute("invalidValues", ErrorMensagem.getMessageByCode(4));
+                request.getRequestDispatcher("/app/users/create.jsp").forward(request, response);
             }
 
             UserService userService = new UserService();
-            CurrentUser currentUser = userService.CreateUser(name, email, password, address);
+            User userExist = userService.getUserByEmail(email);
+            
+            if(userExist != null) {
+                request.setAttribute("emailInUseError", ErrorMensagem.getMessageByCode(5));
+                request.getRequestDispatcher("/app/users/create.jsp").forward(request, response);
+            }
+            
+            
+            User user = userService.createUser(name, email, password, address);
+            CurrentUser currentUser = new CurrentUser(user.getName(),user.getEmail());
 
             this.setCurrentUserInSession(request, currentUser);
             response.sendRedirect("/index.jsp", true);

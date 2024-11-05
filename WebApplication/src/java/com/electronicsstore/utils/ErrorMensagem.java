@@ -10,6 +10,7 @@ public class ErrorMensagem {
         put(2, "O senha é obrigatório. Por favor, preencha este campo.");
         put(3, "Usuário ou senha incorretos. Por favor, verifique suas credenciais e tente novamente.");
         put(4, "Os dados de cadastros não podem ser vázios");
+        put(5, "Este endereço de e-mail já está em uso!");
     }};
              
     public static String getMessageByCode(int code) {

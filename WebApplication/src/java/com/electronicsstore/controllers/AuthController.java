@@ -26,6 +26,7 @@ public class AuthController extends HttpServlet {
                 this.login(request, response);
 
             } else {
+               // Redirecionar para uma pagina 404
                 throw new ServletException("Rota invalida");
             }
 
