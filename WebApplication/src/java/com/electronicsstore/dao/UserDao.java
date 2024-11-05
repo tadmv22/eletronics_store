@@ -15,7 +15,7 @@ public class UserDao {
         this.conn = new ConnectionFactory().getConnection();
     }
 
-    public void Create(User user) {
+    public User Create(User user) {
         String sql = "INSERT INTO users (name,email,address,password) VALUES (?,?,?,?);";
 
         try(PreparedStatement stmt  = conn.prepareStatement(sql)) {
@@ -24,11 +24,17 @@ public class UserDao {
             stmt .setString(3,user.getAddress());
             stmt .setString(4,user.getPassword());
 
-            stmt.execute();
+            boolean rs =  stmt.execute();
+            
+            if(rs) {
+                return this.getUserByEmail(user.getEmail());
+            }           
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        
+        return null;
     }
 
     public User getUserByEmail(String email) {

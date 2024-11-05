@@ -1,7 +1,5 @@
-<!-- <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page session="true" %> -->
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -34,7 +32,7 @@
                     </p>
                 </div>
                 <form action="/auth/login" method="post" class="form-conteudo">
-                    <div>
+                    <div class="field">
                         <label for="email" class="label-padrao">E-mail</label>
                         <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required
                             class="input-padrao" />
@@ -44,7 +42,7 @@
                             </c:if>
                         </div>
                     </div>
-                    <div>
+                    <div class="field">
                         <label for="password" class="label-padrao">Senha</label>
                         <input type="password" id="password" name="password" required placeholder="Digite sua senha"
                             class="input-padrao" />
@@ -54,13 +52,19 @@
                             </c:if>
                         </div>
                     </div>
-                    <div class="form-error">
-                        <c:if test="${not empty loginError}">
-                            ${loginError}
-                        </c:if>
+                    <div class="field">
+                        <div class="form-error">
+                            <c:if test="${not empty loginError}">
+                                ${loginError}
+                            </c:if>
+                        </div>
+                        <button type="submit" class="botao">ENTRAR</button>
                     </div>
-                    <button type="submit" class="botao">ENTRAR</button>
                 </form>
+                <div class="texto-normal">
+                    <span>Não tem uma conta?</span>
+                    <a href="#">Crie sua conta</a>
+                </div>
             </div>
         </main>
         <footer>
