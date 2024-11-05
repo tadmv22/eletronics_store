@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebServlet(name = "UsersController", urlPatterns = {"/users/create"})
+@WebServlet(name = "UsersController", urlPatterns = {"/users/register"})
 public class UsersController extends HttpServlet {
 
     @Override
@@ -21,7 +21,7 @@ public class UsersController extends HttpServlet {
         String path = ((HttpServletRequest) request).getRequestURI();
 
         try {
-            if (path.contains("/users/create")) {
+            if (path.contains("/users/register")) {
                 this.create(request, response);
             } else {
                 throw new ServletException("Rota invalida");
@@ -42,7 +42,7 @@ public class UsersController extends HttpServlet {
 
         try {
             if (!address.isBlank() || name == null || !name.isBlank() || email == null || !email.isBlank() || !password.isBlank() || address == null) {
-                response.sendRedirect("/app/users/create.jsp?error=4", true);
+                response.sendRedirect("/app/users/register.jsp?error=4", true);
             }
 
             UserService userService = new UserService();

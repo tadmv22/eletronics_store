@@ -1,5 +1,6 @@
 package com.electronicsstore.filters;
 
+import com.electronicsstore.dto.CurrentUser;
 import java.io.IOException;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -29,11 +30,11 @@ public class AuthFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = (HttpSession) httpRequest.getSession();
-        String currentSessionUser = (String) session.getAttribute("currentSessionUser");
+        CurrentUser currentSessionUser = (CurrentUser) session.getAttribute("currentSessionUser");
 
         String path = ((HttpServletRequest) request).getRequestURI();
         
-        boolean isPublicRouter = path.contains("/auth/login") || path.contains("/users/create");
+        boolean isPublicRouter = path.contains("/auth/login") || path.contains("/users/register");
         
         
         if (path.contains("/public")) {
