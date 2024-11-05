@@ -38,7 +38,7 @@ public class UserDao {
     }
 
     public User getUserByEmail(String email) {
-        String sql = "SELECT email FROM users WHERE  email =?;";
+        String sql = "SELECT * FROM users WHERE  email =?;";
 
         try(PreparedStatement stmt  = conn.prepareStatement(sql)) {
 
