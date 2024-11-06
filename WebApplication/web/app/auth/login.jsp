@@ -9,16 +9,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="../../public/assets/favicon.ico">
-    <link rel="stylesheet" href="../../public/css/styles.css" />
+    <link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico">
+    <link rel="stylesheet" href="/public/css/styles.css" />
     <title>Eletronics Store - Login</title>
 </head>
 
-<body>
-    <div id="login">
+<body id="login" >
+    <div class="container">
         <main>
             <div class="logo">
-                <img src="../../public/assets/logo.svg" alt="Logo AgendaTennis" />
+                <img src="/public/assets/logo.svg" alt="Logo AgendaTennis" />
             </div>
             <div class="form-container">
                 <div class="form-header">
@@ -31,35 +31,35 @@
                     <div class="field">
                         <label for="email" class="label-padrao">E-mail</label>
                         <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required
-                            class="input-padrao" />
-                        <div class="form-error">
-                            <c:if test="${not empty emailError}">
+                               class="input-padrao" />
+                        <c:if test="${not empty emailError}">
+                            <div class="form-error">
                                 ${emailError}
-                            </c:if>
-                        </div>
+                            </div>
+                        </c:if>
                     </div>
                     <div class="field">
                         <label for="password" class="label-padrao">Senha</label>
                         <input type="password" id="password" name="password" required placeholder="Digite sua senha"
-                            class="input-padrao" />
-                        <div class="form-error">
-                            <c:if test="${not empty passwordError}">
+                               class="input-padrao" />
+                        <c:if test="${not empty passwordError}">
+                            <div class="form-error">
                                 ${passwordError}
-                            </c:if>
-                        </div>
+                            </div>
+                        </c:if>
                     </div>
                     <div class="field">
-                        <div class="form-error">
-                            <c:if test="${not empty loginError}">
+                        <c:if test="${not empty loginError}">
+                            <div class="form-error">
                                 ${loginError}
-                            </c:if>
-                        </div>
+                            </div>
+                        </c:if>
                         <button type="submit" class="botao">ENTRAR</button>
                     </div>
                 </form>
-                <div class="texto-normal">
+                <div class="texto-normal account-register">
                     <span>Não tem uma conta?</span>
-                    <a href="#">Crie sua conta</a>
+                    <a href="/app/users/register.jsp">Cadastre-se agora</a>
                 </div>
             </div>
         </main>
