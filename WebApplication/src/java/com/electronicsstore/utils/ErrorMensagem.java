@@ -11,6 +11,8 @@ public class ErrorMensagem {
         put(3, "Usuário ou senha incorretos. Por favor, verifique suas credenciais e tente novamente.");
         put(4, "Os dados de cadastros não podem ser vázios");
         put(5, "Este endereço de e-mail já está em uso!");
+        put(6, "A senha deve ter pelo menos 8 caracteres");
+
     }};
              
     public static String getMessageByCode(int code) {
