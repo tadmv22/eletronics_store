@@ -11,7 +11,7 @@ public class AuthService {
         User user = userDao.getUserByEmail(email);
             
         if (user != null && user.getPassword().equals(password)) {
-            return new CurrentUser(user.getEmail(), user.getName());
+            return new CurrentUser(user.getEmail(), user.getName(),user.getAddress(),user.getZipcode());
         }
         
         return null;

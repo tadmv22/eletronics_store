@@ -16,17 +16,19 @@ public class UserDao {
     }
 
     public User Create(User user) {
-        String sql = "INSERT INTO users (name,email,address,password) VALUES (?,?,?,?);";
+        String sql = "INSERT INTO users (name,surname,email,address,zipcode,password) VALUES (?,?,?,?,?,?);";
 
         try(PreparedStatement stmt  = conn.prepareStatement(sql)) {
             stmt .setString(1,user.getName());
-            stmt .setString(2,user.getEmail());
-            stmt .setString(3,user.getAddress());
-            stmt .setString(4,user.getPassword());
+            stmt .setString(2,user.getSurname());
+            stmt .setString(3,user.getEmail());
+            stmt .setString(4,user.getAddress());
+            stmt .setString(5,user.getZipcode());
+            stmt .setString(6,user.getPassword());
 
-            boolean rs =  stmt.execute();
+            int result =  stmt.executeUpdate();
             
-            if(rs) {
+            if(result != 0) {
                 return this.getUserByEmail(user.getEmail());
             }           
         }
@@ -50,9 +52,11 @@ public class UserDao {
                 return new User(
                         rs.getInt("id"),
                         rs.getString("name"),
+                        rs.getString("surname"),
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getString("address"),
+                        rs.getString("zipcode"),
                         rs.getBoolean("is_active"),
                         rs.getDate("created_at")
                 );

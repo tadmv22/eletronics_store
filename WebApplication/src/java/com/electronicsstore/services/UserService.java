@@ -13,8 +13,8 @@ public class UserService {
         this.dao = new UserDao();
     }
     
-    public User createUser(String name, String email, String password, String address) throws ServletException {
-        User user = new User(name, email, password, address);
+    public User createUser(String name,String surname, String email, String password, String address,String zipcode) throws ServletException {
+        User user = new User(name,surname, email, password, address,zipcode);
         return this.dao.Create(user);
     }
     
