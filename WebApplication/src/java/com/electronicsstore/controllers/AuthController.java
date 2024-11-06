@@ -11,10 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-@WebServlet(name = "UsersController", urlPatterns = {"/auth/login"})
+@WebServlet(name = "AuthController", urlPatterns = {"/auth/login"})
 public class AuthController extends HttpServlet {
 
     @Override
@@ -22,7 +20,6 @@ public class AuthController extends HttpServlet {
         String path = ((HttpServletRequest) request).getRequestURI();
         try {
             if (path.contains("/auth/login")) {
-
                 this.login(request, response);
 
             } else {
@@ -31,7 +28,7 @@ public class AuthController extends HttpServlet {
             }
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AuthController.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ServletException(ex);
         }
 
     }
