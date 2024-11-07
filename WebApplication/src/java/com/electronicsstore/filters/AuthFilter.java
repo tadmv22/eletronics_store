@@ -36,11 +36,16 @@ public class AuthFilter implements Filter {
         
         boolean isPublicRouter = path.contains("/auth/login") || path.contains("/users/register");
         
-        
         if (path.contains("/public")) {
             chain.doFilter(request, response);
             return;
         }
+       
+        if(currentSessionUser != null && path.contains("/app/auth/login.jsp")) {            
+            httpResponse.sendRedirect("/index.jsp",true);
+            return;
+        }
+        
         if (currentSessionUser == null && !isPublicRouter) {
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/app/auth/login.jsp", true);
             return;
