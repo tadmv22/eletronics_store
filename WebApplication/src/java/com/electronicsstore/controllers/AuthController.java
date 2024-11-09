@@ -9,22 +9,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 
-@WebServlet(name = "AuthController", urlPatterns = {"/auth/login"})
+@WebServlet(name = "AuthController", urlPatterns = {"/api/auth/login"})
 public class AuthController extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String path = ((HttpServletRequest) request).getRequestURI();
         try {
-            if (path.contains("/auth/login")) {
+            if (path.contains("/api/auth/login")) {
                 this.login(request, response);
 
-            } else {
-               // Redirecionar para uma pagina 404
-                throw new ServletException("Rota invalida");
             }
 
         } catch (ClassNotFoundException ex) {
@@ -33,7 +30,8 @@ public class AuthController extends HttpServlet {
 
     }
 
-    private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
+    private void login(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException, ClassNotFoundException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
@@ -51,9 +49,11 @@ public class AuthController extends HttpServlet {
         try {
             AuthService authService = new AuthService();
             CurrentUser currentUser = authService.Login(email, password);
+
             if (currentUser != null) {
                 this.setCurrentUserInSession(request, currentUser);
-                response.sendRedirect("/index.jsp");
+
+                response.sendRedirect("/app/admin/dashboard.jsp");
 
             } else {
                 request.setAttribute("loginError", ErrorMensagem.getMessageByCode(3));
@@ -68,7 +68,7 @@ public class AuthController extends HttpServlet {
     private void setCurrentUserInSession(HttpServletRequest request, CurrentUser currentUser) {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = (HttpSession) httpRequest.getSession();
-
+        session.setMaxInactiveInterval(30 * 60);
         session.setAttribute("currentSessionUser", currentUser);
 
     }

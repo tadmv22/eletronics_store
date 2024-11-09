@@ -3,19 +3,8 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico">
-    <link rel="stylesheet" href="/public/css/styles.css" />
-    <title>Eletronics Store - Login</title>
-</head>
-
+<%@include file="../../WEB-INF/components/head.jsp"%>
 <body id="login" >
-    <div class="container">
         <main>
             <div class="logo">
                 <img src="/public/assets/logo.svg" alt="Logo AgendaTennis" />
@@ -27,7 +16,7 @@
                         Bem-vindo de volta! Por favor, insira seus dados.
                     </p>
                 </div>
-                <form action="/auth/login" method="post" class="form-conteudo">
+                <form action="/api/auth/login" method="post" class="form-conteudo">
                     <div class="field">
                         <label for="email" class="label-padrao">E-mail</label>
                         <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required
@@ -57,10 +46,6 @@
                         <button type="submit" class="botao">ENTRAR</button>
                     </div>
                 </form>
-                <div class="texto-normal account-register">
-                    <span>Não tem uma conta?</span>
-                    <a href="/app/users/register.jsp">Cadastre-se agora</a>
-                </div>
             </div>
         </main>
         <footer>
@@ -68,7 +53,6 @@
                 Eletronics Store © 2024. Alguns direitos reservados.
             </p>
         </footer>
-    </div>
 </body>
 
 </html>

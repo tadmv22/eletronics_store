@@ -2,35 +2,17 @@ package com.electronicsstore.dto;
 
 public class CurrentUser {
 
+    private String email;
+    private String name;
+    private int id;
+
     public CurrentUser() {
     }
 
-    public CurrentUser(String email, String name, String address, String zipcode) {
+    public CurrentUser(String email, String name,int id) {
         this.email = email;
         this.name = name;
-        this.address = address;
-        this.zipcode = zipcode;
-    }
-
-    private String email;
-    private String name;
-    private String address;
-    private String zipcode;
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+        this.id = id;
     }
 
     public String getName() {
@@ -47,5 +29,13 @@ public class CurrentUser {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+     public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -8,13 +8,19 @@ CREATE TABLE IF NOT EXISTS users (
     surname VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    address VARCHAR(255) NOT NULL,
-    zipcode VARCHAR(255) NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at DATETIME NOT NULL DEFAULT (NOW())
+    created_at DATETIME NOT NULL DEFAULT NOW(),
+    updated_at DATETIME DEFAULT NOW()
 );
 
-create table products(
+
+CREATE TABLE IF NOT EXISTS customers (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS products(
 id INT PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(255) NOT NULL UNIQUE,
 value  decimal(10,4) NOT NULL,
@@ -25,12 +31,12 @@ stock_quantity int NOT NULL
 CREATE TABLE IF NOT EXISTS orders(
 id INT PRIMARY KEY AUTO_INCREMENT,
 status VARCHAR(50) NOT NULL,
-created_at DATETIME NOT NULL default(now()),
+created_at DATETIME NOT NULL  DEFAULT NOW(),
 delevery_at DATETIME,
-updated_at DATETIME NOT NULL default(now()),
+updated_at DATETIME NOT NULL  DEFAULT NOW(),
 payment_methods VARCHAR(50),
-user_id INT,
-FOREIGN KEY (user_id) REFERENCES users(id)
+customer_id INT,
+FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
 
 
@@ -39,62 +45,19 @@ order_id INT,
 product_id INT,
 unit_value DECIMAL(10,4) NOT NULL,
 quantity INT NOT NULL,
-create_at DATETIME NOT NULL default(now()),
+create_at DATETIME NOT NULL  DEFAULT NOW(),
 FOREIGN KEY (order_id) REFERENCES orders(id),
 FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
 
-INSERT INTO users (name, surname, email, password, address, zipcode)
+INSERT INTO users (id,name, surname, email, password)
 VALUES
-('Carlos', 'Silva Oliveira', 'carlos.silva@outlook.com', 'senhaSegura123', 'Rua das Flores, 123', '01001-000'),
-('Ana', 'Santos Almeida', 'ana.santos@gmail.com', 'senhaSegura123', 'Avenida Paulista, 1500', '01311-000'),
-('José', 'Costa Pereira', 'jose.costa@yahoo.com', 'senhaSegura123', 'Rua São Bento, 200', '01011-000'),
-('Maria', 'Melo Azevedo', 'maria.melo@uol.com.br', 'senhaSegura123', 'Rua Augusta, 2100', '01413-000'),
-('Luiz', 'Ferreira Lima', 'luiz.ferreira@terra.com.br', 'senhaSegura123', 'Rua 25 de Março, 500', '01021-200'),
-('Paula', 'Gomes Barbosa', 'paula.gomes@bol.com.br', 'senhaSegura123', 'Avenida Rebouças, 1234', '05402-000'),
-('Ricardo', 'Carvalho dos Santos', 'ricardo.carvalho@outlook.com', 'senhaSegura123', 'Rua Vergueiro, 150', '01504-000'),
-('Juliana', 'Ribeiro da Costa', 'juliana.ribeiro@gmail.com', 'senhaSegura123', 'Rua Consolação, 300', '01302-900'),
-('Pedro', 'Martins Dias', 'pedro.martins@yahoo.com', 'senhaSegura123', 'Rua da Glória, 210', '01510-000'),
-('Fernanda', 'Lopes Fernandes', 'fernanda.lopes@uol.com.br', 'senhaSegura123', 'Rua Tabapuã, 123', '04533-000'),
-('Roberto', 'Alves Cardoso', 'roberto.alves@terra.com.br', 'senhaSegura123', 'Avenida Faria Lima, 4500', '04538-132'),
-('Sandra', 'Sousa Rocha', 'sandra.sousa@bol.com.br', 'senhaSegura123', 'Rua Boa Vista, 220', '01014-000'),
-('Marcelo', 'Pereira Moraes', 'marcelo.pereira@outlook.com', 'senhaSegura123', 'Rua Haddock Lobo, 300', '01414-001'),
-('Patrícia', 'Oliveira Lima', 'patricia.oliveira@gmail.com', 'senhaSegura123', 'Rua Bela Cintra, 700', '01415-000'),
-('Tiago', 'Rodrigues Araújo', 'tiago.rodrigues@yahoo.com', 'senhaSegura123', 'Rua da Liberdade, 150', '01503-000'),
-('Marta', 'Barros Correia', 'marta.barros@uol.com.br', 'senhaSegura123', 'Avenida Ibirapuera, 2500', '04028-000'),
-('Rafael', 'Ferreira Campos', 'rafael.ferreira@terra.com.br', 'senhaSegura123', 'Avenida Paulista, 2222', '01310-200'),
-('Beatriz', 'Martins de Oliveira', 'beatriz.martins@bol.com.br', 'senhaSegura123', 'Rua dos Trilhos, 345', '03168-010'),
-('Gustavo', 'Nunes Ribeiro', 'gustavo.nunes@outlook.com', 'senhaSegura123', 'Rua Bela Cintra, 1234', '01415-000'),
-('Carla', 'Teixeira Souza', 'carla.teixeira@gmail.com', 'senhaSegura123', 'Rua Clélia, 678', '05042-000'),
-('Alexandre', 'Silveira Machado', 'alexandre.silveira@yahoo.com', 'senhaSegura123', 'Rua Doutor Arnaldo, 567', '01255-000'),
-('Camila', 'Gonçalves Pinto', 'camila.goncalves@uol.com.br', 'senhaSegura123', 'Rua João Cachoeira, 150', '04535-000'),
-('Felipe', 'Cunha Santana', 'felipe.cunha@terra.com.br', 'senhaSegura123', 'Rua Harmonia, 230', '05435-001'),
-('André', 'Vieira Mendes', 'andre.vieira@bol.com.br', 'senhaSegura123', 'Rua dos Estudantes, 345', '01505-000'),
-('Débora', 'Ramos Souza', 'debora.ramos@outlook.com', 'senhaSegura123', 'Rua Lins de Vasconcelos, 500', '01538-001'),
-('Leandro', 'Batista Almeida', 'leandro.batista@gmail.com', 'senhaSegura123', 'Avenida Pacaembu, 600', '01234-010'),
-('Lorena', 'Freitas Vieira', 'lorena.freitas@yahoo.com', 'senhaSegura123', 'Rua Manuel da Nóbrega, 350', '04001-000'),
-('Rodrigo', 'Moreira Azevedo', 'rodrigo.moreira@uol.com.br', 'senhaSegura123', 'Rua Cipriano Barata, 450', '04205-000'),
-('Tatiana', 'Figueiredo Lima', 'tatiana.figueiredo@terra.com.br', 'senhaSegura123', 'Rua da Mooca, 780', '03162-020'),
-('Maurício', 'Campos Martins', 'mauricio.campos@bol.com.br', 'senhaSegura123', 'Rua Augusta, 1100', '01305-000'),
-('Larissa', 'Andrade Oliveira', 'larissa.andrade@outlook.com', 'senhaSegura123', 'Rua Gomes de Carvalho, 1500', '04547-001'),
-('Fabio', 'Carvalho Rocha', 'fabio.carvalho@gmail.com', 'senhaSegura123', 'Avenida Brigadeiro Faria Lima, 100', '01452-000'),
-('Júlia', 'Silva Cruz', 'julia.silva@yahoo.com', 'senhaSegura123', 'Rua Maria Antônia, 250', '01222-010'),
-('Rafael', 'Santos Lopes', 'rafael.santos@uol.com.br', 'senhaSegura123', 'Rua Vergueiro, 2900', '04101-300'),
-('Letícia', 'Medeiros Almeida', 'leticia.medeiros@terra.com.br', 'senhaSegura123', 'Rua Diogo de Faria, 1234', '04037-002'),
-('Fernando', 'Pires Gonçalves', 'fernando.pires@bol.com.br', 'senhaSegura123', 'Avenida Santo Amaro, 400', '04506-000'),
-('Viviane', 'Cardoso Rocha', 'viviane.cardoso@outlook.com', 'senhaSegura123', 'Rua Antônio de Barros, 235', '03401-000'),
-('Carlos', 'Lima Rocha', 'carlos.lima@gmail.com', 'senhaSegura123', 'Rua Maria Marcolina, 512', '03001-020'),
-('Mariana', 'Martins da Silva', 'mariana.martins@yahoo.com', 'senhaSegura123', 'Rua Santa Cruz, 654', '04122-000'),
-('Vinícius', 'Farias Alves', 'vinicius.farias@uol.com.br', 'senhaSegura123', 'Avenida Ipiranga, 1800', '01046-010'),
-('Simone', 'Albuquerque Ribeiro', 'simone.albuquerque@terra.com.br', 'senhaSegura123', 'Rua Fradique Coutinho, 1000', '05416-001'),
-('Tiago', 'Oliveira Martins', 'tiago.oliveira@bol.com.br', 'senhaSegura123', 'Rua Jacarezinho, 190', '05414-000'),
-('Thaís', 'Dias Monteiro', 'thais.dias@outlook.com', 'senhaSegura123', 'Rua dos Trilhos, 900', '03168-020'),
-('Ricardo', 'Lopes Pereira', 'ricardo.lopes@gmail.com', 'senhaSegura123', 'Rua Pamplona, 450', '01405-000'),
-('Isabela', 'Matos Correia', 'isabela.matos@yahoo.com', 'senhaSegura123', 'Rua dos Jasmins, 78', '03254-010'),
-('Lucas', 'Sousa Nogueira', 'lucas.sousa@uol.com.br', 'senhaSegura123', 'Rua da Prata, 654', '03001-030'),
-('Natália', 'Ramos Barreto', 'natalia.ramos@terra.com.br', 'senhaSegura123', 'Avenida Senador Queirós, 180', '01026-001'),
-('Renato', 'Cardoso Silva', 'renato.cardoso@bol.com.br', 'senhaSegura123', 'Rua dos Timbiras, 240', '01208-010');
+(1,'Carlos', 'Silva Oliveira', 'carlos.silva@outlook.com', 'senhaSegura123'),
+(2,'Ana', 'Santos Almeida', 'ana.santos@gmail.com', 'senhaSegura123'),
+(3,'Pedro', 'Santos Almeida', 'pedro.santos@gmail.com', 'senhaSegura123');
+
+
 
 INSERT INTO `products` (`name`, `value`, `description`, `stock_quantity`) VALUES
 ('Smartphone Galaxy S20', 999.9900, 'Smartphone Samsung Galaxy S20 com 128GB', 15),

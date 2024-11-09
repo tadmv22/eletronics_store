@@ -9,6 +9,8 @@
 
   --cor-titulo: #101828;
   --cor-texto: #475467;
+  --border-default: 1px solid #d0d5dd;
+  --border-secondary: 1px solid #f2f4f7;
 }
 
 * {
@@ -29,6 +31,10 @@ body {
   height: 100vh;
   background-color: var(--cor-backgroud);
   color: var(--cor-titulo);
+
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 img {
@@ -43,11 +49,18 @@ label {
   font-weight: 400;
 }
 
-.conteiner {
+.container {
   max-width: 1280px;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
   padding-left: 32px;
   padding-right: 32px;
   margin: 0 auto;
+
+  display: flex;
+  gap: 32px;
 }
 
 .titulo-principal {
@@ -69,7 +82,7 @@ label {
 
 .botao {
   width: 100%;
-  padding: 12px;
+  padding: 8px 12px;
   background-color: var(--cor-primaria-marca);
   color: #ffffff;
   border: none;
@@ -106,6 +119,19 @@ label {
   width: 100%;
 }
 
+.field-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.field-actions .botao[type="reset"] {
+  background-color: var(--cor-backgroud);
+  border: var(--border-default);
+  color: var(--cor-texto);
+}
+
 .form-error {
   color: #f04438;
   font-size: 12px;
@@ -114,13 +140,20 @@ label {
 }
 
 .header-main {
-  height: 72px;
+  max-width: 1280px;
   width: 100%;
-  border-bottom: 1px solid #f2f4f7;
+  height: 72px;
+
+  border-bottom: var(--border-secondary);
+
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+
+  padding-left: 32px;
+  padding-right: 32px;
+  margin: 0 auto;
 }
 
 .header-main a {
@@ -134,7 +167,7 @@ label {
 }
 
 .header-main a:hover,
-.header-main a.ativo {
+.header-main a.active {
   background-color: #f9f5ff;
   color: var(--cor-primaria-marca);
 }
@@ -157,6 +190,13 @@ label {
   min-width: 300px;
 }
 
+header nav ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 8px;
+}
+
 .search-products {
   border: 3px solid transparent;
 }
@@ -172,7 +212,9 @@ label {
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 460px;
 }
+
 .search-products .input-padrao {
   border-radius: 4px 0 0 4px;
   width: 100%;
@@ -208,6 +250,7 @@ label {
 .account {
   font-size: 14px;
 }
+
 .account a {
   display: flex;
   flex-direction: column;
@@ -270,15 +313,6 @@ footer .copy {
   }
 }
 
-.container {
-  display: grid;
-  grid-template-columns: 1fr;
-  place-items: center;
-  padding: 20px;
-  height: 100%;
-  width: 100%;
-}
-
 /* Estilos página login */
 
 #login .container {
@@ -296,8 +330,27 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 16px;
+}
+
+#register main {
   align-items: center;
+}
+
+body#login {
+  justify-content: center;
+  align-items: center;
+}
+
+#login main {
+  padding-left: 32px;
+  padding-right: 32px;
+  margin: 0 auto;
   gap: 32px;
+}
+
+#login main .logo {
+  height: min-content;
 }
 
 main .logo {
@@ -348,6 +401,7 @@ main .logo img {
 .esquece-senha:hover {
   opacity: 0.8;
 }
+
 .account-register {
   text-align: center;
   font-size: 14px;
@@ -365,7 +419,6 @@ main .logo img {
   }
 
   main {
-    gap: 24px;
     padding: 0;
   }
 
@@ -409,8 +462,288 @@ main .logo img {
   gap: 8px;
 }
 
-#register .container {
-  gap: 32px;
+/* Página inicial */
+
+.main-table {
+  width: 100%;
+  border: solid 1px #e4e7ec;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-/* Página inicial */
+.products-list-header {
+  padding: 20px 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.products-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.products-query {
+  display: flex;
+}
+
+.products-list-header p.texto-normal {
+  color: var(--cor-titulo);
+}
+
+.products-list-header .products-actions button,
+.products-list-header .products-actions a.botao {
+  padding: 6px 16px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  width: inherit;
+}
+
+.products-list-header .products-actions form input {
+  border-radius: 4px 0 0 4px;
+  border: solid 2px #e4e7ec;
+}
+
+.products-actions form input:focus-within {
+  border: solid 2px var(--cor-primaria-marca);
+  outline: none;
+}
+
+.products-list-header .products-actions form button.botao {
+  border-radius: 0 4px 4px 0;
+}
+
+.products-list-header p span.texto-pequeno {
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 16px;
+  background-color: #f9f5ff;
+  padding: 4px 8px;
+  color: var(--cor-primaria-marca);
+}
+
+.products-actions form {
+  min-width: 400px;
+}
+
+.main-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.main-table table tr {
+  border-bottom: solid 1px #e4e7ec;
+  padding: 12px;
+}
+
+.main-table table tr th:first-child,
+.main-table table tr td:first-child {
+  padding-left: 24px;
+}
+
+.main-table table td,
+.main-table table th {
+  padding: 12px;
+}
+
+.main-table table td:has(.status) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-table table th:nth-child(6) {
+  text-align: center;
+}
+
+.main-table table th {
+  text-align: left;
+}
+
+.main-table table thead {
+  font-size: 12px;
+  background-color: #f9fafb;
+}
+
+.main-table table tbody {
+  font-size: 14px;
+}
+
+.user-action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--cor-texto);
+}
+
+.user-action svg {
+  width: 20px;
+  height: 20px;
+}
+
+.status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  border-radius: 16px;
+  padding: 4px 8px;
+  font-weight: bold;
+  color: #344054;
+  background-color: #f2f4f7;
+  max-width: 72px;
+  width: 100%;
+  font-size: 12px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  margin-top: 2px;
+  background-color: #667085;
+}
+
+.status.status-active {
+  background-color: #ecfdf3;
+  color: #027a48;
+}
+
+.status-dot.status-active {
+  background-color: #12b76a;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+form.products-query {
+  position: relative;
+}
+
+.clear-form {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  color: var(--cor-texto);
+  position: absolute;
+  z-index: 999;
+  right: 64px;
+  top: 8px;
+}
+
+.clear-form svg {
+  height: 20px;
+  width: 20px;
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 4px 8px 16px;
+  gap: 16px;
+}
+
+a.pagination-item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  color: var(--cor-texto);
+  border: var(--border-default);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+a.pagination-item.pagination-item-inative {
+  cursor: not-allowed;
+  color: #d0d5dd;
+}
+
+#remove-user-modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  z-index: 9999;
+}
+
+#remove-user-modal.modal-open {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: var(--cor-backgroud);
+  width: 456px;
+  padding: 32px 24px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  height: fit-content;
+}
+
+.model-info {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  text-align: center;
+}
+
+.model-info p + p {
+  margin-top: 12px;
+}
+
+.modal-user-name,
+.modal-user-email {
+  color: var(--cor-primaria-marca);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.modal-actions button.close {
+  background-color: var(--cor-backgroud);
+  border: var(--border-default);
+  color: var(--cor-texto);
+}
+
+.modal-actions a.botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background-color: #f04438;
+  text-decoration: none;
+}
+
+button.remove-user {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+button.remove-user svg {
+  pointer-events: none;
+}
