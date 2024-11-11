@@ -8,8 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ProductDao {
+public class ProductDao implements BaseDao<Product> {
 
     private final Connection conn;
 
@@ -24,7 +25,7 @@ public class ProductDao {
             stmt.setString(1, product.getName());
             stmt.setDouble(2, product.getValue());
             stmt.setString(3, product.getDescription());
-            stmt.setInt(4, product.getStock_quantity());
+            stmt.setInt(4, product.getStockQuantity());
 
             stmt.execute();
         } catch (SQLException e) {
@@ -32,8 +33,40 @@ public class ProductDao {
         }
     }
 
-    public Product getProductById(int id) {
-        String sql = "SELECT id FROM products WHERE  id =?;";
+    @Override
+    public Product create(Product input) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Product update(Product input) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(int id) {
+
+        String sql = "DELETE FROM products WHERE id= ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Product> list(int page, String query) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Product getById(int id) {
+        String sql = "SELECT  FROM products WHERE  id =?;";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -47,60 +80,16 @@ public class ProductDao {
                         rs.getString("name"),
                         rs.getDouble("value"),
                         rs.getString("description"),
-                        rs.getInt("stock_quantity")
+                        rs.getInt("stock_quantity"),
+                        rs.getInt("category_id")
                 );
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        
+
         return null;
-    }
-        
-
-    public ArrayList<Product> getAll(int limit, int offset) {
-        
-        ArrayList productList = new ArrayList(); 
-        String sql = "SELECT id,name,value,description,stock_quantity FROM products ORDER BY ProductID LIMIT ?,?";
-                
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, offset);
-            stmt.setInt(2, limit);
-
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                productList.add(new Product(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getDouble("value"),
-                        rs.getString("description"),
-                        rs.getInt("stock_quantity")
-                ));
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return productList;
-    }
-    
-    public void Delete(int id) {
-        
-        String sql = "DELETE FROM products WHERE id= ?";
-                
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, id);
-
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }

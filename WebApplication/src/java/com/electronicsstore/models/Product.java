@@ -6,25 +6,31 @@ public class Product {
     private String name;
     private double value;
     private String description;
-    private int stock_quantity;
-
-    public Product(String name, double value, String description, int stock_quantity) {
+    private int stockQuantity;
+    private int categoryId;
+    
+    public Product(String name, double value, String description, int stockQuantity, int categoryId) {
         this.name = name;
         this.value = value;
         this.description = description;
-        this.stock_quantity = stock_quantity;
+        this.stockQuantity = stockQuantity;
+        this.categoryId = categoryId;
     }
-
-    public Product(int id, String name, double value, String description, int stock_quantity) {
+    public Product(int id, String name, double value, String description, int stockQuantity, int categoryId) {
         this.id = id;
         this.name = name;
         this.value = value;
         this.description = description;
-        this.stock_quantity = stock_quantity;
+        this.stockQuantity = stockQuantity;
+        this.categoryId = categoryId;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -51,14 +57,23 @@ public class Product {
         this.description = description;
     }
 
-    public int getStock_quantity() {
-        return stock_quantity;
+    public int getStockQuantity() {
+        return stockQuantity;
     }
 
-    public void setStock_quantity(int stock_quantity) {
-        this.stock_quantity = stock_quantity;
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
-    
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+
 }
 
 

@@ -90,7 +90,6 @@ public class UserDao {
             throw new RuntimeException(e);
         }
         
-        System.err.println(users.size());
         
         return users;
     }
