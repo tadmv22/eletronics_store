@@ -8,6 +8,7 @@ public class PagedList<T> {
     private int pageSize;
     private int totalCount;
     private List<T> items;
+    
     public PagedList(int page, int pageSize, int totalCount, List<T> items) {
         this.page = page;
         this.pageSize = pageSize;
