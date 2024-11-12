@@ -35,8 +35,8 @@ public class AuthFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpServletRequest httpRequest = (HttpServletRequest) request;
 
-        if (this.isAuthenticate(httpRequest) && httpRequest.getRequestURI().contains("/app/auth/login.jsp")) {
-            httpResponse.sendRedirect("/index.jsp");
+        if (this.isAuthenticate(httpRequest) && (httpRequest.getRequestURI().endsWith("/app/auth/login.jsp") || httpRequest.getRequestURI().endsWith("/api/auth/login"))) {
+            httpResponse.sendRedirect("/");
             return;
         }
 

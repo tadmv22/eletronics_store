@@ -142,5 +142,6 @@
                 </div>
             </main>
         </div>
+        <script src="/public/scripts/index.js"></script>
     </body>
 </html>

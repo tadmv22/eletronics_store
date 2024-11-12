@@ -199,7 +199,7 @@ public class UsersController extends HttpServlet {
             }
 
             User user = userService.createUser(name, surname, email, password);
-            CurrentUser currentUser = new CurrentUser(user.getName(), user.getEmail(), user.getId());
+            CurrentUser currentUser = new CurrentUser(user.getId(),user.getEmail(),user.getName(),user.getSurname() );
 
             this.setCurrentUserInSession(request, currentUser);
             response.sendRedirect(request.getContextPath() + "/index.jsp");
