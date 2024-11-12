@@ -16,107 +16,117 @@
     }
 %>
 
-
 <!DOCTYPE html>
 <html lang="pt-br">
-    <%@include file="../../../WEB-INF/components/head.jsp" %>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <body id="admin">
-        <div id="remove-user-modal">
-            <div class="modal-content">
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+            rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico" />
+        <link rel="stylesheet" href="/public/css/styles.css" />
+        <link rel="stylesheet" href="/public/css/index.css" />
+        <link rel="stylesheet" href="/public/css/pages/users.css" />
+        <title>Eletronics Store</title>
+    </head>
+    <body id="user-list">
+        <div class="layout">
+            <%@include file="../../../WEB-INF/components/sidebar.jsp" %>
+            <div id="remove-user-modal">
+                <div class="modal-content">
 
-                <div class="model-info">
-                    <h3 class="titulo-principal">Confirmação de Exclusão de Usuário</h3>
-                    <div>
-                        <p class="texto-normal">Tem certeza de que deseja excluir o usuário
-                      <span class="modal-user-email"></span>?
-                        </p>
-                        <p class="texto-normal">Esta ação é irreversível e todas as informações
-                            associadas a este
-                            usuário
-                            serão permanentemente removidas do sistema. </p>
+                    <div class="model-info">
+                        <h3 class="titulo-principal">Confirmação de Exclusão de Usuário</h3>
+                        <div>
+                            <p class="texto-normal">Tem certeza de que deseja excluir o usuário
+                                <span class="modal-user-email"></span>?
+                            </p>
+                            <p class="texto-normal">Esta ação é irreversível e todas as informações
+                                associadas a este
+                                usuário
+                                serão permanentemente removidas do sistema. </p>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn close">Cancelar</button>
+                        <a href="/api/admin/users/remove?id=" class="btn submit-delete">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                 class="lucide-trash-2 lucide">
+                            <path d="M3 6h18" />
+                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                            <line x1="10" x2="10" y1="11" y2="17" />
+                            <line x1="14" x2="14" y1="11" y2="17" />
+                            </svg>
+                            Excluir
+                        </a>
                     </div>
 
-
                 </div>
-                <div class="modal-actions">
-                    <button type="button" class="botao close">Cancelar</button>
-                    <a href="/api/admin/users/remove?id=" class="botao submit-delete">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="lucide-trash-2 lucide">
-                        <path d="M3 6h18" />
-                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                        <line x1="10" x2="10" y1="11" y2="17" />
-                        <line x1="14" x2="14" y1="11" y2="17" />
-                        </svg>
-                        Excluir
-                    </a>
-                </div>
-
             </div>
-        </div>
-        <div>
-            <%@include file="../../../WEB-INF/components/header.jsp" %>
-            <div class="container">
-                <main>
-                    <h1 class="titulo-principal">Gerenciamento de usuários</h1>
-                    <div class="main-table">
-                        <div class="products-list-header">
-                            <p class="texto-normal">Total de usuários <span
-                                    class="texto-pequeno">
-                                    <c:out value="${users.totalCount}" />
-                                    usuários
-                                </span></p>
-                            <div class="products-actions">
-                                <form action="/app/admin/users/list.jsp" method="get"
-                                      class="products-query">
-                                    <input class="input-padrao" type="search" name="q"
-                                           id="q" value="${param.q}"
-                                           placeholder="Buscar usuário" />
+            <main class="container">
+                <h1 class="text-large">Gerenciamento de usuários</h1>
+                <div class="table-container">
+                    <div class="table-container-header">
+                        <p class="text-base">Total de usuários <span
+                                class="text-sm">
+                                <c:out value="${users.totalCount}" />
+                                usuários
+                            </span></p>
+                        <div class="table-container-actions">
+                            <form action="/app/admin/users/list.jsp" method="get"
+                                  class="users-query">
+                                <input class="input-default" type="search" name="q"
+                                       id="q" value="${param.q}"
+                                       placeholder="Buscar usuário" />
 
-                                    <c:if test="${not empty param.q}">
-                                        <a href="/app/admin/users/list.jsp"
-                                           class="clear-form">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                 width="24" height="24" viewBox="0 0 24 24"
-                                                 fill="none" stroke="currentColor"
-                                                 stroke-width="2" stroke-linecap="round"
-                                                 stroke-linejoin="round"
-                                                 class="lucide lucide-x">
-                                            <path d="M18 6 6 18" />
-                                            <path d="m6 6 12 12" />
-                                            </svg>
-                                        </a>
-                                    </c:if>
-                                    <button type="submit" class="botao">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                             height="24" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             class="lucide lucide-search">
-                                        <circle cx="11" cy="11" r="8" />
-                                        <path d="m21 21-4.3-4.3" />
+                                <c:if test="${not empty param.q}">
+                                    <a href="/app/admin/users/list.jsp"
+                                       class="clear-form">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24" height="24" viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="lucide lucide-x">
+                                        <path d="M18 6 6 18" />
+                                        <path d="m6 6 12 12" />
                                         </svg>
-                                    </button>
-                                </form>
-                                <a href="/app/admin/users/register.jsp" class="botao">
+                                    </a>
+                                </c:if>
+                                <button type="submit" class="btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                          height="24" viewBox="0 0 24 24" fill="none"
                                          stroke="currentColor" stroke-width="2"
                                          stroke-linecap="round" stroke-linejoin="round"
-                                         class="lucide lucide-plus">
-                                    <path d="M5 12h14" />
-                                    <path d="M12 5v14" />
+                                         class="lucide lucide-search">
+                                    <circle cx="11" cy="11" r="8" />
+                                    <path d="m21 21-4.3-4.3" />
                                     </svg>
-                                    Registrar novo usuário
-                                </a>
-                            </div>
+                                </button>
+                            </form>
+                            <a href="/app/admin/users/register.jsp" class="btn text-xs">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                     height="24" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2"
+                                     stroke-linecap="round" stroke-linejoin="round"
+                                     class="lucide lucide-plus">
+                                <path d="M5 12h14" />
+                                <path d="M12 5v14" />
+                                </svg>
+                                Registrar novo usuário
+                            </a>
                         </div>
-                        <table>
-                            <thead>
+                    </div>
+                    <div class="table-container-content">
+                        <table class="table-default">
+                            <thead class="text-xs">
                                 <tr>
                                     <th>Nome</th>
                                     <th>Sobrenome</th>
@@ -128,7 +138,7 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="text-sm">
                                 <c:forEach var="user" items="${users.items}">
                                     <tr>
                                         <td>${user.name}</td>
@@ -146,7 +156,7 @@
                                                     </span>
                                                 </c:when>
                                                 <c:when test="${!user.isActive}">
-                                                    <span class="status">
+                                                    <span class="status text-xs">
                                                         <span class="status-dot"></span>
                                                         Inativo
                                                     </span>
@@ -154,8 +164,8 @@
                                             </c:choose>
                                         </td>
                                         <td>
-                                            <button class="remove-user user-action"
-                                                                          data-email="${user.email}"
+                                            <button class="remove-user table-row-actions"
+                                                    data-email="${user.email}"
                                                     data-id="${user.id}">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                      width="24" height="24"
@@ -176,7 +186,7 @@
                                         </td>
                                         <td>
                                             <a href="/app/admin/users/update.jsp?id=${user.id}"
-                                               class="user-action">
+                                               class="table-row-actions">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                      width="24" height="24"
                                                      viewBox="0 0 24 24" fill="none"
@@ -194,92 +204,71 @@
                                 </c:forEach>
                             </tbody>
                         </table>
-                        <div class="pagination-container">
-                            <c:choose>
-                                <c:when test="${users.HasPreviousPage()}">
-                                    <a href="/app/admin/users/list.jsp?q=${param.q}&p=${param.p - 1}"
-                                       class="pagination-item">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                             height="24" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             class="lucide-chevron-left lucide">
-                                        <path d="m15 18-6-6 6-6" />
-                                        </svg>
-                                        Anterior
-                                    </a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a href="/app/admin/users/list.jsp?q=${param.q}&p=${param.p}"
-                                       class="pagination-item-inative pagination-item">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                             height="24" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             class="lucide-chevron-left lucide">
-                                        <path d="m15 18-6-6 6-6" />
-                                        </svg>
-                                        Anterior
-                                    </a>
-                                </c:otherwise>
-                            </c:choose>
-
-                            <c:choose>
-                                <c:when test="${users.HasNextPage()}">
-                                    <a href="/app/admin/users/list.jsp?q=${param.q}&p=${param.p + 1}"
-                                       class="pagination-item">
-                                        Próxima
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                             height="24" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             class="lucide-chevron-right lucide">
-                                        <path d="m9 18 6-6-6-6" />
-                                        </svg>
-
-                                    </a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a href="/app/admin/users/list.jsp?q=${param.q}&p=${param.p}"
-                                       class="pagination-item-inative pagination-item">
-                                        Próxima
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                             height="24" viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2"
-                                             stroke-linecap="round" stroke-linejoin="round"
-                                             class="lucide-chevron-right lucide">
-                                        <path d="m9 18 6-6-6-6" />
-                                        </svg>
-
-                                    </a>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
                     </div>
-                </main>
-            </div>
 
+                    <div class="pagination-container">
+                        <c:choose>
+                            <c:when test="${users.HasPreviousPage()}">
+                                <a href="/app/admin/users/list.jsp?q=${param.q}&p=${param.p - 1}"
+                                   class="pagination-item text-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                         height="24" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2"
+                                         stroke-linecap="round" stroke-linejoin="round"
+                                         class="lucide-chevron-left lucide">
+                                    <path d="m15 18-6-6 6-6" />
+                                    </svg>
+                                    Anterior
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="/app/admin/users/list.jsp?q=${param.q}&p=${param.p}"
+                                   class="pagination-item-inative pagination-item text-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                         height="24" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2"
+                                         stroke-linecap="round" stroke-linejoin="round"
+                                         class="lucide-chevron-left lucide">
+                                    <path d="m15 18-6-6 6-6" />
+                                    </svg>
+                                    Anterior
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <c:choose>
+                            <c:when test="${users.HasNextPage()}">
+                                <a href="/app/admin/users/list.jsp?q=${param.q}&p=${param.p + 1}"
+                                   class="pagination-item text-sm">
+                                    Próxima
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                         height="24" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2"
+                                         stroke-linecap="round" stroke-linejoin="round"
+                                         class="lucide-chevron-right lucide">
+                                    <path d="m9 18 6-6-6-6" />
+                                    </svg>
+
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="/app/admin/users/list.jsp?q=${param.q}&p=${param.p}"
+                                   class="pagination-item-inative pagination-item text-sm">
+                                    Próxima
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                         height="24" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2"
+                                         stroke-linecap="round" stroke-linejoin="round"
+                                         class="lucide-chevron-right lucide">
+                                    <path d="m9 18 6-6-6-6" />
+                                    </svg>
+
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </main>
     </body>
-    <script>
-        const removeUserInput = document.querySelectorAll(".remove-user")
-        const removeUserModel = document.getElementById("remove-user-modal")
-        const buttonModalClose = document.querySelector(".modal-actions .close")
-
-        removeUserInput.forEach((el) => {
-            el.addEventListener("click", (e) => {
-                removeUserModel.querySelector(".modal-user-email").innerText = e.target.dataset.email
-                removeUserModel.querySelector(".submit-delete").href = "/api/admin/users/remove?id=" + e.target.dataset.id
-
-
-                removeUserModel.classList.add("modal-open")
-            })
-        })
-
-        buttonModalClose.addEventListener("click", (e) => {
-            removeUserModel.classList.remove("modal-open")
-        })
-
-
-    </script>
-
+    <script src="/public/scripts/index.js"></script>
 </html>

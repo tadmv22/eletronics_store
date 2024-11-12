@@ -2,14 +2,15 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="pt-br">
-    <%@include file="../../WEB-INF/components/head.jsp"%>
-    <body>
-        <%@include file="../../WEB-INF/components/header.jsp"%>
-        <div class="container">
-            <main>
+<html lang="pt-br" data-theme='light'>
+<%@include file="../../WEB-INF/components/head.jsp"%>
+<body>
+    <div class="layout">
+        <%@include file="../../WEB-INF/components/sidebar.jsp"%>
+        <main>
+        </main>
+    </div>
+        <script src="/public/scripts/index.js"></script>
+</body>
 
-            </main>
-        </div>
-    </body>
 </html>

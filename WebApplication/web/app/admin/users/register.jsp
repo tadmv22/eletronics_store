@@ -6,7 +6,7 @@
     <%@include file="../../../WEB-INF/components/head.jsp"%>
 
     <body id="register">
-        <%@include file="../../../WEB-INF/components/header.jsp"%>
+        <%@include file="../../../WEB-INF/components/sidebar.jsp"%>
         <div class="container">
             <main>
                 <div class="form-container">
@@ -99,5 +99,6 @@
                 </div>
             </main>
         </div>
+        <script src="/public/scripts/index.js"></script>
     </body>
 </html>

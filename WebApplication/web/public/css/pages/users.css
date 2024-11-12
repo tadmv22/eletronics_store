@@ -1,0 +1,40 @@
+form.users-query {
+    position: relative;
+}
+
+.users-query {
+    display: flex;
+}
+
+
+.status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    position: relative;
+    border-radius: var(--border-radius-xl);
+    padding: 0.4rem 0.8rem;
+    font-weight: bold;
+    color: #344054;
+    background-color: #f2f4f7;
+    max-width: 72rem;
+    width: 100%;
+}
+
+.status-dot {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 99rem;
+    margin-top: 0.2rem;
+    background-color: #667085;
+}
+
+.status.status-active {
+    background-color: #ecfdf3;
+    color: #027a48;
+}
+
+.status-dot.status-active {
+    background-color: #12b76a;
+}

@@ -6,9 +6,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-        rel="stylesheet"
-        />
+        rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico" />
-    <link rel="stylesheet" href="/public/css/styles.css" />
+       <link rel="stylesheet" href="/public/css/styles.css" />
+    <link rel="stylesheet" href="/public/css/index.css" />
+
     <title>Eletronics Store</title>
 </head>

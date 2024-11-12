@@ -53,7 +53,7 @@ public class AuthController extends HttpServlet {
             if (currentUser != null) {
                 this.setCurrentUserInSession(request, currentUser);
 
-                response.sendRedirect("/app/admin/dashboard.jsp");
+                response.sendRedirect("/");
 
             } else {
                 request.setAttribute("loginError", ErrorMensagem.getMessageByCode(3));

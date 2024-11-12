@@ -1,0 +1,52 @@
+.text-primary-color {
+    color: var(--text-color-primary);
+}
+
+.text-secondary-color {
+    color: var(--text-color-secondary);
+}
+
+
+.text-xs {
+    font-size: 1.2rem;
+}
+
+.text-sm {
+    font-size: 1.4rem;
+}
+
+.text-base {
+    font-size: 1.6rem;
+
+}
+
+.text-large {
+    font-size: 2rem;
+
+}
+
+.text-extra-large {
+    font-size: 2.4rem;
+}
+
+
+
+
+@media (max-width: 400px) {
+
+    .text-large {
+        font-size: 1.8rem;
+    }
+
+    .text-base {
+        font-size: 1.4rem;
+    }
+
+    .text-sm {
+        font-size: 1.2rem;
+    }
+
+    .text-xs {
+        font-size: 1rem;
+    }
+}

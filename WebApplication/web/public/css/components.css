@@ -1,0 +1,286 @@
+.container {
+    max-width: 128rem;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+
+    padding: 2rem 2.8rem;
+    margin: 0 auto;
+
+    display: flex;
+    gap: 3.2rem;
+}
+
+
+.btn {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    background-color: var(--brand-color);
+    color: var(--text-colo-white);
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--brand-colo-hover);
+}
+
+.input-default {
+    width: 100%;
+    padding: 1rem 0.8rem;
+    color: var(--text-color-secondary);
+    background-color: var(--bg-color);
+    border: 0.1rem solid var(--border-primary-color);
+    border-radius: var(--border-radius-md);
+}
+
+.label-default {
+    color: var(--text-color-secondary);
+    font-weight: 600;
+    display: block;
+}
+
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+}
+
+.field-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.6rem;
+    margin-top: 1.6rem;
+}
+
+.field-actions .botao[type="reset"] {
+    background-color: var(--bg-color);
+    border: 0.1rem solid var(--border-primary-color);
+    color: var(--text-color-secondary);
+}
+
+.form-error {
+    color: var(--error-color);
+    margin-bottom: 0.4rem;
+    margin-top: 0.4rem;
+}
+
+.search-products {
+    border: 0.3rem solid transparent;
+}
+
+.search-products:has(input:focus-visible),
+.search-products:has(input:focus-within),
+.search-products:has(input:focus) {
+    border: 0.3rem solid var(--brand-color);
+    border-radius: var(--border-radius-lg);
+}
+
+.search-products form {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 46rem;
+}
+
+.search-products .input-default {
+    border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+    width: 100%;
+    outline: 0;
+}
+
+.search-products .btn {
+    width: inherit;
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    max-width: 48rem;
+    outline: 0;
+}
+
+.search-products .clear-form {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    color: var(--cor-texto);
+    position: absolute;
+    z-index: 999;
+    right: 64px;
+    top: 8px;
+}
+
+.search-products .clear-form svg {
+    height: 2rem;
+    width: 2rem;
+}
+
+.table-container {
+    width: 100%;
+    border: solid 0.1rem var(--border-primary-color);
+    border-radius: var(--border-radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+}
+
+.table-default {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-default tr {
+    border-bottom: solid 0.1rem var(--border-primary-color);
+    padding: 1.2rem;
+}
+
+.table-default tr th:first-child,
+.table-default tr td:first-child {
+    padding-left: 2.4rem;
+}
+
+.table-default tr th:last-child,
+.table-default tr td:last-child {
+    padding-right: 2.4rem;
+}
+
+.table-default td,
+.table-default th {
+    padding: 1.2rem;
+}
+
+.table-default td:has(.status) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-default th:nth-child(6) {
+    text-align: center;
+}
+
+.table-default th {
+    text-align: left;
+}
+
+.table-default thead {
+    background-color: var(--bg-color);
+}
+
+.table-container-header {
+    padding: 1.6rem 2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    height: 100%;
+}
+
+.table-container-header .input-default {
+    padding: 0.8rem;
+}
+
+.table-container-actions {
+    display: flex;
+    gap: 1.6rem;
+    justify-content: space-between;
+}
+
+
+.table-container-header p.text-base {
+    color: var(--text-color-primary);
+}
+
+.table-container-header .table-container-actions button,
+.table-container-header .table-container-actions a.btn {
+    padding: 0.4rem 1.4rem;
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    width: inherit;
+}
+
+.table-container-header .table-container-actions form input {
+    border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+    border: solid 0.2rem var(--border-primary-color);
+}
+
+.table-container-header .table-container-actions form button.btn {
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+}
+
+.table-container-header p span.text-sm {
+    font-weight: 700;
+    border-radius: var(--border-radius-xl);
+    background-color: var(--bg-color);
+    padding: 0.4rem 0.8rem;
+    color: var(--brand-color);
+}
+
+
+.table-container-actions form input:focus-within {
+    border: solid 0.2rem var(--brand-color);
+    outline: none;
+}
+
+.table-container-actions form {
+    min-width: 40rem;
+}
+
+.table-row-actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--cor-texto);
+    border-radius: var(--border-radius-md);
+    padding: 0.8rem;
+    transition: background-color .3s;
+}
+
+.table-row-actions:hover {
+    background-color: var(--bg-hover);
+}
+
+.table-row-actions svg {
+    width: 1.8rem;
+    height: 1.8rem;
+}
+
+.pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 0 0.8rem 1.6rem;
+    gap: 1.6rem;
+}
+
+.pagination-item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.6rem 1.4rem;
+    color: var(--text-color-secondary);
+    border: solid 0.1rem var(--border-primary-color);
+    border-radius: var(--border-radius-lg);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.pagination-item.pagination-item-inative {
+    cursor: not-allowed;
+    color: var(--bg-hover);
+}
+
+@media (max-width: 400px) {
+    .btn {
+        padding: 0.6rem 1rem;
+    }
+}
