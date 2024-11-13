@@ -9,69 +9,95 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDao {
+public class UserDao implements BaseDao<User> {
 
     public UserDao() throws ClassNotFoundException {
 
     }
 
-    public User Create(User user) throws ClassNotFoundException {
+    @Override
+    public User create(User input) {
         String sql = "INSERT INTO users (name,surname,email,password) VALUES (?,?,?,?);";
 
         try (Connection conn = new ConnectionFactory().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, user.getName());
-            stmt.setString(2, user.getSurname());
-            stmt.setString(3, user.getEmail());
-            stmt.setString(4, user.getPassword());
+            stmt.setString(1, input.getName());
+            stmt.setString(2, input.getSurname());
+            stmt.setString(3, input.getEmail());
+            stmt.setString(4, input.getPassword());
 
             int result = stmt.executeUpdate();
 
-            if (result != 0) {
-                return this.getUserByEmail(user.getEmail());
+            if (result == 1) {
+                return this.getUserByEmail(input.getEmail());
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
         return null;
     }
 
-    public int getTotal() throws ClassNotFoundException {
-        String sql = "SELECT COUNT(*) AS total FROM users";
+    @Override
+    public User update(User input) {
+        String sql = "UPDATE users SET name=?,surname=?,email=?,password=? WHERE id = ?";
+        try (Connection conn = new ConnectionFactory().getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, input.getName());
+            stmt.setString(2, input.getSurname());
+            stmt.setString(3, input.getEmail());
+            stmt.setString(4, input.getPassword());
+            stmt.setInt(5, input.getId());
+
+            int result = stmt.executeUpdate();
+
+            if (result == 1) {
+                return input;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+        String sql = "DELETE FROM users WHERE id = ?";
 
         try (Connection conn = new ConnectionFactory().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                return rs.getInt("total");
-            }
+            stmt.setInt(1, id);
 
-        } catch (SQLException e) {
+            int result = stmt.executeUpdate();
+
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return 0;
+
     }
 
-    public List<User> getList(int page, String query) throws ClassNotFoundException {
+    @Override
+    public List<User> list(int page, String query) {
         List<User> users = new ArrayList<>();
         String sql;
-        
-        String searchTerm =  (query == null) ? "%%" : "%" + query + "%"; 
-        int size = 10;
+
+        String searchTerm = (query == null) ? "%%" : "%" + query + "%";
+        int size = 5;
         int offset = (page - 1) * size;
-        
-        sql = "SELECT * FROM users WHERE (name LIKE ? or surname LIKE ? ) LIMIT ?,?";
-        
+
+        sql = "SELECT * FROM users WHERE (name LIKE ? or surname LIKE ? or email LIKE ? ) LIMIT ?,?";
+
         try (Connection conn = new ConnectionFactory().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, searchTerm);
             stmt.setString(2, searchTerm);
-            stmt.setInt(3, offset);
-            stmt.setInt(4, size);
-            
-            
+            stmt.setString(3, searchTerm);
+            stmt.setInt(4, offset);
+            stmt.setInt(5, size);
+
             ResultSet rs = stmt.executeQuery();
             System.out.println(stmt);
             while (rs.next()) {
@@ -86,16 +112,44 @@ public class UserDao {
                 ));
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        
-        
+
         return users;
     }
 
+    @Override
+    public User getById(int id) {
+        String sql = "SELECT * FROM users WHERE  id =? AND is_active;";
+
+        try (Connection conn = new ConnectionFactory().getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new User(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("surname"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getBoolean("is_active"),
+                        rs.getDate("created_at")
+                );
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
     public User getUserByEmail(String email) throws ClassNotFoundException {
-        String sql = "SELECT * FROM users WHERE  email =?;";
+        String sql = "SELECT * FROM users WHERE  email =? AND is_active;";
 
         try (Connection conn = new ConnectionFactory().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -123,32 +177,20 @@ public class UserDao {
         return null;
     }
 
-     public User getUserById(int id) throws ClassNotFoundException {
-        String sql = "SELECT * FROM users WHERE  id =?;";
+    public int getTotal() throws ClassNotFoundException {
+        String sql = "SELECT COUNT(*) AS total FROM users";
 
         try (Connection conn = new ConnectionFactory().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
-
-            stmt.setInt(1, id);
-
             ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                return new User(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("surname"),
-                        rs.getString("email"),
-                        rs.getString("password"),
-                        rs.getBoolean("is_active"),
-                        rs.getDate("created_at")
-                );
+            while (rs.next()) {
+                return rs.getInt("total");
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        return null;
+        return 0;
     }
 }

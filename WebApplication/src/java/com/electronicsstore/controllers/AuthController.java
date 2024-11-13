@@ -11,8 +11,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "AuthController", urlPatterns = {"/api/auth/login"})
+@WebServlet(name = "AuthController", urlPatterns = {"/api/auth/*"})
 public class AuthController extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = ((HttpServletRequest) request).getRequestURI();
+        if (path.contains("/api/auth/logout")) {
+            this.logout(request, response);
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -28,6 +36,17 @@ public class AuthController extends HttpServlet {
             throw new ServletException(ex);
         }
 
+    }
+
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession(false);
+        
+        if (session != null) {
+            session.invalidate();
+        }
+        
+        request.getRequestDispatcher("/app/auth/login.jsp").forward(request, response);
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response)
