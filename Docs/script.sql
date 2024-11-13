@@ -14,10 +14,9 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 
-CREATE TABLE IF NOT EXISTS customers (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-	email VARCHAR(255) NOT NULL UNIQUE
+CREATE TABLE IF NOT EXISTS categories(
+id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS products(
@@ -25,71 +24,80 @@ id INT PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(255) NOT NULL UNIQUE,
 value  decimal(10,4) NOT NULL,
 description  VARCHAR(255) NOT NULL,
-stock_quantity int NOT NULL
+stock_quantity int NOT NULL,
+category_id INT NOT NULL,
+FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
-CREATE TABLE IF NOT EXISTS orders(
+CREATE TABLE IF NOT EXISTS produt_image(
 id INT PRIMARY KEY AUTO_INCREMENT,
-status VARCHAR(50) NOT NULL,
-created_at DATETIME NOT NULL  DEFAULT NOW(),
-delevery_at DATETIME,
-updated_at DATETIME NOT NULL  DEFAULT NOW(),
-payment_methods VARCHAR(50),
-customer_id INT,
-FOREIGN KEY (customer_id) REFERENCES customers(id)
-);
-
-
-CREATE TABLE IF NOT EXISTS orders_details (
-order_id INT,
+path VARCHAR(255) NOT NULL,
 product_id INT,
-unit_value DECIMAL(10,4) NOT NULL,
-quantity INT NOT NULL,
-create_at DATETIME NOT NULL  DEFAULT NOW(),
-FOREIGN KEY (order_id) REFERENCES orders(id),
 FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
 
-INSERT INTO users (id,name, surname, email, password)
-VALUES
-(1,'Carlos', 'Silva Oliveira', 'carlos.silva@outlook.com', 'senhaSegura123'),
-(2,'Ana', 'Santos Almeida', 'ana.santos@gmail.com', 'senhaSegura123'),
-(3,'Pedro', 'Santos Almeida', 'pedro.santos@gmail.com', 'senhaSegura123');
+
+INSERT INTO users (name, surname, email, password, is_active, created_at, updated_at) VALUES
+('Alice', 'Silva', 'alice.silva@gmail.com', 'senha123', TRUE, NOW(), NOW()),
+('Bruno', 'Souza', 'bruno.souza@yahoo.com', 'senha123', TRUE, NOW(), NOW()),
+('Carla', 'Santos', 'carla.santos@outlook.com', 'senha123', TRUE, NOW(), NOW()),
+('Daniel', 'Oliveira', 'daniel.oliveira@icloud.com', 'senha123', TRUE, NOW(), NOW()),
+('Eduarda', 'Lima', 'eduarda.lima@hotmail.com', 'senha123', TRUE, NOW(), NOW()),
+('Felipe', 'Mendes', 'felipe.mendes@live.com', 'senha123', TRUE, NOW(), NOW()),
+('Gabriela', 'Ferreira', 'gabriela.ferreira@gmail.com', 'senha123', TRUE, NOW(), NOW()),
+('Henrique', 'Ribeiro', 'henrique.ribeiro@yahoo.com', 'senha123', TRUE, NOW(), NOW()),
+('Isabela', 'Martins', 'isabela.martins@outlook.com', 'senha123', TRUE, NOW(), NOW()),
+('João', 'Barros', 'joao.barros@icloud.com', 'senha123', TRUE, NOW(), NOW()),
+('Karina', 'Costa', 'karina.costa@gmail.com', 'senha123', TRUE, NOW(), NOW()),
+('Leonardo', 'Moreira', 'leonardo.moreira@yahoo.com', 'senha123', TRUE, NOW(), NOW()),
+('Mariana', 'Pereira', 'mariana.pereira@outlook.com', 'senha123', TRUE, NOW(), NOW()),
+('Nicolas', 'Almeida', 'nicolas.almeida@icloud.com', 'senha123', TRUE, NOW(), NOW()),
+('Olivia', 'Gomes', 'olivia.gomes@hotmail.com', 'senha123', TRUE, NOW(), NOW()),
+('Pedro', 'Cardoso', 'pedro.cardoso@live.com', 'senha123', TRUE, NOW(), NOW()),
+('Quésia', 'Araújo', 'quesia.araujo@gmail.com', 'senha123', TRUE, NOW(), NOW()),
+('Rafael', 'Farias', 'rafael.farias@yahoo.com', 'senha123', TRUE, NOW(), NOW()),
+('Sofia', 'Rodrigues', 'sofia.rodrigues@outlook.com', 'senha123', TRUE, NOW(), NOW()),
+('Thiago', 'Vieira', 'thiago.vieira@icloud.com', 'senha123', TRUE, NOW(), NOW());
 
 
+-- Inserindo categorias de produtos eletrônicos
+INSERT INTO categories (name) VALUES
+('Smartphones'),
+('Notebooks'),
+('Tablets'),
+('Televisores'),
+('Acessórios'),
+('Consoles de Videogame'),
+('Áudio e Fones de Ouvido'),
+('Drones'),
+('Câmeras Digitais'),
+('Eletrodomésticos');
 
-INSERT INTO `products` (`name`, `value`, `description`, `stock_quantity`) VALUES
-('Smartphone Galaxy S20', 999.9900, 'Smartphone Samsung Galaxy S20 com 128GB', 15),
-('Notebook Dell Inspiron', 2799.9900, 'Notebook Dell Inspiron com 8GB RAM e 512GB SSD', 8),
-('Smart TV LG 55"', 2299.9900, 'Smart TV LG 4K UHD 55 Polegadas', 5),
-('Fone Bluetooth JBL', 199.9900, 'Fone de ouvido JBL sem fio', 25),
-('Câmera Canon EOS', 1499.9900, 'Câmera Digital Canon EOS com lente 18-55mm', 12),
-('Impressora HP LaserJet', 499.9900, 'Impressora HP LaserJet Pro P1102w', 10),
-('Tablet Apple iPad', 3299.9900, 'Apple iPad 10.2" Wi-Fi 128GB', 6),
-('Monitor Samsung 24"', 849.9900, 'Monitor Samsung LED Full HD 24"', 14),
-('Teclado Mecânico HyperX', 349.9900, 'Teclado Mecânico HyperX Alloy FPS Pro', 20),
-('Mouse Gamer Logitech', 149.9900, 'Mouse Logitech G203 Prodigy RGB', 30),
-('Caixa de Som Bluetooth Sony', 499.9900, 'Caixa de Som Sony Extra Bass Bluetooth', 18),
-('SSD Kingston 480GB', 279.9900, 'SSD Kingston 480GB SATA III', 22),
-('Placa de Vídeo GTX 1660', 1899.9900, 'Placa de vídeo NVIDIA GeForce GTX 1660', 7),
-('HD Externo 1TB', 399.9900, 'HD Externo Seagate Expansion 1TB', 16),
-('Carregador Portátil 10000mAh', 99.9900, 'Power Bank de 10000mAh com saída USB', 35),
-('Webcam Logitech HD', 249.9900, 'Webcam Logitech C270 HD', 9),
-('Switch 8 Portas TP-Link', 129.9900, 'Switch de Rede TP-Link TL-SF1008D', 40),
-('Roteador Wi-Fi TP-Link', 159.9900, 'Roteador Wi-Fi TP-Link Archer C6', 13),
-('Smartwatch Xiaomi Mi Band', 299.9900, 'Smartwatch Xiaomi Mi Band 6', 27),
-('Console PlayStation 5', 4999.9900, 'Console Sony PlayStation 5', 4),
-('Drone DJI Mini 2', 3199.9900, 'Drone DJI Mini 2 Fly More Combo', 6),
-('Lâmpada Inteligente Xiaomi', 69.9900, 'Lâmpada LED Inteligente Xiaomi Wi-Fi', 40),
-('Carregador Rápido Samsung', 119.9900, 'Carregador Turbo Samsung 25W', 25),
-('Roteador Mesh Xiaomi', 299.9900, 'Roteador Wi-Fi Mesh Xiaomi AX3000', 10),
-('Controle Xbox Series X', 349.9900, 'Controle sem fio Xbox Series X', 30),
-('Headset Gamer Redragon', 199.9900, 'Headset Redragon Zeus 2', 18),
-('Smart Speaker Amazon Echo Dot', 399.9900, 'Amazon Echo Dot com Alexa', 19),
-('Projetor Epson 1080p', 2999.9900, 'Projetor Epson Full HD 1080p', 3),
-('Smartphone iPhone 12', 3999.9900, 'Apple iPhone 12 64GB', 6),
-('Notebook Lenovo Ideapad', 2899.9900, 'Notebook Lenovo com 8GB RAM e 256GB SSD', 9),
-('Câmera GoPro HERO9', 2499.9900, 'Câmera GoPro HERO9 Black', 8),
-('Smart TV Samsung 43"', 1999.9900, 'Smart TV Samsung 43" 4K UHD', 7);
-
+-- Inserindo produtos eletrônicos variados
+INSERT INTO products (name, value, description, stock_quantity, category_id) VALUES
+('iPhone 14', 5999.99, 'Smartphone Apple iPhone 14 com 128GB de armazenamento', 20, 1),
+('Samsung Galaxy S23', 3999.99, 'Smartphone Samsung Galaxy S23 com 256GB de armazenamento', 15, 1),
+('MacBook Pro', 12999.99, 'Notebook Apple MacBook Pro com 16GB RAM e 512GB SSD', 10, 2),
+('Dell XPS 13', 7999.99, 'Notebook Dell XPS 13 com 8GB RAM e 256GB SSD', 12, 2),
+('iPad Air', 4499.99, 'Tablet Apple iPad Air com tela de 10.9" e 64GB', 18, 3),
+('Samsung Galaxy Tab S8', 3499.99, 'Tablet Samsung Galaxy Tab S8 com 128GB', 20, 3),
+('TV LG OLED 55"', 7999.99, 'Televisor LG OLED 55" 4K com AI ThinQ', 8, 4),
+('TV Samsung QLED 65"', 10999.99, 'Televisor Samsung QLED 65" 4K com HDR', 6, 4),
+('Carregador Rápido 20W', 199.99, 'Carregador rápido de 20W compatível com smartphones e tablets', 50, 5),
+('Cabo USB-C para Lightning', 99.99, 'Cabo de conexão USB-C para Lightning de 1 metro', 40, 5),
+('PlayStation 5', 4999.99, 'Console de videogame Sony PlayStation 5 com SSD de 825GB', 5, 6),
+('Xbox Series X', 4699.99, 'Console de videogame Microsoft Xbox Series X com 1TB', 7, 6),
+('Fone de Ouvido Bluetooth JBL', 299.99, 'Fone de ouvido JBL Bluetooth com tecnologia Pure Bass', 30, 7),
+('Caixa de Som Portátil JBL', 599.99, 'Caixa de som portátil JBL com resistência à água e Bluetooth', 25, 7),
+('Drone DJI Mini 3', 3499.99, 'Drone DJI Mini 3 com câmera 4K e 30 minutos de voo', 4, 8),
+('Drone DJI Air 2S', 4999.99, 'Drone DJI Air 2S com câmera de 1" e 5.4K', 2, 8),
+('Câmera Canon EOS Rebel T7', 2999.99, 'Câmera DSLR Canon EOS Rebel T7 com lente 18-55mm', 10, 9),
+('Câmera Sony Alpha a7 III', 8999.99, 'Câmera mirrorless Sony Alpha a7 III com lente 28-70mm', 5, 9),
+('Liquidificador Philips Walita', 399.99, 'Liquidificador Philips Walita com 5 velocidades e 700W', 15, 10),
+('Cafeteira Expresso Nespresso', 499.99, 'Cafeteira expresso Nespresso com sistema de cápsulas', 20, 10),
+('Aspirador de Pó Vertical Electrolux', 799.99, 'Aspirador de pó vertical Electrolux sem fio', 12, 10),
+('Air Fryer Mondial', 599.99, 'Fritadeira Air Fryer Mondial com capacidade de 3.5L', 18, 10),
+('Smartwatch Samsung Galaxy Watch', 1299.99, 'Smartwatch Samsung Galaxy Watch com monitoramento de saúde', 25, 1),
+('Smartwatch Apple Watch Series 8', 1999.99, 'Apple Watch Series 8 com GPS e tela retina', 15, 1),
+('Notebook Lenovo IdeaPad 3', 3999.99, 'Notebook Lenovo IdeaPad 3 com 8GB RAM e 256GB SSD', 10, 2);

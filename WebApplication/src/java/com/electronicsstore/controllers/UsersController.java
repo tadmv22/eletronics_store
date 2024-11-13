@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet(name = "UsersController", urlPatterns = {"/api/users/*"})
 public class UsersController extends HttpServlet {
@@ -17,8 +19,13 @@ public class UsersController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getRequestURI();
-        if (path.contains("/api/users/remove")) {
-            this.remove(request, response);
+
+        try {
+            if (path.endsWith("/api/users/remove")) {
+                this.remove(request, response);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UsersController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -27,7 +34,7 @@ public class UsersController extends HttpServlet {
         String path = request.getRequestURI();
 
         try {
-            if (path.endsWith("/api/users/register")) {
+            if (path.endsWith("/api/users/create")) {
                 this.create(request, response);
             } else if (path.endsWith("/api/users/update")) {
                 this.update(request, response);
@@ -38,14 +45,30 @@ public class UsersController extends HttpServlet {
         }
     }
 
-    private void remove(HttpServletRequest request, HttpServletResponse response) {
+    private void remove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
+        int id = Integer.parseInt(request.getParameter("id"));
 
+        String endpoint = "/app/admin/users/list.jsp";
+
+        HttpSession session = request.getSession();
+        CurrentUser currentUser = (CurrentUser) session.getAttribute("currentSessionUser");
+
+        if (currentUser == null) {
+            this.setRequestDispatcherError(request, response, endpoint, "unauthorizedError", "unauthorizedError");
+            return;
+        }
+
+        UserService userService = new UserService();
+        userService.deleteUser(id);
+
+        response.sendRedirect("/app/admin/users/list.jsp");
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-
+                
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
+
+            int id = Integer.parseInt(request.getParameter("id"));            
             String name = request.getParameter("name");
             String surname = request.getParameter("surname");
             String email = request.getParameter("email");
@@ -56,101 +79,109 @@ public class UsersController extends HttpServlet {
             CurrentUser currentUser = (CurrentUser) session.getAttribute("currentSessionUser");
 
             if (currentUser == null) {
-                this.setRequestDispatcherError(request, response, "unauthorizedError", "unauthorizedError");
+                this.setRequestDispatcherError(request, response, "/app/admin/users/list.jsp", "unauthorizedError", "unauthorizedError");
                 return;
             }
-
+                        
             if (currentUser.getId() != id) {
+                
                 if (this.checkValuesIsBlank(name, surname, email)) {
-                    this.setRequestDispatcherError(request, response, "invalidValues", "Os dados de cadastros não podem ser vazios");
+                    this.setRequestDispatcherError(request, response, "/app/admin/users/update.jsp?id=" + id, "invalidValues", "Os dados de cadastros não podem ser vazios");
                     return;
                 }
 
                 if (name.length() < 2) {
-                    this.setRequestDispatcherError(request, response, "nameError", "O nome deve ter pelo menos 2 caracteres");
+                    this.setRequestDispatcherError(request, response, "/app/admin/users/update.jsp?id=" + id, "nameError", "O nome deve ter pelo menos 2 caracteres");
                     return;
                 }
 
                 if (surname.length() < 2) {
-                    this.setRequestDispatcherError(request, response, "surnameError", "O sobrenome deve ter pelo menos 2 caracteres");
+                    this.setRequestDispatcherError(request, response, "/app/admin/users/update.jsp?id=" + id, "surnameError", "O sobrenome deve ter pelo menos 2 caracteres");
                     return;
                 }
 
                 if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-                    this.setRequestDispatcherError(request, response, "invalidEmail", "O endereço deve ser um email válido");
+                    this.setRequestDispatcherError(request, response, "/app/admin/users/update.jsp?id=" + id, "invalidEmail", "O endereço deve ser um email válido");
                     return;
                 }
 
                 UserService userService = new UserService();
-                User userExist = userService.getUserByEmail(email);
-
+                User userExist = userService.getUserById(id);
+                
+                
                 if (userExist == null) {
-                    this.setRequestDispatcherError(request, response, "userNotFoud", "userNotFoud");
+                    this.setRequestDispatcherError(request, response, "/app/admin/users/list.jsp", "userNotFoud", "userNotFoud");
                     return;
                 }
-
-                if (userService.checkEmailAlreadyInUse(email, id)) {
-                    this.setRequestDispatcherError(request, response, "emailInUseError", "Este endereço de e-mail já está em uso!");
+                
+                 
+                if (!userExist.getEmail().equals(email) && userService.checkEmailAlreadyInUse(email, id)) {
+                    this.setRequestDispatcherError(request, response, "/app/admin/users/update.jsp?id=" + id, "emailInUseError", "Este endereço de e-mail já está em uso!");
                     return;
                 }
 
                 userExist.setEmail(email);
-                userExist.setName(email);
-                userExist.setSurname(email);
+                userExist.setName(name);
+                userExist.setSurname(surname);
 
                 User user = userService.updateUser(userExist);
 
+                response.sendRedirect("/app/admin/users/update.jsp?id=" + user.getId());
+
             } else {
+                
+                
                 if (this.checkValuesIsBlank(name, surname, email, oldPassword, password)) {
-                    this.setRequestDispatcherError(request, response, "invalidValues", "Os dados de cadastros não podem ser vazios");
+                    this.setRequestDispatcherError(request, response, "/app/admin/users/update.jsp?id=" + id , "invalidValues", "Os dados de cadastros não podem ser vazios");
                     return;
                 }
 
                 if (!oldPassword.equals(password)) {
-                    this.setRequestDispatcherError(request, response, "passwordNoMatchError", "passwordNoMatchError");
+                    this.setRequestDispatcherError(request, response, "/app/admin/users/update.jsp?id=" + id, "passwordNoMatchError", "passwordNoMatchError");
                     return;
                 }
 
                 if (name.length() < 2) {
-                    this.setRequestDispatcherError(request, response, "nameError", "O nome deve ter pelo menos 2 caracteres");
+                    this.setRequestDispatcherError(request, response, "/app/admin/users/update.jsp?id=" + id , "nameError", "O nome deve ter pelo menos 2 caracteres");
                     return;
                 }
 
                 if (surname.length() < 2) {
-                    this.setRequestDispatcherError(request, response, "surnameError", "O sobrenome deve ter pelo menos 2 caracteres");
+                    this.setRequestDispatcherError(request, response, "/app/admin/users/update.jsp?id=" + id, "surnameError", "O sobrenome deve ter pelo menos 2 caracteres");
                     return;
                 }
 
                 if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-                    this.setRequestDispatcherError(request, response, "invalidEmail", "O endereço deve ser um email válido");
+                    this.setRequestDispatcherError(request, response,  "/app/admin/users/update.jsp?id=" + id, "invalidEmail", "O endereço deve ser um email válido");
                     return;
                 }
 
                 if (password.length() < 8) {
-                    this.setRequestDispatcherError(request, response, "passwordError", "A senha deve ter pelo menos 8 caracteres");
+                    this.setRequestDispatcherError(request, response,  "/app/admin/users/update.jsp?id=" + id, "passwordError", "A senha deve ter pelo menos 8 caracteres");
                     return;
                 }
 
                 UserService userService = new UserService();
-                User userExist = userService.getUserByEmail(email);
+                User userExist = userService.getUserById(id);
 
                 if (userExist == null) {
-                    this.setRequestDispatcherError(request, response, "userNotFoud", "userNotFoud");
+                    this.setRequestDispatcherError(request, response, "/app/admin/users/list.jsp", "userNotFoud", "userNotFoud");
                     return;
                 }
 
-                if (userService.checkEmailAlreadyInUse(email, id)) {
-                    this.setRequestDispatcherError(request, response, "emailInUseError", "Este endereço de e-mail já está em uso!");
+                if (!userExist.getEmail().equals(email) && userService.checkEmailAlreadyInUse(email, id)) {
+                    this.setRequestDispatcherError(request, response, "/app/admin/users/update.jsp?id=" + id, "emailInUseError", "Este endereço de e-mail já está em uso!");
                     return;
                 }
 
                 userExist.setEmail(email);
-                userExist.setName(email);
-                userExist.setSurname(email);
+                userExist.setName(name);
+                userExist.setSurname(surname);
+                userExist.setPassword(password);
 
                 User user = userService.updateUser(userExist);
 
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
+                response.sendRedirect("/app/admin/users/update.jsp?id=" + user.getId());
             }
 
         } catch (ServletException | IOException | ClassNotFoundException ex) {
@@ -164,29 +195,31 @@ public class UsersController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        String endpoint = "/app/admin/users/create.jsp";
+
         try {
             if (this.checkValuesIsBlank(name, surname, email, password)) {
-                this.setRequestDispatcherError(request, response, "invalidValues", "Os dados de cadastros não podem ser vazios");
+                this.setRequestDispatcherError(request, response, endpoint, "invalidValues", "Os dados de cadastros não podem ser vazios");
                 return;
             }
 
             if (name.length() < 2) {
-                this.setRequestDispatcherError(request, response, "nameError", "O nome deve ter pelo menos 2 caracteres");
+                this.setRequestDispatcherError(request, response, endpoint, "nameError", "O nome deve ter pelo menos 2 caracteres");
                 return;
             }
 
             if (surname.length() < 2) {
-                this.setRequestDispatcherError(request, response, "surnameError", "O sobrenome deve ter pelo menos 2 caracteres");
+                this.setRequestDispatcherError(request, response, endpoint, "surnameError", "O sobrenome deve ter pelo menos 2 caracteres");
                 return;
             }
 
             if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-                this.setRequestDispatcherError(request, response, "invalidEmail", "O endereço deve ser um email válido");
+                this.setRequestDispatcherError(request, response, endpoint, "invalidEmail", "O endereço deve ser um email válido");
                 return;
             }
 
             if (password.length() < 8) {
-                this.setRequestDispatcherError(request, response, "passwordError", "A senha deve ter pelo menos 8 caracteres");
+                this.setRequestDispatcherError(request, response, endpoint, "passwordError", "A senha deve ter pelo menos 8 caracteres");
                 return;
             }
 
@@ -194,15 +227,15 @@ public class UsersController extends HttpServlet {
             User userExist = userService.getUserByEmail(email);
 
             if (userExist != null) {
-                this.setRequestDispatcherError(request, response, "emailInUseError", "Este endereço de e-mail já está em uso!");
+                this.setRequestDispatcherError(request, response, endpoint, "emailInUseError", "Este endereço de e-mail já está em uso!");
                 return;
             }
 
             User user = userService.createUser(name, surname, email, password);
-            CurrentUser currentUser = new CurrentUser(user.getId(),user.getEmail(),user.getName(),user.getSurname() );
+            CurrentUser currentUser = new CurrentUser(user.getId(), user.getEmail(), user.getName(), user.getSurname());
 
             this.setCurrentUserInSession(request, currentUser);
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            response.sendRedirect("/app/admin/users/list.jsp");
 
         } catch (ServletException | IOException | ClassNotFoundException ex) {
             throw new ServletException(ex);
@@ -214,9 +247,9 @@ public class UsersController extends HttpServlet {
         session.setAttribute("currentSessionUser", currentUser);
     }
 
-    private void setRequestDispatcherError(HttpServletRequest request, HttpServletResponse response, String code, String mensagem) throws ServletException, IOException {
+    private void setRequestDispatcherError(HttpServletRequest request, HttpServletResponse response, String endpoint, String code, String mensagem) throws ServletException, IOException {
         request.setAttribute(code, mensagem);
-        request.getRequestDispatcher("/app/users/register.jsp").forward(request, response);
+        request.getRequestDispatcher(endpoint).forward(request, response);
     }
 
     private boolean checkValuesIsBlank(String... values) {

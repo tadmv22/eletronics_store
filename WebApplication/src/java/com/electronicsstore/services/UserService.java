@@ -18,36 +18,46 @@ public class UserService {
 
     public User createUser(String name, String surname, String email, String password) throws ServletException, ClassNotFoundException {
         User user = new User(name, surname, email, password);
-        return this.dao.Create(user);
+        return this.dao.create(user);
     }
 
-    public void deleteUser() {
-
+    public void deleteUser(int id) {
+        this.dao.delete(id);
     }
 
     public User updateUser(User user) {
-        return null;
+        return this.dao.update(user);
     }
-    
-    public boolean checkEmailAlreadyInUse(String email, int id) {
+
+    public boolean checkEmailAlreadyInUse(String email, int id) throws ClassNotFoundException {
+        User user = this.dao.getUserByEmail(email);
+        
+        if (user == null) {
+            return false;
+        }
+        
+        if (user.getId() == id) {
+            return false;
+        }
+
         return true;
     }
 
     public User getUserByEmail(String email) throws ClassNotFoundException {
         return this.dao.getUserByEmail(email);
     }
-    
-     public User getUserById(int id) throws ClassNotFoundException {
-        return this.dao.getUserById(id);
+
+    public User getUserById(int id) throws ClassNotFoundException {
+        return this.dao.getById(id);
     }
 
     public PagedList<UserResponse> getAllUser(int page, String query) throws ClassNotFoundException {
-        
-        if(page < 1) {
+
+        if (page < 1) {
             page = 1;
         }
-        
-        List<User> users = this.dao.getList(page,query);
+
+        List<User> users = this.dao.list(page, query);
         int total = this.dao.getTotal();
 
         ArrayList<UserResponse> usersResponse = new ArrayList<>();
@@ -64,7 +74,7 @@ public class UserService {
                     ));
         }
 
-        return new PagedList<>(page, 10, total, usersResponse);
+        return new PagedList<>(page, 5, total, usersResponse);
 
     }
 }
