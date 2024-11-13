@@ -91,5 +91,23 @@ public class ProductDao implements BaseDao<Product> {
 
         return null;
     }
+    
+      @Override
+    public int getTotal(){
+        String sql = "SELECT COUNT(*) AS total FROM products";
+
+        try (Connection conn = new ConnectionFactory().getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                return rs.getInt("total");
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } 
+        return 0;
+    }
 
 }

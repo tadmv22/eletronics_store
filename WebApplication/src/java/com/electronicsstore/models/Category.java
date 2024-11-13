@@ -1,15 +1,35 @@
 package com.electronicsstore.models;
 
+import java.util.Date;
+
 public class Category {
-    private String name;
+
     private int id;
-    
-    public Category(String name) {
+    private String name;
+    private String description;
+    private boolean isActive;
+    private Date createdAt;
+    private Date updateAt;
+
+    public Category(String name, String description) {
         this.name = name;
+        this.description = description;
     }
-    
-    public Category( int id, String name) {
+
+    public Category(int id, String name, String description, boolean isActive, Date createdAt, Date updateAt) {
+        this.id = id;
         this.name = name;
+        this.description = description;
+        this.isActive = isActive;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -21,14 +41,36 @@ public class Category {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    public String getDescription() {
+        return description;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
     }
 
 }
-
-

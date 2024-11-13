@@ -1,6 +1,6 @@
-<%@page import="com.electronicsstore.dto.UserResponse" %>
+<%@page import="com.electronicsstore.models.Category"%>
 <%@page import="com.electronicsstore.dto.PagedList" %>
-<jsp:useBean id="services" class="com.electronicsstore.services.UserService" />
+<jsp:useBean id="services" class="com.electronicsstore.services.CategoryService" />
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -9,11 +9,11 @@
     String q = (String) request.getParameter("q");
     try {
         int pageNumber = Integer.parseInt(p);
-        PagedList<UserResponse> users = services.getAllUser(pageNumber, q);
-        request.setAttribute("users", users);
+        PagedList<Category> categories = services.getAllCategories(pageNumber, q);
+        request.setAttribute("categories", categories);
     } catch (NumberFormatException e) {
-        PagedList<UserResponse> users = services.getAllUser(1, q);
-        request.setAttribute("users", users);
+        PagedList<Category> categories = services.getAllCategories(1, q);
+        request.setAttribute("categories", categories);
     }
 %>
 
@@ -30,18 +30,18 @@
             rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico" />
         <link rel="stylesheet" href="/public/css/index.css" />
-        <link rel="stylesheet" href="/public/css/pages/users.css" />
-        <title>Eletronics Store - Usuários</title>
+        <link rel="stylesheet" href="/public/css/pages/categories.css" />
+        <title>Eletronics Store - Categorias</title>
     </head>
-    <body id="users-list">
+    <body id="categories-list">
         <div class="layout">
             <%@include file="../../../WEB-INF/components/sidebar.jsp" %>
             <div id="modal-container">
                 <div class="modal-content">
                     <div class="model-info">
-                        <h3 class="text-large">Confirmação de Exclusão de Usuário</h3>
+                        <h3 class="text-large">Confirmação de exclusão de categoria</h3>
                         <div>
-                            <p class="text-sm">Tem certeza de que deseja excluir o usuário
+                            <p class="text-sm">Tem certeza de que deseja excluir a categoria
                                 <span class="modal-details"></span>?
                             </p>
                             <p class="text-sm">
@@ -66,30 +66,30 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/app/admin/users/list.jsp"  class="text-xs icon-none">
-                                Usuários
+                            <a href="/app/admin/categories/list.jsp"  class="text-xs icon-none">
+                                Categorias
                             </a>
                         </li>
                     </ul>
                 </div>
                 <main class="container">
-                    <h1 class="text-large">Gerenciamento de usuários</h1>
+                    <h1 class="text-large">Gerenciamento de categorias</h1>
                     <div class="table-container">
                         <div class="table-container-header">
-                            <p class="text-base">Total de usuários <span
+                            <p class="text-base">Total de categorias<span
                                     class="text-sm">
-                                    <c:out value="${users.totalCount}" />
-                                    usuários
+                                    <c:out value="${categories.totalCount}" />
+                                    categorias
                                 </span></p>
                             <div class="table-container-actions">
-                                <form action="/app/admin/users/list.jsp" method="get"
+                                <form action="/app/admin/categories/list.jsp" method="get"
                                       class="search-input">
                                     <input class="input-default" type="search" name="q"
                                            id="q" value="${param.q}"
-                                           placeholder="Buscar usuário" />
+                                           placeholder="Buscar categoria" />
 
                                     <c:if test="${not empty param.q}">
-                                        <a href="/app/admin/users/list.jsp"
+                                        <a href="/app/admin/categories/list.jsp"
                                            class="clear-form">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                  width="24" height="24" viewBox="0 0 24 24"
@@ -114,7 +114,7 @@
                                     </button>
                                 </form>
                                 <div class="table-container-action-add">
-                                    <a href="/app/admin/users/create.jsp" class="btn text-xs">
+                                    <a href="/app/admin/categories/create.jsp" class="btn text-xs">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                              height="24" viewBox="0 0 24 24" fill="none"
                                              stroke="currentColor" stroke-width="2"
@@ -123,7 +123,7 @@
                                         <path d="M5 12h14" />
                                         <path d="M12 5v14" />
                                         </svg>
-                                        Registrar novo usuário
+                                        Registrar nova categoria
                                     </a>
                                 </div>
                             </div>
@@ -133,8 +133,7 @@
                                 <thead class="text-xs">
                                     <tr>
                                         <th>Nome</th>
-                                        <th>Sobrenome</th>
-                                        <th>E-mail</th>
+                                        <th>Descrição</th>
                                         <th>Data de Cadastrado</th>
                                         <th>Última atualização</th>
                                         <th>Status</th>
@@ -143,23 +142,22 @@
                                     </tr>
                                 </thead>
                                 <tbody class="text-sm">
-                                    <c:forEach var="user" items="${users.items}">
+                                    <c:forEach var="category" items="${categories.items}">
                                         <tr>
-                                            <td>${user.name}</td>
-                                            <td>${user.surname}</td>
-                                            <td>${user.email}</td>
-                                            <td>${user.createdAt}</td>
-                                            <td>${user.createdAt}</td>
+                                            <td>${category.name}</td>
+                                            <td>${category.description}</td>
+                                            <td>${category.createdAt}</td>
+                                            <td>${category.updateAt}</td>
                                             <td>
                                                 <c:choose>
-                                                    <c:when test="${user.isActive}">
-                                                        <a href="/api/users/change-status?id=${user.id}" class="status status-active text-sm">
+                                                    <c:when test="${category.isActive}">
+                                                        <a href="/api/categories/change-status?id=${category.id}" class="status status-active text-sm">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
                                                             Ativo
                                                         </a>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <a href="/api/users/change-status?id=${user.id}" class="status text-sm">
+                                                        <a href="/api/categories/change-status?id=${category.id}" class="status text-sm">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
                                                             Inativo
                                                         </a>
@@ -168,8 +166,8 @@
                                             </td>
                                             <td>
                                                 <button class="table-action-remove table-row-actions"
-                                                        data-detail="${user.email}"
-                                                        data-id="${user.id}">
+                                                        data-detail="${category.name}"
+                                                        data-id="${category.id}">
                                                     <svg xmlns="http://www.w3.org/2000/svg"
                                                          width="24" height="24"
                                                          viewBox="0 0 24 24" fill="none"
@@ -188,7 +186,7 @@
                                                 </button>
                                             </td>
                                             <td>
-                                                <a href="/app/admin/users/update.jsp?id=${user.id}"
+                                                <a href="/app/admin/categories/update.jsp?id=${category.id}"
                                                    class="table-row-actions">
                                                     <svg xmlns="http://www.w3.org/2000/svg"
                                                          width="24" height="24"
@@ -211,12 +209,12 @@
 
                         <div class="pagination-container">
                             <div class="text-sm">
-                                Página ${users.page} de ${Math.round(users.totalCount / users.pageSize)}
+                                Página ${categories.page} de ${Math.round(categories.totalCount / categories.pageSize)}
                             </div>
                             <div>
                                 <c:choose>
-                                    <c:when test="${users.HasPreviousPage()}">
-                                        <a href="/app/admin/users/list.jsp?q=${param.q}&p=${users.previousPage()}"
+                                    <c:when test="${categories.HasPreviousPage()}">
+                                        <a href="/app/admin/categories/list.jsp?q=${param.q}&p=${categories.previousPage()}"
                                            class="pagination-item text-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                  height="24" viewBox="0 0 24 24" fill="none"
@@ -229,7 +227,7 @@
                                         </a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="/app/admin/users/list.jsp?q=${param.q}&p=${users.previousPage()}"
+                                        <a href="/app/admin/categories/list.jsp?q=${param.q}&p=${categories.previousPage()}"
                                            class="pagination-item-inative pagination-item text-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                  height="24" viewBox="0 0 24 24" fill="none"
@@ -244,8 +242,8 @@
                                 </c:choose>
 
                                 <c:choose>
-                                    <c:when test="${users.HasNextPage()}">
-                                        <a href="/app/admin/users/list.jsp?q=${param.q}&p=${users.nextPage()}" class="pagination-item text-sm">
+                                    <c:when test="${categories.HasNextPage()}">
+                                        <a href="/app/admin/categories/list.jsp?q=${param.q}&p=${categories.nextPage()}" class="pagination-item text-sm">
                                             Próxima
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                  height="24" viewBox="0 0 24 24" fill="none"
@@ -258,7 +256,7 @@
                                         </a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="/app/admin/users/list.jsp?q=${param.q}&p=${users.nextPage()}" class="pagination-item-inative pagination-item text-sm">
+                                        <a href="/app/admin/categories/list.jsp?q=${param.q}&p=${categories.nextPage()}" class="pagination-item-inative pagination-item text-sm">
                                             Próxima
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                  height="24" viewBox="0 0 24 24" fill="none"
@@ -275,7 +273,7 @@
                     </div>
                 </main>
             </div>
-            <script>
+                             <script>
                 const tableActionRemoveList = document.querySelectorAll(".table-action-remove");
                 const modalContainer = document.getElementById("modal-container");
                 const btnModalClose = document.querySelector(".modal-actions .close");
@@ -285,7 +283,7 @@
                         modalContainer.querySelector(".modal-details").innerText =
                                 e.target.dataset.detail;
                         modalContainer.querySelector(".submit-delete").href =
-                                "/api/users/remove?id=" + e.target.dataset.id;
+                                "/api/categories/remove?id=" + e.target.dataset.id;
 
                         modalContainer.classList.add("modal-open");
                     });

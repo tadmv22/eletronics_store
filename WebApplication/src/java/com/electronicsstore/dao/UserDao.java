@@ -8,6 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserDao implements BaseDao<User> {
 
@@ -40,7 +44,7 @@ public class UserDao implements BaseDao<User> {
 
     @Override
     public User update(User input) {
-        String sql = "UPDATE users SET name=?,surname=?,email=?,password=? WHERE id = ?";
+        String sql = "UPDATE users SET name=?,surname=?,email=?,password=?,is_active=?,updated_at=? WHERE id = ?";
         try (Connection conn = new ConnectionFactory().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -48,7 +52,9 @@ public class UserDao implements BaseDao<User> {
             stmt.setString(2, input.getSurname());
             stmt.setString(3, input.getEmail());
             stmt.setString(4, input.getPassword());
-            stmt.setInt(5, input.getId());
+            stmt.setBoolean(5, input.getIsActive());
+            stmt.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setInt(7, input.getId());
 
             int result = stmt.executeUpdate();
 
@@ -108,7 +114,8 @@ public class UserDao implements BaseDao<User> {
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getBoolean("is_active"),
-                        rs.getDate("created_at")
+                        rs.getDate("created_at"),
+                        rs.getDate("updated_at")
                 ));
             }
 
@@ -121,7 +128,7 @@ public class UserDao implements BaseDao<User> {
 
     @Override
     public User getById(int id) {
-        String sql = "SELECT * FROM users WHERE  id =? AND is_active;";
+        String sql = "SELECT * FROM users WHERE  id =?;";
 
         try (Connection conn = new ConnectionFactory().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -138,7 +145,8 @@ public class UserDao implements BaseDao<User> {
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getBoolean("is_active"),
-                        rs.getDate("created_at")
+                        rs.getDate("created_at"),
+                        rs.getDate("updated_at")
                 );
             }
 
@@ -166,7 +174,8 @@ public class UserDao implements BaseDao<User> {
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getBoolean("is_active"),
-                        rs.getDate("created_at")
+                        rs.getDate("created_at"),
+                        rs.getDate("updated_at")
                 );
             }
 
@@ -177,7 +186,8 @@ public class UserDao implements BaseDao<User> {
         return null;
     }
 
-    public int getTotal() throws ClassNotFoundException {
+    @Override
+    public int getTotal(){
         String sql = "SELECT COUNT(*) AS total FROM users";
 
         try (Connection conn = new ConnectionFactory().getConnection()) {
@@ -188,9 +198,9 @@ public class UserDao implements BaseDao<User> {
                 return rs.getInt("total");
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }
+        } 
         return 0;
     }
 }

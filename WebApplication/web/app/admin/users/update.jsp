@@ -119,7 +119,13 @@
                                     </div>
                                 </c:if>
                             </div>
-
+                            <div class="field">
+                                <label for="status" class="label-default">Status</label>
+                                <select name="status" id="status"  class="select-default">
+                                    <option value="1" ${user.isActive ? "selected" : ""}>Ativo</option>
+                                    <option value="0" ${!user.isActive ? "selected" : ""} >Inativo</option>
+                                </select>
+                            </div>
                             <c:if test="${sessionScope.currentSessionUser.email eq user.email}" >
                                 <div class="field">
                                     <label for="oldPassword" class="label-default">Senha anterior</label>

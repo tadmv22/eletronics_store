@@ -54,6 +54,23 @@
     display: block;
 }
 
+.select-default {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: var(--bg-color);
+    border: 0.1rem solid var(--border-primary-color);
+    padding: 1rem;
+    padding-right: 4rem;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    position: relative;
+    background-image: var(--arrow-select);
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.6rem;
+    border-radius: var(--border-radius-md);
+}
 
 .field {
     display: flex;
@@ -398,6 +415,7 @@
     background-color: var(--bg-hover);
     padding: 0.4rem 0.8rem;
     color: var(--brand-color);
+    margin-left: 1rem;
 }
 
 

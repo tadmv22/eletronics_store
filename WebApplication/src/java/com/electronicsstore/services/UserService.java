@@ -31,11 +31,11 @@ public class UserService {
 
     public boolean checkEmailAlreadyInUse(String email, int id) throws ClassNotFoundException {
         User user = this.dao.getUserByEmail(email);
-        
+
         if (user == null) {
             return false;
         }
-        
+
         if (user.getId() == id) {
             return false;
         }
@@ -76,5 +76,19 @@ public class UserService {
 
         return new PagedList<>(page, 5, total, usersResponse);
 
+    }
+
+    public void changeStatusUser(int id) {
+        User user = this.dao.getById(id);
+
+        if (user != null) {
+            if (user.getIsActive()) {
+                user.setIsActive(false);
+            } else {
+                user.setIsActive(true);
+            }
+        }
+        
+        this.dao.update(user);
     }
 }

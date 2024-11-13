@@ -14,26 +14,34 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 
-CREATE TABLE IF NOT EXISTS categories(
-id INT PRIMARY KEY AUTO_INCREMENT,
-name VARCHAR(255) NOT NULL UNIQUE
+CREATE TABLE IF NOT EXISTS categories (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description VARCHAR(255) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+	created_at DATETIME NOT NULL DEFAULT NOW(),
+    updated_at DATETIME DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS products(
-id INT PRIMARY KEY AUTO_INCREMENT,
-name VARCHAR(255) NOT NULL UNIQUE,
-value  decimal(10,4) NOT NULL,
-description  VARCHAR(255) NOT NULL,
-stock_quantity int NOT NULL,
-category_id INT NOT NULL,
-FOREIGN KEY (category_id) REFERENCES categories(id)
+CREATE TABLE IF NOT EXISTS products (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    value DECIMAL(10 , 4 ) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    stock_quantity INT NOT NULL,
+    category_id INT,
+    FOREIGN KEY (category_id)
+        REFERENCES categories (id)
+        ON DELETE SET NULL
 );
 
-CREATE TABLE IF NOT EXISTS produt_image(
-id INT PRIMARY KEY AUTO_INCREMENT,
-path VARCHAR(255) NOT NULL,
-product_id INT,
-FOREIGN KEY (product_id) REFERENCES products(id)
+CREATE TABLE IF NOT EXISTS produt_image (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    path VARCHAR(255) NOT NULL,
+    product_id INT,
+    FOREIGN KEY (product_id)
+        REFERENCES products (id)
+        ON DELETE SET NULL
 );
 
 
@@ -62,17 +70,18 @@ INSERT INTO users (name, surname, email, password, is_active, created_at, update
 
 
 -- Inserindo categorias de produtos eletrônicos
-INSERT INTO categories (name) VALUES
-('Smartphones'),
-('Notebooks'),
-('Tablets'),
-('Televisores'),
-('Acessórios'),
-('Consoles de Videogame'),
-('Áudio e Fones de Ouvido'),
-('Drones'),
-('Câmeras Digitais'),
-('Eletrodomésticos');
+INSERT INTO categories (name, description) VALUES
+('Smartphones', 'Dispositivos móveis para comunicação e entretenimento'),
+('Televisores', 'Televisores de diferentes tamanhos e tecnologias, como LED, OLED, e QLED'),
+('Computadores', 'Computadores desktop e acessórios para trabalho e entretenimento'),
+('Notebooks', 'Laptops de várias marcas e especificações para uso pessoal e profissional'),
+('Tablets', 'Dispositivos portáteis maiores que smartphones, ideais para leitura e multimídia'),
+('Acessórios', 'Itens complementares para diversos dispositivos, como cabos, cases e carregadores'),
+('Áudio', 'Fones de ouvido, caixas de som e sistemas de som para áudio de alta qualidade'),
+('Câmeras', 'Câmeras fotográficas e acessórios para fotografia e vídeo'),
+('Consoles', 'Consoles e acessórios de videogame para jogadores casuais e hardcore'),
+('Casa Inteligente', 'Dispositivos de automação residencial, como lâmpadas e fechaduras inteligentes');
+
 
 -- Inserindo produtos eletrônicos variados
 INSERT INTO products (name, value, description, stock_quantity, category_id) VALUES

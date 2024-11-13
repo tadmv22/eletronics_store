@@ -1,0 +1,22 @@
+#categories-register .container {
+    padding-top: 0;
+}
+
+#categories-update main h1,
+#categories-register main h1 {
+    margin: 0 auto;
+}
+
+#categories-update form.update-category-form,
+#categories-register form.create-category-form {
+    width: 100%;
+    max-width: 52rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0 auto;
+}
+
+#categories-list .container {
+    gap: 1rem;
+}
