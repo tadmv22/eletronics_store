@@ -77,7 +77,8 @@ public class UserService {
                             u.getSurname(),
                             u.getEmail(),
                             u.getIsActive(),
-                            u.getCreatedAt()
+                            u.getCreatedAt(),
+                            u.getUpdateAt()
                     ));
         }
 
@@ -89,11 +90,7 @@ public class UserService {
         User user = this.dao.getById(id);
 
         if (user != null) {
-            if (user.getIsActive()) {
-                user.setIsActive(false);
-            } else {
-                user.setIsActive(true);
-            }
+            user.changeStatus();
         }
 
         this.dao.update(user);

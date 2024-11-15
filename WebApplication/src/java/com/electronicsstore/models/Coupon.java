@@ -5,6 +5,7 @@ import java.util.Date;
 public class Coupon {
 
     private int id;
+
     private String code;
     private String description;
     private double discountValue;
@@ -34,15 +35,21 @@ public class Coupon {
         this.expirationAt = expirationAt;
     }
 
-    public boolean isExpired() {        
-        if(this.expirationAt == null) return false;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public boolean isExpired() {
+        if (this.expirationAt == null) {
+            return false;
+        }
         return this.expirationAt.before(new Date());
     }
 
     public boolean IsActiveAndValid() {
-        return this.active && !this.isExpired() && this.startAt.before(new Date());
+        return this.active && (!this.isExpired() && this.startAt.before(new Date()) || this.expirationAt == null);
     }
-    
+
     public int getId() {
         return id;
     }
@@ -112,6 +119,14 @@ public class Coupon {
             this.setActive(false);
         } else {
             this.setActive(true);
+        }
+    }
+
+    public void changeStatus(int status) {
+        if (status == 1) {
+            this.setActive(true);
+        } else {
+            this.setActive(false);
         }
     }
 

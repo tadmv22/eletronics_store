@@ -26,14 +26,14 @@
                 </li>
                 <li class="nav-item">
                     <a href="/app/admin/categories/list.jsp"
-                       class="${uri.endsWith('/app/admin/categories/list.jsp') ? 'active' : ''}">
+                       class="${uri.contains('/app/admin/categories/') ? 'active' : ''}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-grip"><circle cx="12" cy="5" r="1"/><circle cx="19" cy="5" r="1"/><circle cx="5" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="19" cy="19" r="1"/><circle cx="5" cy="19" r="1"/></svg>
                         Categorias
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="/app/admin/coupons/list.jsp"
-                       class="${uri.endsWith('/app/admin/coupons/list.jsp') ? 'active' : ''}">
+                       class="${uri.contains('/app/admin/coupons/') ? 'active' : ''}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-percent"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m15 9-6 6"/><path d="M9 9h.01"/><path d="M15 15h.01"/></svg>
                         Cupons
                     </a>
@@ -46,7 +46,7 @@
 
                 <li class="nav-item">
                     <a href="/app/admin/products/list.jsp"
-                       class="${uri.endsWith('/app/admin/products/list.jsp') ? 'active' : ''}">
+                       class="${uri.contains('/app/admin/products/') ? 'active' : ''}">
                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
                         Produtos
                     </a>

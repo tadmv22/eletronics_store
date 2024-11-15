@@ -149,7 +149,8 @@
                                             <td>${user.name}</td>
                                             <td>${user.surname}</td>
                                             <td>${user.email}</td>
-                                            <td class="item-date"><fmt:formatDate pattern = "dd/MM/yyyy" value = "${user.createdAt}"/></td>
+                                            <td class="item-date"><fmt:formatDate  pattern = "dd/MM/yyyy" value = "${user.createdAt}"/></td>
+                                            <td class="item-date"><fmt:formatDate  pattern = "dd/MM/yyyy" value = "${user.updateAt}"/></td>
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${user.isActive}">

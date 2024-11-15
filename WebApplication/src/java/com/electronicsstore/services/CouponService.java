@@ -20,11 +20,11 @@ public class CouponService {
         return this.dao.create(coupon);
     }
 
-    public void deleteCategory(int id) {
+    public void deleteCoupon(int id) {
         this.dao.delete(id);
     }
 
-    public Coupon updateCategory(Coupon coupon) {
+    public Coupon updateCoupon(Coupon coupon) {
         return this.dao.update(coupon);
     }
 
@@ -69,14 +69,5 @@ public class CouponService {
         }
 
         return true;
-    }
-
-    public void changeStatus(int id) {
-        Coupon coupon = this.dao.getById(id);
-
-        if (coupon != null) {
-            coupon.changeStatus();
-            this.dao.update(coupon);
-        }
     }
 }

@@ -144,16 +144,14 @@ public class UsersController extends HttpServlet {
                 userExist.setEmail(email);
                 userExist.setName(name);
                 userExist.setSurname(surname);
-
-                if (status == 1) {
-                    userExist.setIsActive(true);
-                } else {
-                    userExist.setIsActive(false);
-                }
+                userExist.changeStatus(status);
 
                 User user = userService.updateUser(userExist);
-
-                response.sendRedirect("/app/admin/users/update.jsp?id=" + user.getId());
+                
+                
+                request.setAttribute("updateSuccess", true);
+                request.getRequestDispatcher("/app/admin/users/update.jsp?id=" + user.getId()).forward(request, response);
+        
 
             } else {
 
@@ -213,7 +211,9 @@ public class UsersController extends HttpServlet {
 
                 User user = userService.updateUser(userExist);
 
-                response.sendRedirect("/app/admin/users/update.jsp?id=" + user.getId());
+                request.setAttribute("updateSuccess", true);
+                request.getRequestDispatcher("/app/admin/users/update.jsp?id=" + user.getId()).forward(request, response);
+        
             }
 
         } catch (ServletException | IOException | ClassNotFoundException ex) {

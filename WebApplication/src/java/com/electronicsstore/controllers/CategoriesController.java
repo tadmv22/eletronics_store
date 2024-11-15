@@ -60,7 +60,7 @@ public class CategoriesController extends HttpServlet {
             return;
         }
 
-         CategoryService categoryService = new CategoryService();
+        CategoryService categoryService = new CategoryService();
         categoryService.changeStatusCategory(id);
 
         response.sendRedirect("/app/admin/categories/list.jsp");
@@ -132,16 +132,12 @@ public class CategoriesController extends HttpServlet {
 
             categoryExist.setName(name);
             categoryExist.setDescription(description);
-
-            if (status == 1) {
-                categoryExist.setIsActive(true);
-            } else {
-                categoryExist.setIsActive(false);
-            }
+            categoryExist.changeStatus(status);
 
             Category category = categoryService.updateCategory(categoryExist);
 
-            response.sendRedirect("/app/admin/categories/update.jsp?id=" + category.getId());
+            request.setAttribute("updateSuccess", true);
+            request.getRequestDispatcher("/app/admin/categories/update.jsp?id=" + category.getId()).forward(request, response);
 
         } catch (ServletException | IOException | ClassNotFoundException ex) {
             throw new ServletException(ex);

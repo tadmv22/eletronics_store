@@ -14,10 +14,10 @@
             rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico" />
         <link rel="stylesheet" href="/public/css/index.css" />
-        <link rel="stylesheet" href="/public/css/pages/categories.css" />
+        <link rel="stylesheet" href="/public/css/pages/coupons.css" />
         <title>Eletronics Store - Categorias</title>
     </head>
-    <body id="categories-register">
+    <body id="coupons-register">
         <div class="layout">
             <%@include file="../../../WEB-INF/components/sidebar.jsp" %>
             <div class="main-container-content">
@@ -31,44 +31,96 @@
                         </li>
                         <li class="breadcrumb-item">
                             <a href="/app/admin/categories/list.jsp"  class="text-xs">
-                                Categorias
+                                Cupom
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
                             </a>
                         </li>
                         <li class="breadcrumb-item">
                             <a href="/app/admin/categories/create.jsp" class="text-xs icon-none">
-                                Registar nova categoria
+                                Registar novo cupom
                             </a>
                         </li>
                     </ul>
                 </div>
                 <main class="container">
-                    <h1 class="text-large">Registar nova categoria</h1>
-                    <form action="/api/categories/create" method="post" class="create-category-form">
-                        <div class="field">
-                            <label for="name" class="label-default">Nome</label>
+                    <h1 class="text-large">Registar novo cupom</h1>
+                    <form action="/api/coupons/create" method="post" class="create-coupom-form">
+                        <div class="field-container">
+                            <div class="field">
+                                <label for="code" class="label-default">Código</label>
+                                <input
+                                    type="text"
+                                    id="code"
+                                    name="code"
+                                    placeholder="Digite um código para o cupom"
+                                    required
+                                    class="input-default"
+                                    />
+                                <c:if test="${not empty codeError}">
+                                    <div class="form-error text-xs">
+                                        ${codeError}
+                                    </div>
+                                </c:if>
+                            </div>
+                            <div class="field">
+                                <label for="discountValue" class="label-default">Valor de desconto</label>
+                                <input
+                                    type="number"
+                                    id="discountValue"
+                                    name="discountValue"
+                                    min="0.00"
+                                    max="10000.00"
+                                    step="0.01"
+                                    placeholder="Digite o valor do cupom"
+                                    required
+                                    class="input-default"
+                                    />
+                                <c:if test="${not empty discountValueError}">
+                                    <div class="form-error text-xs">
+                                        ${discountValueError}
+                                    </div>
+                                </c:if>
+                            </div>
+                        </div>
+                        <div class="field-container">
+                             <div class="field">
+                            <label for="startAt" class="label-default">Data de início</label>
                             <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                placeholder="Digite o nome da categoria"
+                                type="date"
+                                id="startAt"
+                                name="startAt"
                                 required
                                 class="input-default"
                                 />
-                            <c:if test="${not empty nameError}">
+                            <c:if test="${not empty startAtError}">
                                 <div class="form-error text-xs">
-                                    ${nameError}
+                                    ${startAtError}
                                 </div>
                             </c:if>
+                        </div>
+                        <div class="field">
+                            <label for="expirationAt" class="label-default">Data de expiração</label>
+                            <input
+                                type="date"
+                                id="expirationAt"
+                                name="expirationAt"
+                                class="input-default"
+                                />
+                            <c:if test="${not empty expirationAtError}">
+                                <div class="form-error text-xs">
+                                    ${expirationAtError}
+                                </div>
+                            </c:if>
+                        </div>
                         </div>
                         <div class="field">
                             <label for="description" class="label-default">Descrição</label>
                             <textarea
                                 id="description"
                                 name="description"
-                                placeholder="Escreva uma descrição para a categoria"
+                                placeholder="Escreva uma descrição para o cupom"
                                 required
-                                rows="8"
+                                rows="4"
                                 class="textarea-default"
                                 >${category.description}</textarea>  
                             <c:if test="${not empty descriptionError}">
@@ -86,7 +138,7 @@
                             </c:if>
 
                             <button type="submit" class="btn">Salvar</button>
-                            <a href="/app/admin/categories/list.jsp" class="btn btn-outline close">Cancelar</a>
+                            <a href="/app/admin/coupons/list.jsp" class="btn btn-outline close">Cancelar</a>
                         </div>
                     </form>
                 </main>

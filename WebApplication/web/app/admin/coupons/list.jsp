@@ -126,7 +126,7 @@
                                         <path d="M5 12h14" />
                                         <path d="M12 5v14" />
                                         </svg>
-                                        Registrar nova categoria
+                                        Registrar novo cupom
                                     </a>
                                 </div>
                             </div>
@@ -139,9 +139,9 @@
                                         <th>Valor de desconto</th>
                                         <th>Data de início</th>
                                         <th>Data de expiração</th>
-                                        <th>Status</th>
                                         <th>Data de Cadastrado</th>
                                         <th>Última atualização</th>
+                                        <th>Status</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -158,7 +158,7 @@
                                             <td class="item-date">
                                                 <c:choose>
                                                     <c:when test="${empty coupon.expirationAt}">
-                                                        Sem validade definida
+                                                        N.D.
                                                     </c:when>
                                                     <c:otherwise>
                                                          <fmt:formatDate pattern = "dd/MM/yyyy" value = "${coupon.expirationAt}"/>
@@ -170,28 +170,28 @@
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${coupon.isExpired()}">
-                                                        <a href="/api/coupons/change-status?id=${coupon.id}" class="status status-expired text-sm">
+                                                        <span  class="status status-expired text-sm">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-x"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m14 14-4 4"/><path d="m10 14 4 4"/></svg>
                                                             Expirado
-                                                        </a>
+                                                        </span>
                                                     </c:when>
                                                     <c:when test="${coupon.IsActiveAndValid()}">
-                                                        <a href="/api/coupons/change-status?id=${coupon.id}" class="status status-current text-sm">
+                                                        <span class="status status-current text-sm">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check-2"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M21 14V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8"/><path d="M3 10h18"/><path d="m16 20 2 2 4-4"/></svg>
                                                             Vigente 
-                                                        </a>
+                                                        </span>
                                                     </c:when>
                                                     <c:when test="${coupon.active}">
-                                                        <a href="/api/coupons/change-status?id=${coupon.id}" class="status status-scheduled text-sm">
+                                                        <span class="status status-scheduled text-sm">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-clock"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.3V14"/><circle cx="16" cy="16" r="6"/></svg>
                                                             Programado 
-                                                        </a>
+                                                        </span>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <a href="/api/coupons/change-status?id=${coupon.id}" class="status text-sm">
+                                                        <span  class="status text-sm">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-off"><path d="M4.2 4.2A2 2 0 0 0 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 1.82-1.18"/><path d="M21 15.5V6a2 2 0 0 0-2-2H9.5"/><path d="M16 2v4"/><path d="M3 10h7"/><path d="M21 10h-5.5"/><path d="m2 2 20 20"/></svg>
                                                             Inativo
-                                                        </a>
+                                                        </span>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>

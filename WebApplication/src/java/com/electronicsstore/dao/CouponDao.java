@@ -16,7 +16,7 @@ public class CouponDao implements BaseDao<Coupon> {
 
     @Override
     public Coupon create(Coupon input) {
-        String sql = "INSERT INTO coupons (code,description,discount_type,discount_value,start_at,expiration_at) VALUES (?,?,?,?,?);";
+        String sql = "INSERT INTO coupons (code,description,discount_value,start_at,expiration_at) VALUES (?,?,?,?,?);";
 
         try (Connection conn = new ConnectionFactory().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -24,7 +24,11 @@ public class CouponDao implements BaseDao<Coupon> {
             stmt.setString(2, input.getDescription());
             stmt.setDouble(3, input.getDiscountValue());
             stmt.setDate(4, new Date(input.getStartAt().getTime()));
-            stmt.setDate(5, new Date(input.getExpirationAt().getTime()));
+
+            if (input.getExpirationAt() != null) {
+                stmt.setDate(5, new Date(input.getExpirationAt().getTime()));
+            }
+            stmt.setDate(5, null);
 
             int result = stmt.executeUpdate();
 
@@ -40,7 +44,7 @@ public class CouponDao implements BaseDao<Coupon> {
 
     @Override
     public Coupon update(Coupon input) {
-        String sql = "UPDATE coupons SET code = ?,description =?,discountValue=?,startAt=?,expirationAt=?,active=?,updated_at =? WHERE id = ?;";
+        String sql = "UPDATE coupons SET code = ?,description =?,discount_value=?,start_at=?,expiration_at=?,is_active=?,updated_at =? WHERE id = ?;";
 
         try (Connection conn = new ConnectionFactory().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -48,7 +52,13 @@ public class CouponDao implements BaseDao<Coupon> {
             stmt.setString(2, input.getDescription());
             stmt.setDouble(3, input.getDiscountValue());
             stmt.setDate(4, new Date(input.getStartAt().getTime()));
-            stmt.setDate(5, new Date(input.getExpirationAt().getTime()));
+
+            if (input.getExpirationAt() != null) {
+                stmt.setDate(5, new Date(input.getExpirationAt().getTime()));
+            } else {
+                stmt.setDate(5, null);
+            }
+
             stmt.setBoolean(6, input.getActive());
             stmt.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
             stmt.setInt(8, input.getId());

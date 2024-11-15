@@ -73,4 +73,19 @@ public class Category {
         this.updateAt = updateAt;
     }
 
+    public void changeStatus() {
+        if (this.getIsActive()) {
+            this.setIsActive(false);
+        } else {
+            this.setIsActive(true);
+        }
+    }
+
+    public void changeStatus(int status) {
+        if (status == 1) {
+            this.setIsActive(true);
+        } else {
+            this.setIsActive(false);
+        }
+    }
 }

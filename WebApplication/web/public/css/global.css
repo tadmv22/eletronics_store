@@ -59,16 +59,17 @@ body {
     height: 100%;
 }
 
+
 body {
     background-color: var(--bg-color);
     color: var(--text-color-secondary);
-
     display: flex;
     flex-direction: column;
     gap: 32px;
-
     font-size: 1.6rem;
+
 }
+
 
 img {
     max-width: 100%;
@@ -112,6 +113,16 @@ svg {
     height: 1.8rem;
 }
 
+
+html[data-theme='dark'] input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 2px;
+    opacity: 0.6;
+    filter: invert(0.8);
+}
+
+
 .layout {
     height: 100%;
     width: 100%;
@@ -133,6 +144,7 @@ svg {
     display: grid;
     grid-template-columns: minmax(100vh, 128rem);
     grid-auto-rows: min-content;
+    position: relative;
 }
 
 .switch input {
@@ -252,6 +264,45 @@ nav .nav-list {
 .nav-list .nav-item a svg {
     width: 2rem;
     height: 2rem;
+}
+
+
+
+.toast {
+    position: absolute;
+    z-index: 9999;
+
+    top: 0;
+    left: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    box-shadow: 0 4px 12px #0000001a;
+
+    width: 320px;
+    height: 42px;
+    transform: translate(-50%, -120%);
+
+    color: rgb(0, 138, 46);
+    background-color: #ecfdf3;
+    border: solid 1px #d3fde5;
+    border-radius: 4px;
+
+    transition: all 2s cubic-bezier(0.68, -0.55, 0.25, 1.35);
+}
+
+
+.toast.active {
+    display: flex;
+    transform: translate(-50%, 50%);
+}
+
+.toast svg {
+    width: 18px;
+    height: 18px;
 }
 
 

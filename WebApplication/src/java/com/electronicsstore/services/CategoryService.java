@@ -90,11 +90,7 @@ public class CategoryService {
         Category category = this.dao.getById(id);
 
         if (category != null) {
-            if (category.getIsActive()) {
-                category.setIsActive(false);
-            } else {
-                category.setIsActive(true);
-            }
+            category.changeStatus();
         }
 
         this.dao.update(category);
