@@ -12,6 +12,7 @@ public class User {
     private String password;
     private boolean isActive;
     private Date createdAt;
+    private Date updateAt;
 
     public User(String name, String surname, String email, String password) {
         this.name = name;
@@ -20,7 +21,7 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String name, String surname, String email, String password, boolean isActive, Date createdAt) {
+    public User(int id, String name, String surname, String email, String password, boolean isActive, Date createdAt,Date updateAt) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -28,6 +29,7 @@ public class User {
         this.password = password;
         this.isActive = isActive;
         this.createdAt = createdAt;
+        this.updateAt = updateAt;
     }
     public void setId(int id) {
         this.id = id;
@@ -81,4 +83,11 @@ public class User {
         this.isActive = isActive;
     }
 
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
 }

@@ -1,0 +1,30 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="TomcatServer" type="com.poratu.idea.plugins.tomcat" editBeforeRun="true" focusToolWindowBeforeRun="true" singleton="false">
+    <log_file alias="Tomcat Catalina Log" path="$PROJECT_DIR$/../../apache-tomcat/apache-tomcat-11.0.0/logs/catalina.*" />
+    <log_file alias="Tomcat Manager Log" path="$PROJECT_DIR$/../../apache-tomcat/apache-tomcat-11.0.0/logs/manager.*" />
+    <log_file alias="Tomcat Host Manager Log" path="$PROJECT_DIR$/../../apache-tomcat/apache-tomcat-11.0.0/logs/host-manager.*" />
+    <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
+    <predefined_log_file enabled="true" id="Tomcat Access Log" />
+    <option name="adminPort" value="3005" />
+    <option name="catalinaBase" value="C:\dev\apache-tomcat\apache-tomcat-11.0.0" />
+    <option name="contextPath" value="/" />
+    <option name="docBase" value="C:\dev\projetos\eletronics_store\WebApplication" />
+    <option name="envOptions">
+      <map />
+    </option>
+    <option name="extraClassPath" value="" />
+    <option name="port" value="3001" />
+    <option name="tomcatInfo">
+      <TomcatInfo>
+        <option name="name" value="Apache Tomcat/11.0.0" />
+        <option name="path" value="$PROJECT_DIR$/../../apache-tomcat/apache-tomcat-11.0.0" />
+        <option name="version" value="11.0.0.0" />
+      </TomcatInfo>
+    </option>
+    <option name="vmOptions" value="" />
+    <module name="eletronics_store" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

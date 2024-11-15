@@ -1,0 +1,24 @@
+#coupons-list .status {
+    max-width: 12rem;
+    justify-content: start;
+}
+
+#coupons-list .status svg{
+    stroke: var(--status-inative-color);
+    fill:none;
+}
+
+#coupons-list .status.status-current svg {
+    stroke: var(--status-active-color);
+
+}
+
+#coupons-list .status.status-expired svg {
+    stroke: var(--status-expired-color);
+
+}
+
+#coupons-list .status.status-scheduled svg {
+    stroke: var(--status-scheduled-color);
+
+}

@@ -14,10 +14,10 @@
             rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico" />
         <link rel="stylesheet" href="/public/css/index.css" />
-        <link rel="stylesheet" href="/public/css/pages/users.css" />
-        <title>Eletronics Store - Usuários</title>
+        <link rel="stylesheet" href="/public/css/pages/categories.css" />
+        <title>Eletronics Store - Categorias</title>
     </head>
-    <body id="users-register">
+    <body id="categories-register">
         <div class="layout">
             <%@include file="../../../WEB-INF/components/sidebar.jsp" %>
             <div class="main-container-content">
@@ -30,29 +30,28 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/app/admin/users/list.jsp"  class="text-xs">
-                                Usuários
+                            <a href="/app/admin/categories/list.jsp"  class="text-xs">
+                                Categorias
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
                             </a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/app/admin/users/create.jsp"  class="text-xs icon-none">
-                                Registar novo usuário
+                            <a href="/app/admin/categories/create.jsp" class="text-xs icon-none">
+                                Registar nova categoria
                             </a>
                         </li>
                     </ul>
                 </div>
                 <main class="container">
-                    <h1 class="text-large">Registar novo usuário</h1>
-                    <form action="/api/users/create" method="post" class="create-user-form">
-
+                    <h1 class="text-large">Registar nova categoria</h1>
+                    <form action="/api/categories/create" method="post" class="create-category-form">
                         <div class="field">
                             <label for="name" class="label-default">Nome</label>
                             <input
                                 type="text"
                                 id="name"
                                 name="name"
-                                placeholder="Digite seu nome"
+                                placeholder="Digite o nome da categoria"
                                 required
                                 class="input-default"
                                 />
@@ -63,58 +62,22 @@
                             </c:if>
                         </div>
                         <div class="field">
-                            <label for="surname" class="label-default">Sobrenome</label>
-                            <input
-                                type="text"
-                                id="surname"
-                                name="surname"
-                                placeholder="Digite seu sobrenome"
+                            <label for="description" class="label-default">Descrição</label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                placeholder="Escreva uma descrição para a categoria"
                                 required
-                                class="input-default"
-                                />
-                            <c:if test="${not empty surnameError}">
+                                rows="8"
+                                class="textarea-default"
+                                >${category.description}</textarea>  
+                            <c:if test="${not empty descriptionError}">
                                 <div class="form-error text-sm">
-                                    ${surnameError}
+                                    ${descriptionError}
                                 </div>
                             </c:if>
                         </div>
-                        <div class="field">
-                            <label for="email" class="label-default">E-mail</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                required
-                                placeholder="Digite seu e-mail"
-                                class="input-default"
-                                />
-                            <c:if test="${not empty invalidEmail}">
-                                <div class="form-error text-sm">
-                                    ${invalidEmail}
-                                </div>
-                            </c:if>
-                            <c:if test="${not empty emailInUseError}">
-                                <div class="form-error text-sm">
-                                    ${emailInUseError}
-                                </div>
-                            </c:if>
-                        </div>
-                        <div class="field">
-                            <label for="password" class="label-default">Senha</label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                required
-                                placeholder="Digite sua senha para login"
-                                class="input-default"
-                                />
-                            <c:if test="${not empty passwordError}">
-                                <div class="form-error text-sm">
-                                    ${passwordError}
-                                </div>
-                            </c:if>
-                        </div>
+
                         <div class="field-actions">
                             <c:if test="${not empty invalidValues}">
                                 <div class="form-error text-sm">
@@ -123,7 +86,7 @@
                             </c:if>
 
                             <button type="submit" class="btn">Salvar</button>
-                            <a href="/app/admin/users/list.jsp" class="btn btn-outline close">Cancelar</a>
+                            <a href="/app/admin/categories/list.jsp" class="btn btn-outline close">Cancelar</a>
                         </div>
                     </form>
                 </main>

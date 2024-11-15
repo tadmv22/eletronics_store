@@ -9,70 +9,80 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at DATETIME NOT NULL DEFAULT NOW(),
-    updated_at DATETIME DEFAULT NOW()
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 
-CREATE TABLE IF NOT EXISTS categories(
-id INT PRIMARY KEY AUTO_INCREMENT,
-name VARCHAR(255) NOT NULL UNIQUE
+CREATE TABLE IF NOT EXISTS categories (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description VARCHAR(255) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS products(
-id INT PRIMARY KEY AUTO_INCREMENT,
-name VARCHAR(255) NOT NULL UNIQUE,
-value  decimal(10,4) NOT NULL,
-description  VARCHAR(255) NOT NULL,
-stock_quantity int NOT NULL,
-category_id INT NOT NULL,
-FOREIGN KEY (category_id) REFERENCES categories(id)
+CREATE TABLE IF NOT EXISTS products (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    value DECIMAL(10 , 4 ) NOT NULL,
+    description TEXT NOT NULL,
+    stock_quantity INT NOT NULL CHECK (stock_quantity >= 0),
+    category_id INT,
+	created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS produt_image(
-id INT PRIMARY KEY AUTO_INCREMENT,
-path VARCHAR(255) NOT NULL,
-product_id INT,
-FOREIGN KEY (product_id) REFERENCES products(id)
+CREATE TABLE IF NOT EXISTS coupons (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    code VARCHAR(50) UNIQUE NOT NULL,
+    description TEXT,
+	discount_value DECIMAL(10, 2) NOT NULL,
+    start_at DATETIME NOT NULL, 
+    expiration_at DATETIME, 
+    is_active BOOLEAN NOT NULL DEFAULT TRUE, 
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS product_coupon (
+    product_id INT NOT NULL,
+    coupon_id INT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (product_id, coupon_id),
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (coupon_id) REFERENCES coupons(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS produt_image (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    path VARCHAR(255) NOT NULL,
+    product_id INT,
+    FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE SET NULL
+);
 
 
 INSERT INTO users (name, surname, email, password, is_active, created_at, updated_at) VALUES
 ('Alice', 'Silva', 'alice.silva@gmail.com', 'senha123', TRUE, NOW(), NOW()),
 ('Bruno', 'Souza', 'bruno.souza@yahoo.com', 'senha123', TRUE, NOW(), NOW()),
-('Carla', 'Santos', 'carla.santos@outlook.com', 'senha123', TRUE, NOW(), NOW()),
-('Daniel', 'Oliveira', 'daniel.oliveira@icloud.com', 'senha123', TRUE, NOW(), NOW()),
-('Eduarda', 'Lima', 'eduarda.lima@hotmail.com', 'senha123', TRUE, NOW(), NOW()),
-('Felipe', 'Mendes', 'felipe.mendes@live.com', 'senha123', TRUE, NOW(), NOW()),
-('Gabriela', 'Ferreira', 'gabriela.ferreira@gmail.com', 'senha123', TRUE, NOW(), NOW()),
-('Henrique', 'Ribeiro', 'henrique.ribeiro@yahoo.com', 'senha123', TRUE, NOW(), NOW()),
-('Isabela', 'Martins', 'isabela.martins@outlook.com', 'senha123', TRUE, NOW(), NOW()),
-('João', 'Barros', 'joao.barros@icloud.com', 'senha123', TRUE, NOW(), NOW()),
-('Karina', 'Costa', 'karina.costa@gmail.com', 'senha123', TRUE, NOW(), NOW()),
-('Leonardo', 'Moreira', 'leonardo.moreira@yahoo.com', 'senha123', TRUE, NOW(), NOW()),
-('Mariana', 'Pereira', 'mariana.pereira@outlook.com', 'senha123', TRUE, NOW(), NOW()),
-('Nicolas', 'Almeida', 'nicolas.almeida@icloud.com', 'senha123', TRUE, NOW(), NOW()),
-('Olivia', 'Gomes', 'olivia.gomes@hotmail.com', 'senha123', TRUE, NOW(), NOW()),
-('Pedro', 'Cardoso', 'pedro.cardoso@live.com', 'senha123', TRUE, NOW(), NOW()),
-('Quésia', 'Araújo', 'quesia.araujo@gmail.com', 'senha123', TRUE, NOW(), NOW()),
-('Rafael', 'Farias', 'rafael.farias@yahoo.com', 'senha123', TRUE, NOW(), NOW()),
-('Sofia', 'Rodrigues', 'sofia.rodrigues@outlook.com', 'senha123', TRUE, NOW(), NOW()),
-('Thiago', 'Vieira', 'thiago.vieira@icloud.com', 'senha123', TRUE, NOW(), NOW());
-
+('Carla', 'Santos', 'carla.santos@outlook.com', 'senha123', TRUE, NOW(), NOW());
 
 -- Inserindo categorias de produtos eletrônicos
-INSERT INTO categories (name) VALUES
-('Smartphones'),
-('Notebooks'),
-('Tablets'),
-('Televisores'),
-('Acessórios'),
-('Consoles de Videogame'),
-('Áudio e Fones de Ouvido'),
-('Drones'),
-('Câmeras Digitais'),
-('Eletrodomésticos');
+INSERT INTO categories (name, description) VALUES
+('Smartphones', 'Dispositivos móveis para comunicação e entretenimento'),
+('Televisores', 'Televisores de diferentes tamanhos e tecnologias, como LED, OLED, e QLED'),
+('Computadores', 'Computadores desktop e acessórios para trabalho e entretenimento'),
+('Notebooks', 'Laptops de várias marcas e especificações para uso pessoal e profissional'),
+('Tablets', 'Dispositivos portáteis maiores que smartphones, ideais para leitura e multimídia'),
+('Acessórios', 'Itens complementares para diversos dispositivos, como cabos, cases e carregadores'),
+('Áudio', 'Fones de ouvido, caixas de som e sistemas de som para áudio de alta qualidade'),
+('Câmeras', 'Câmeras fotográficas e acessórios para fotografia e vídeo'),
+('Consoles', 'Consoles e acessórios de videogame para jogadores casuais e hardcore'),
+('Casa Inteligente', 'Dispositivos de automação residencial, como lâmpadas e fechaduras inteligentes'),
+('PCs', 'Dispositivos de automação residencial, como lâmpadas e fechaduras inteligentes');
+
 
 -- Inserindo produtos eletrônicos variados
 INSERT INTO products (name, value, description, stock_quantity, category_id) VALUES
@@ -84,8 +94,8 @@ INSERT INTO products (name, value, description, stock_quantity, category_id) VAL
 ('Samsung Galaxy Tab S8', 3499.99, 'Tablet Samsung Galaxy Tab S8 com 128GB', 20, 3),
 ('TV LG OLED 55"', 7999.99, 'Televisor LG OLED 55" 4K com AI ThinQ', 8, 4),
 ('TV Samsung QLED 65"', 10999.99, 'Televisor Samsung QLED 65" 4K com HDR', 6, 4),
-('Carregador Rápido 20W', 199.99, 'Carregador rápido de 20W compatível com smartphones e tablets', 50, 5),
-('Cabo USB-C para Lightning', 99.99, 'Cabo de conexão USB-C para Lightning de 1 metro', 40, 5),
+('Carregador Rápido 20W', 199.99, 'Carregador rápido de 20W compatível com smartphones e tablets', 50, NULL),
+('Cabo USB-C para Lightning', 99.99, 'Cabo de conexão USB-C para Lightning de 1 metro', 40, NULL),
 ('PlayStation 5', 4999.99, 'Console de videogame Sony PlayStation 5 com SSD de 825GB', 5, 6),
 ('Xbox Series X', 4699.99, 'Console de videogame Microsoft Xbox Series X com 1TB', 7, 6),
 ('Fone de Ouvido Bluetooth JBL', 299.99, 'Fone de ouvido JBL Bluetooth com tecnologia Pure Bass', 30, 7),
@@ -101,3 +111,38 @@ INSERT INTO products (name, value, description, stock_quantity, category_id) VAL
 ('Smartwatch Samsung Galaxy Watch', 1299.99, 'Smartwatch Samsung Galaxy Watch com monitoramento de saúde', 25, 1),
 ('Smartwatch Apple Watch Series 8', 1999.99, 'Apple Watch Series 8 com GPS e tela retina', 15, 1),
 ('Notebook Lenovo IdeaPad 3', 3999.99, 'Notebook Lenovo IdeaPad 3 com 8GB RAM e 256GB SSD', 10, 2);
+
+
+INSERT INTO coupons (code, description, discount_value, start_at, expiration_at, is_active)
+VALUES 
+    ('SUMMER2024', 'Desconto de verão', 15.00, '2024-06-01 00:00:00', '2024-08-31 23:59:59', TRUE),
+    ('WINTER2024', 'Desconto de inverno', 20.00, '2024-12-01 00:00:00', '2025-02-28 23:59:59', TRUE),
+    ('WELCOME10', 'Desconto de boas-vindas', 10.00, '2024-01-01 00:00:00', NULL, TRUE),
+    ('FREESHIP', 'Frete grátis', 5.00, '2024-01-01 00:00:00', NULL, FALSE),
+    ('BLACKFRIDAY2024', 'Desconto de Black Friday 2024', 50.00, '2024-11-25 00:00:00', '2024-11-30 23:59:59', TRUE),
+    ('CYBERMONDAY2024', 'Desconto de Cyber Monday 2024', 30.00, '2024-12-02 00:00:00', '2024-12-02 23:59:59', TRUE);
+
+
+CREATE VIEW CategoryViewAnalytics AS
+SELECT 
+    c.id,
+    c.name,
+    COUNT(p.id) AS total_products,
+    SUM(p.stock_quantity) AS total_units,
+    SUM(p.value * p.stock_quantity) AS total_balance,
+    IFNULL(SUM(p.value * p.stock_quantity) / NULLIF(SUM(p.stock_quantity), 0), 0) AS average_value_per_unit
+FROM
+    eletronics_store.categories c
+        LEFT JOIN
+    eletronics_store.products p ON c.id = p.category_id
+GROUP BY 
+    c.id, c.name;
+    
+    
+CREATE VIEW ProductsViewAnalytics AS
+    SELECT 
+        SUM(stock_quantity) AS total_units,
+        SUM(value * stock_quantity) total_balanceas,
+        SUM(value * stock_quantity) / SUM(stock_quantity) * 100 AS averange
+    FROM
+        eletronics_store.products
