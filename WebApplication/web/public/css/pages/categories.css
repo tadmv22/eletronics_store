@@ -18,5 +18,40 @@
 }
 
 #categories-list .container {
-    gap: 1rem;
+    gap: 2rem;
+}
+
+  
+.category-description {
+    max-width: 38ch;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-wrap: nowrap;
+}
+
+.category-total-products {
+    text-wrap: nowrap;
+}
+
+.category-total-products-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0.6rem 0.4rem;
+    border-radius: var(--border-radius-md);
+    transition: all 0.3s;
+    position: relative;
+}
+
+.category-total-products-link:hover {
+    background-color: var(--bg-hover);
+    color: var(--brand-color);
+}
+
+.category-total-products-link svg {
+    height: 1.6rem;
+    width: 1.6rem;
+    margin-top: 0.1rem;
 }

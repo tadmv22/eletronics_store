@@ -32,7 +32,7 @@
                 <form action="/api/auth/login" method="post" class="form-content">
                     <div class="field">
                         <label for="email" class="label-default text-sm">E-mail</label>
-                        <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required
+                        <input type="email" id="email" name="email" placeholder="Digite seu e-mail" autocomplete="on" required
                                class="input-default" />
                         <c:if test="${not empty emailError}">
                             <div class="form-error text-sm">
@@ -42,7 +42,7 @@
                     </div>
                     <div class="field">
                         <label for="password" class="label-default text-sm">Senha</label>
-                        <input type="password" id="password" name="password" required placeholder="Digite sua senha"
+                        <input type="password" id="password" name="password" autocomplete="on" required placeholder="Digite sua senha"
                                class="input-default" />
                         <c:if test="${not empty passwordError}">
                             <div class="form-error text-sm">

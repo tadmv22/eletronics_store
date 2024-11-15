@@ -6,12 +6,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDao implements BaseDao<User> {
 
@@ -86,12 +84,11 @@ public class UserDao implements BaseDao<User> {
     }
 
     @Override
-    public List<User> list(int page, String query) {
+    public List<User> list(String search, int page, int size) {
         List<User> users = new ArrayList<>();
         String sql;
 
-        String searchTerm = (query == null) ? "%%" : "%" + query + "%";
-        int size = 5;
+        String searchTerm = (search == null) ? "%%" : "%" + search + "%";
         int offset = (page - 1) * size;
 
         sql = "SELECT * FROM users WHERE (name LIKE ? or surname LIKE ? or email LIKE ? ) LIMIT ?,?";
@@ -192,6 +189,29 @@ public class UserDao implements BaseDao<User> {
 
         try (Connection conn = new ConnectionFactory().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                return rs.getInt("total");
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } 
+        return 0;
+    }
+    
+    public int getTotal(String search) {
+        String sql = "SELECT COUNT(*) AS total FROM users WHERE (name LIKE ? or surname LIKE ?);";
+        
+        String searchTerm = (search == null) ? "%%" : "%" + search + "%";
+
+        try (Connection conn = new ConnectionFactory().getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            
+            stmt.setString(1, searchTerm);
+            stmt.setString(2, searchTerm);
+            
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {

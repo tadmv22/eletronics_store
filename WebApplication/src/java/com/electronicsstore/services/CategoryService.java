@@ -1,10 +1,9 @@
 package com.electronicsstore.services;
 
 import com.electronicsstore.dao.CategoryDao;
+import com.electronicsstore.dto.CategoryResponse;
 import com.electronicsstore.dto.PagedList;
-import com.electronicsstore.dto.UserResponse;
 import com.electronicsstore.models.Category;
-import com.electronicsstore.models.User;
 import jakarta.servlet.ServletException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,31 +37,38 @@ public class CategoryService {
         return this.dao.getById(id);
     }
 
-    public PagedList<Category> getAllCategories(int page, String query) throws ClassNotFoundException {
-
+    public PagedList<CategoryResponse> getAllCategoriesWithFilter(String search, int page) throws ClassNotFoundException {
+        int size = 5;
+        int total;
+                
         if (page < 1) {
             page = 1;
         }
 
-        List<Category> categories = this.dao.list(page, query);
+        List<CategoryResponse> categories = this.dao.listWithTotalProducts(search, page, size);
+        
+        if(search == null) {
+            total = this.dao.getTotal();
+        } else {
+            total = this.dao.getTotal(search);
+        }
 
-        int total = this.dao.getTotal();
+        ArrayList<CategoryResponse> categoriesResponse = new ArrayList<>();
 
-        ArrayList<Category> categoriesResponse = new ArrayList<>();
-
-        for (Category c : categories) {
+        for (CategoryResponse c : categories) {
             categoriesResponse.add(
-                    new Category(
+                    new CategoryResponse(
                             c.getId(),
                             c.getName(),
                             c.getDescription(),
+                            c.getTotalProducts(),
                             c.getIsActive(),
                             c.getCreatedAt(),
                             c.getUpdateAt()
                     ));
         }
 
-        return new PagedList<>(page, 5, total, categoriesResponse);
+        return new PagedList<>(page, size, total, categoriesResponse);
 
     }
 

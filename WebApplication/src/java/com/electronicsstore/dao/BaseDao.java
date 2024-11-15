@@ -10,7 +10,7 @@ public interface BaseDao<T> {
 
     public void delete(int id);
 
-    public List<T> list(int page, String query);
+    public List<T> list(String search,int page, int size);
 
     public int getTotal();
 

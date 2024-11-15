@@ -3,7 +3,6 @@ package com.electronicsstore.controllers;
 import com.electronicsstore.dto.CurrentUser;
 import com.electronicsstore.models.Category;
 import com.electronicsstore.services.CategoryService;
-import com.electronicsstore.services.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

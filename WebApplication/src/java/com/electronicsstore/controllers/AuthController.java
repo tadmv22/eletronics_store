@@ -2,7 +2,6 @@ package com.electronicsstore.controllers;
 
 import com.electronicsstore.dto.CurrentUser;
 import com.electronicsstore.services.AuthService;
-import com.electronicsstore.utils.ErrorMensagem;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -55,13 +54,13 @@ public class AuthController extends HttpServlet {
         String password = request.getParameter("password");
 
         if (email == null || email.isBlank()) {
-            request.setAttribute("emailError", ErrorMensagem.getMessageByCode(1));
+            request.setAttribute("emailError", "ErrorMensagemO email é obrigatório. Por favor, preencha este campo.");
             request.getRequestDispatcher("/app/auth/login.jsp").forward(request, response);
 
         }
 
         if (password == null || password.isBlank()) {
-            request.setAttribute("passwordError", ErrorMensagem.getMessageByCode(2));
+            request.setAttribute("passwordError", "O senha é obrigatório. Por favor, preencha este campo.");
             request.getRequestDispatcher("/app/auth/login.jsp").forward(request, response);
         }
 
@@ -75,7 +74,7 @@ public class AuthController extends HttpServlet {
                 response.sendRedirect("/");
 
             } else {
-                request.setAttribute("loginError", ErrorMensagem.getMessageByCode(3));
+                request.setAttribute("loginError", "Usuário ou senha incorretos. Por favor, verifique suas credenciais e tente novamente.");
                 request.getRequestDispatcher("/app/auth/login.jsp").forward(request, response);
             }
         } catch (IOException ex) {
@@ -87,7 +86,7 @@ public class AuthController extends HttpServlet {
     private void setCurrentUserInSession(HttpServletRequest request, CurrentUser currentUser) {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = (HttpSession) httpRequest.getSession();
-        session.setMaxInactiveInterval(30 * 60);
+        session.setMaxInactiveInterval(24 * 60 * 60);
         session.setAttribute("currentSessionUser", currentUser);
 
     }

@@ -8,70 +8,69 @@
         </a>
     </div>
     <nav aria-label="nav-main">
-        <ul class="nav-list text-sm">
-            <li class="nav-item">
-                <a href="/" class="${uri.equals('/') ? 'active' : ''}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                         stroke-linejoin="round" class="lucide lucide-chart-column-decreasing">
-                        <path d="M13 17V9" />
-                        <path d="M18 17v-3" />
-                        <path d="M3 3v16a2 2 0 0 0 2 2h16" />
-                        <path d="M8 17V5" />
-                    </svg>
-                    Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/app/admin/users/list.jsp" class="${uri.contains('/app/admin/users') ? 'active' : ''}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                         stroke-linejoin="round" class="lucide lucide-users">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                        <circle cx="9" cy="7" r="4" />
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                    </svg>
-                    Usuários
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/app/admin/products/list.jsp"
-                   class="${uri.endsWith('/app/admin/products/list.jsp') ? 'active' : ''}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                         stroke-linejoin="round" class="lucide lucide-package">
-                        <path
-                            d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
-                        <path d="M12 22V12" />
-                        <path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7" />
-                        <path d="m7.5 4.27 9 5.15" />
-                    </svg>
-                    Produtos
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/app/admin/categories/list.jsp"
-                   class="${uri.endsWith('/app/admin/orders/list.jsp') ? 'active' : ''}">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-boxes"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
-                    Categorias
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/app/admin/orders/list.jsp"
-                   class="${uri.endsWith('/app/admin/orders/list.jsp') ? 'active' : ''}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                         stroke-linejoin="round" class="lucide lucide-shopping-cart">
-                        <circle cx="8" cy="21" r="1" />
-                        <circle cx="19" cy="21" r="1" />
-                        <path
-                            d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
-                    </svg>
-                    Pedidos
-                </a>
-            </li>
-        </ul>
+        <div class="nav-categories">
+            <h3 class="text-xs">Menu principal</h3>
+            <ul class="nav-list text-sm">
+                <li class="nav-item">
+                    <a href="/" class="${uri.equals('/') ? 'active' : ''}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" class="lucide lucide-chart-column-decreasing">
+                            <path d="M13 17V9" />
+                            <path d="M18 17v-3" />
+                            <path d="M3 3v16a2 2 0 0 0 2 2h16" />
+                            <path d="M8 17V5" />
+                        </svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/app/admin/categories/list.jsp"
+                       class="${uri.endsWith('/app/admin/categories/list.jsp') ? 'active' : ''}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-grip"><circle cx="12" cy="5" r="1"/><circle cx="19" cy="5" r="1"/><circle cx="5" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="19" cy="19" r="1"/><circle cx="5" cy="19" r="1"/></svg>
+                        Categorias
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/app/admin/coupons/list.jsp"
+                       class="${uri.endsWith('/app/admin/coupons/list.jsp') ? 'active' : ''}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-percent"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m15 9-6 6"/><path d="M9 9h.01"/><path d="M15 15h.01"/></svg>
+                        Cupons
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav-categories">
+            <h3 class="text-xs">Inventário</h3>
+            <ul class="nav-list text-sm">
+
+                <li class="nav-item">
+                    <a href="/app/admin/products/list.jsp"
+                       class="${uri.endsWith('/app/admin/products/list.jsp') ? 'active' : ''}">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+                        Produtos
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav-categories">
+            <h3 class="text-xs">Configurações</h3>
+            <ul class="nav-list text-sm">
+                <li class="nav-item">
+                    <a href="/app/admin/users/list.jsp" class="${uri.contains('/app/admin/users') ? 'active' : ''}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" class="lucide lucide-users">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                        Gerenciamento de usuários
+                    </a>
+                </li>
+            </ul>
+        </div>
     </nav>
     <div class="profile-container">
         <div class="profile-avatar">

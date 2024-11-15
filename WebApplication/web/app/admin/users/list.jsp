@@ -3,16 +3,17 @@
 <jsp:useBean id="services" class="com.electronicsstore.services.UserService" />
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
     String p = (String) request.getParameter("p");
     String q = (String) request.getParameter("q");
     try {
         int pageNumber = Integer.parseInt(p);
-        PagedList<UserResponse> users = services.getAllUser(pageNumber, q);
+        PagedList<UserResponse> users = services.getAllUsersWithFilter(q, pageNumber);
         request.setAttribute("users", users);
     } catch (NumberFormatException e) {
-        PagedList<UserResponse> users = services.getAllUser(1, q);
+        PagedList<UserResponse> users = services.getAllUsersWithFilter(q, 1);
         request.setAttribute("users", users);
     }
 %>
@@ -148,8 +149,7 @@
                                             <td>${user.name}</td>
                                             <td>${user.surname}</td>
                                             <td>${user.email}</td>
-                                            <td>${user.createdAt}</td>
-                                            <td>${user.createdAt}</td>
+                                            <td class="item-date"><fmt:formatDate pattern = "dd/MM/yyyy" value = "${user.createdAt}"/></td>
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${user.isActive}">

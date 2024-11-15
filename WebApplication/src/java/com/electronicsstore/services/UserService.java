@@ -51,14 +51,21 @@ public class UserService {
         return this.dao.getById(id);
     }
 
-    public PagedList<UserResponse> getAllUser(int page, String query) throws ClassNotFoundException {
-
+    public PagedList<UserResponse> getAllUsersWithFilter(String search, int page) throws ClassNotFoundException {
+        int size = 5;
+        int total;
+        
         if (page < 1) {
             page = 1;
         }
 
-        List<User> users = this.dao.list(page, query);
-        int total = this.dao.getTotal();
+        List<User> users = this.dao.list(search, page, size);
+        
+        if(search == null) {
+            total = this.dao.getTotal();
+        } else {
+            total = this.dao.getTotal(search);
+        }
 
         ArrayList<UserResponse> usersResponse = new ArrayList<>();
 
@@ -74,7 +81,7 @@ public class UserService {
                     ));
         }
 
-        return new PagedList<>(page, 5, total, usersResponse);
+        return new PagedList<>(page, size, total, usersResponse);
 
     }
 
@@ -88,7 +95,7 @@ public class UserService {
                 user.setIsActive(true);
             }
         }
-        
+
         this.dao.update(user);
     }
 }

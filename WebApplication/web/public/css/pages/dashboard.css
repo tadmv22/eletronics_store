@@ -1,0 +1,137 @@
+#dashboard main {
+    margin-top: 1.6rem;
+}
+
+#dashboard .container {
+    gap: 1.8rem;
+}
+
+#dashboard .card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem
+}
+
+
+#dashboard .card-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem 0.6rem;
+
+    border: solid 0.1rem var(--border-primary-color);
+    border-radius: var(--border-radius-md);
+}
+
+#dashboard .card-main {
+    padding: 1rem 1.8rem;
+}
+
+#dashboard .card-main h4 {
+    color: var(--text-color-secondary);
+    font-weight: normal;
+}
+
+#dashboard .card-main p {
+    margin-top: 1rem;
+    color: var(--text-color-primary);
+}
+
+#dashboard .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    justify-content: end;
+    border-top: solid 0.1rem var(--border-primary-color);
+    font-weight: 600;
+
+    padding: 1rem 1.8rem;
+    color: var(--brand-color);
+
+    transition: all .3s;
+}
+
+#dashboard .card-footer svg {
+    margin-top: 0.3rem;
+    transition: all .3s;
+}
+
+#dashboard .card-footer:hover {
+    color: var(--brand-color-secondary);
+}
+
+#dashboard .card-footer:hover svg {
+    transform: translateX(0.6rem);
+}
+
+#dashboard .sales .card-footer:hover svg {
+    transform: none;
+}
+
+#dashboard .card-footer.analytics {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    justify-content: start;
+    border-top: none;
+    font-weight: 300;
+    padding: 0 1.8rem 1rem;
+    color: var(--text-color-secondary);
+
+    transition: all .3s;
+}
+
+#dashboard .card-footer.analytics span:first-child {
+    color: var(--brand-color);
+    font-weight: 600;
+}
+
+#dashboard .card-footer.analytics svg {
+    width: 1.4rem;
+    height: 1.3rem;
+    margin-top: 0.2rem;
+}
+
+.categories-analytics-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+}
+
+.categories-analytics-container h2 {
+    margin-top: 1rem;
+}
+
+.categories-analytics-main {
+    overflow-x: auto;
+    padding-bottom: 1rem;
+}
+
+.category-analytics-list {
+    width: 100%;
+    display: flex;
+    gap: 1.8rem;
+}
+
+
+.category-analytics-item .category-analytics-kpi {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 0 1.8rem 1rem;
+}
+
+.category-analytics-item .category-analytics-kpi li {
+    text-wrap: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.category-analytics-item .category-analytics-kpi li svg {
+    margin-top: 0.1rem;
+}
+
+#dashboard .category-analytics-item .card-main h4.text-extra-large {
+    color: var(--text-color-primary);
+    font-weight: 600;
+}
