@@ -16,16 +16,22 @@ public class UserService {
         this.dao = new UserDao();
     }
 
-    public User createUser(String name, String surname, String email, String password) throws ServletException, ClassNotFoundException {
+    public User createUser(String name, String surname, String email, String password)
+            throws ServletException, ClassNotFoundException {
         User user = new User(name, surname, email, password);
         return this.dao.create(user);
+        return this.dao.create(user);
     }
+
+    public void deleteUser(int id) {
+        this.dao.delete(id);
 
     public void deleteUser(int id) {
         this.dao.delete(id);
     }
 
     public User updateUser(User user) {
+        return this.dao.update(user);
         return this.dao.update(user);
     }
 
@@ -49,19 +55,22 @@ public class UserService {
 
     public User getUserById(int id) throws ClassNotFoundException {
         return this.dao.getById(id);
+
+    public User getUserById(int id) throws ClassNotFoundException {
+        return this.dao.getById(id);
     }
 
     public PagedList<UserResponse> getAllUsersWithFilter(String search, int page) throws ClassNotFoundException {
         int size = 5;
         int total;
-        
+
         if (page < 1) {
             page = 1;
         }
 
         List<User> users = this.dao.list(search, page, size);
-        
-        if(search == null) {
+
+        if (search == null) {
             total = this.dao.getTotal();
         } else {
             total = this.dao.getTotal(search);
@@ -77,12 +86,25 @@ public class UserService {
                             u.getSurname(),
                             u.getEmail(),
                             u.getIsActive(),
-                            u.getCreatedAt()
-                    ));
+                            u.getCreatedAt()));
         }
 
         return new PagedList<>(page, size, total, usersResponse);
 
+    }
+
+    public void changeStatusUser(int id) {
+        User user = this.dao.getById(id);
+
+        if (user != null) {
+            if (user.getIsActive()) {
+                user.setIsActive(false);
+            } else {
+                user.setIsActive(true);
+            }
+        }
+
+        this.dao.update(user);
     }
 
     public void changeStatusUser(int id) {

@@ -41,7 +41,7 @@
             </ul>
         </div>
         <div class="nav-categories">
-            <h3 class="text-xs">Inventário</h3>
+            <h3 class="text-xs">Inventï¿½rio</h3>
             <ul class="nav-list text-sm">
 
                 <li class="nav-item">
@@ -54,7 +54,7 @@
             </ul>
         </div>
         <div class="nav-categories">
-            <h3 class="text-xs">Configurações</h3>
+            <h3 class="text-xs">Configuraï¿½ï¿½es</h3>
             <ul class="nav-list text-sm">
                 <li class="nav-item">
                     <a href="/app/admin/users/list.jsp" class="${uri.contains('/app/admin/users') ? 'active' : ''}">
@@ -66,7 +66,7 @@
                             <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
                             <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                         </svg>
-                        Gerenciamento de usuários
+                        Gerenciamento de usuï¿½rios
                     </a>
                 </li>
             </ul>
