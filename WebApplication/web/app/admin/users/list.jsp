@@ -7,8 +7,6 @@
 
 <%
     String p = (String) request.getParameter("p");
-<%
-    String p = (String) request.getParameter("p");
     String q = (String) request.getParameter("q");
     try {
         int pageNumber = Integer.parseInt(p);
@@ -22,39 +20,6 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-            rel="stylesheet" />
-        <link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico" />
-        <link rel="stylesheet" href="/public/css/index.css" />
-        <link rel="stylesheet" href="/public/css/pages/users.css" />
-        <title>Eletronics Store - Usuários</title>
-    </head>
-    <body id="users-list">
-        <div class="layout">
-            <%@include file="../../../WEB-INF/components/sidebar.jsp" %>
-            <div id="modal-container">
-                <div class="modal-content">
-                    <div class="model-info">
-                        <h3 class="text-large">Confirmação de Exclusão de Usuário</h3>
-                        <div>
-                            <p class="text-sm">Tem certeza de que deseja excluir o usuário
-                                <span class="modal-details"></span>?
-                            </p>
-                            <p class="text-sm">
-                                Esta ação é irreversível e todas as informações associadas a este usuário serão permanentemente removidas do sistema. 
-                            </p>
-                        </div>
-                    </div>
-                    <div class="modal-actions">
-                        <a href="" class="btn text-sm submit-delete">Excluir</a>
-                        <button type="button" class="btn btn-outline close text-sm">Cancelar</button>
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -114,20 +79,11 @@
                         <div class="table-container-header">
                             <p class="text-base">Total de usuários <span
                                     class="text-sm">
-                <main class="container">
-                    <h1 class="text-large">Gerenciamento de usuários</h1>
-                    <div class="table-container">
-                        <div class="table-container-header">
-                            <p class="text-base">Total de usuários <span
-                                    class="text-sm">
                                     <c:out value="${users.totalCount}" />
                                     usuários
                                 </span></p>
                             <div class="table-container-actions">
-                            <div class="table-container-actions">
                                 <form action="/app/admin/users/list.jsp" method="get"
-                                      class="search-input">
-                                    <input class="input-default" type="search" name="q"
                                       class="search-input">
                                     <input class="input-default" type="search" name="q"
                                            id="q" value="${param.q}"
@@ -147,7 +103,6 @@
                                             </svg>
                                         </a>
                                     </c:if>
-                                    <button type="submit" class="btn">
                                     <button type="submit" class="btn">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                              height="24" viewBox="0 0 24 24" fill="none"
@@ -287,38 +242,6 @@
                                         </a>
                                     </c:otherwise>
                                 </c:choose>
-                            <div class="text-sm">
-                                Página ${users.page} de ${Math.round(users.totalCount / users.pageSize)}
-                            </div>
-                            <div>
-                                <c:choose>
-                                    <c:when test="${users.HasPreviousPage()}">
-                                        <a href="/app/admin/users/list.jsp?q=${param.q}&p=${users.previousPage()}"
-                                           class="pagination-item text-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                 height="24" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor" stroke-width="2"
-                                                 stroke-linecap="round" stroke-linejoin="round"
-                                                 class="lucide-chevron-left lucide">
-                                            <path d="m15 18-6-6 6-6" />
-                                            </svg>
-                                            Anterior
-                                        </a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a href="/app/admin/users/list.jsp?q=${param.q}&p=${users.previousPage()}"
-                                           class="pagination-item-inative pagination-item text-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                 height="24" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor" stroke-width="2"
-                                                 stroke-linecap="round" stroke-linejoin="round"
-                                                 class="lucide-chevron-left lucide">
-                                            <path d="m15 18-6-6 6-6" />
-                                            </svg>
-                                            Anterior
-                                        </a>
-                                    </c:otherwise>
-                                </c:choose>
 
                                 <c:choose>
                                     <c:when test="${users.HasNextPage()}">
@@ -331,34 +254,7 @@
                                                  class="lucide-chevron-right lucide">
                                             <path d="m9 18 6-6-6-6" />
                                             </svg>
-                                <c:choose>
-                                    <c:when test="${users.HasNextPage()}">
-                                        <a href="/app/admin/users/list.jsp?q=${param.q}&p=${users.nextPage()}" class="pagination-item text-sm">
-                                            Próxima
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                 height="24" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor" stroke-width="2"
-                                                 stroke-linecap="round" stroke-linejoin="round"
-                                                 class="lucide-chevron-right lucide">
-                                            <path d="m9 18 6-6-6-6" />
-                                            </svg>
 
-                                        </a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a href="/app/admin/users/list.jsp?q=${param.q}&p=${users.nextPage()}" class="pagination-item-inative pagination-item text-sm">
-                                            Próxima
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                 height="24" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor" stroke-width="2"
-                                                 stroke-linecap="round" stroke-linejoin="round"
-                                                 class="lucide-chevron-right lucide">
-                                            <path d="m9 18 6-6-6-6" />
-                                            </svg>
-                                        </a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
                                         </a>
                                     </c:when>
                                     <c:otherwise>
