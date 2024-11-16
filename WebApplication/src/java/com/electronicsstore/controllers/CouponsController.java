@@ -176,7 +176,7 @@ public class CouponsController extends HttpServlet {
             }
 
             if (code.length() < 6) {
-                this.setRequestDispatcherError(request, response, endpoint, "nameError", "O código deve ter pelo menos 6 caracteres");
+                this.setRequestDispatcherError(request, response, endpoint, "codeError", "O código deve ter pelo menos 6 caracteres");
                 return;
             }
 
