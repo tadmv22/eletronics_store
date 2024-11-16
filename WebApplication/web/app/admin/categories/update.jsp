@@ -137,17 +137,17 @@
                         if (toastElement) {
                             toastElement.classList.add("active");
                         }
-                    }, 100);
+                    }, 10);
 
                     setTimeout(() => {
                         if (toastElement) {
                             toastElement.classList.remove("active");
                         }
-                    }, 5000);
+                    }, 2500);
 
                     setTimeout(() => {
                         window.location.replace(window.location.origin + "/app/admin/categories/list.jsp");
-                    }, 6000);
+                    }, 3500);
                 }
             }
 
