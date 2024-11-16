@@ -126,7 +126,7 @@ public class UsersController extends HttpServlet {
                 }
 
                 if (!oldPassword.equals(password)) {
-                    this.setRequestDispatcherError(request, "passwordNoMatchError", "passwordNoMatchError");
+                    this.setRequestDispatcherError(request, "passwordNoMatchError", "As senhas informadas não coincidem. Por favor, verifique e tente novamente.");
                     request.getRequestDispatcher("/app/admin/users/update.jsp?id=" + id).forward(request, response);
                     return;
                 }
