@@ -103,9 +103,9 @@
                                     required
                                     class="input-default"
                                     />
-                                <c:if test="${not empty valueError}">
+                                <c:if test="${not empty discountValueError}">
                                     <div class="form-error text-xs">
-                                        ${valueError}
+                                        ${discountValueError}
                                     </div>
                                 </c:if>
                             </div>
@@ -121,9 +121,9 @@
                                     required
                                     class="input-default"
                                     />
-                                <c:if test="${not empty codeError}">
+                                <c:if test="${not empty startAtError}">
                                     <div class="form-error text-xs">
-                                        ${codeError}
+                                        ${startAtError}
                                     </div>
                                 </c:if>
                             </div>
@@ -136,9 +136,9 @@
                                     value="${coupon.expirationAt}"
                                     class="input-default"
                                     />
-                                <c:if test="${not empty codeError}">
+                                <c:if test="${not empty expirationAtError}">
                                     <div class="form-error text-xs">
-                                        ${codeError}
+                                        ${expirationAtError}
                                     </div>
                                 </c:if>
                             </div>
