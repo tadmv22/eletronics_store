@@ -77,7 +77,7 @@ public class CouponsController extends HttpServlet {
             double discountValue = Double.parseDouble(request.getParameter("discountValue"));
             Date startAt = sdf.parse(request.getParameter("startAt"));
 
-            if (!request.getParameter("expirationAt").isBlank()) {
+            if (request.getParameter("expirationAt") != null && !request.getParameter("expirationAt").isBlank()) {
                 expirationAt = sdf.parse(request.getParameter("expirationAt"));
             }
 
@@ -162,7 +162,7 @@ public class CouponsController extends HttpServlet {
         String description = request.getParameter("description");
         double discountValue = Double.parseDouble(request.getParameter("discountValue"));
         Date startAt = sdf.parse(request.getParameter("startAt"));
-        
+
         if (request.getParameter("expirationAt") != null && !request.getParameter("expirationAt").isBlank()) {
             expirationAt = sdf.parse(request.getParameter("expirationAt"));
         }
