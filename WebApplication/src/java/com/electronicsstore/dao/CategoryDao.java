@@ -116,7 +116,35 @@ public class CategoryDao implements BaseDao<Category> {
 
         return categories;
     }
+    
+    public List<Category> list() {
+        List<Category> categories = new ArrayList<>();
 
+        String sql = "SELECT * FROM categories;";
+
+        try (Connection conn = new ConnectionFactory().getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                categories.add(new Category(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getBoolean("is_active"),
+                        rs.getDate("created_at"),
+                        rs.getDate("updated_at")
+                ));
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return categories;
+    }
+   
     public List<CategoryResponse> listWithTotalProducts(String search, int page, int size) {
         List<CategoryResponse> categories = new ArrayList<>();
 

@@ -195,7 +195,7 @@ public class CouponsController extends HttpServlet {
                 return;
             }
 
-            if (expirationAt != null && !expirationAt.after(new Date())) {
+            if (expirationAt != null && (!expirationAt.after(new Date()) || expirationAt.equals(new Date()))) {
                 this.setRequestDispatcherError(request, response, endpoint, "expirationAtError", "A data de expiração deve maior que a data atual");
                 return;
             }
