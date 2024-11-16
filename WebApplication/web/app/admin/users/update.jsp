@@ -153,11 +153,11 @@
                                     </c:if>
                                 </div>
                                 <div class="field">
-                                    <label for="newPassword" class="label-default">Nova senha</label>
+                                    <label for="password" class="label-default">Nova senha</label>
                                     <input
                                         type="password"
-                                        id="newPassword"
-                                        name="newPassword"
+                                        id="password"
+                                        name="password"
                                         required
                                         placeholder="Digite sua senha nova senha"
                                         class="input-default"
@@ -170,9 +170,9 @@
                                 </div>
                             </c:if>        
                             <div class="field-actions">
-                                <c:if test="${not empty invalidPassword}">
+                                <c:if test="${not empty passwordNoMatchError}">
                                     <div class="form-error text-sm">
-                                        ${invalidPassword}
+                                        ${passwordNoMatchError}
                                     </div>
                                 </c:if>
                                 <c:if test="${not empty invalidValues}">
