@@ -1,4 +1,4 @@
-<%@page import="com.electronicsstore.models.Product"%>
+<%@page import="com.electronicsstore.dto.ProductResponse"%>
 <jsp:useBean id="services" class="com.electronicsstore.services.ProductsService" />
 <%@page import="com.electronicsstore.dto.PagedList" %>
 <%@page import="java.util.List"%>
@@ -12,10 +12,10 @@
 
     try {
         int pageNumber = Integer.parseInt(p);
-        PagedList<Product> products = services.getAllProductWithFilter(q, pageNumber);
+        PagedList<ProductResponse> products = services.getAllProductWithFilter(q, pageNumber);
         request.setAttribute("products", products);
     } catch (NumberFormatException e) {
-        PagedList<Product> products = services.getAllProductWithFilter(q, 1);
+        PagedList<ProductResponse> products = services.getAllProductWithFilter(q, 1);
         request.setAttribute("products", products);
     }
 %>
@@ -36,7 +36,7 @@
         <link rel="stylesheet" href="/public/css/pages/products.css" />
         <title>Eletronics Store - Produtos</title>
     </head>
-    <body id="categories-list">
+    <body id="products-list">
         <div class="layout">
             <%@include file="../../../WEB-INF/components/sidebar.jsp" %>
             <div id="modal-container">
@@ -138,7 +138,9 @@
                                         <th>Nome</th>
                                         <th>Valor</th>
                                         <th>Descrição</th>
-                                        <th>Quantidade em estoque</th>
+                                        <th>Categoria</th>
+                                        <th>Qtd estoque</th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -149,11 +151,16 @@
                                             <td>${product.name}</td>
                                             <td><fmt:setLocale value="pt-BR" />
                                                 <fmt:formatNumber value="${product.value}" minFractionDigits="2" type="currency" /></td>
-                                            <td class="category-description">${product.description}</td>
-                                            <td>${product.stockQuantity}</td>               
-                                                
-                                           
-                                            <td>
+                                            <td class="product-description">${product.description}</td>
+                                            <td>${product.categoryName}</td>
+                                            <td style="text-align: center">${product.stockQuantity}</td>               
+                                            <td title="Ver cupons">
+                                                <a href="/app/admin/products/coupons/list.jsp?id=${product.id}"
+                                                   class="table-row-actions">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-percent"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m15 9-6 6"/><path d="M9 9h.01"/><path d="M15 15h.01"/></svg>
+                                                </a>
+                                            </td>
+                                            <td title="Remover produto">
                                                 <button class="table-action-remove table-row-actions"
                                                         data-detail="${product.name}"
                                                         data-id="${product.id}">
@@ -174,7 +181,7 @@
                                                     </svg>
                                                 </button>
                                             </td>
-                                            <td>
+                                            <td title="Atualizar produto">
                                                 <a href="/app/admin/products/update.jsp?id=${product.id}"
                                                    class="table-row-actions">
                                                     <svg xmlns="http://www.w3.org/2000/svg"

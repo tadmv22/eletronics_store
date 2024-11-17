@@ -21,7 +21,7 @@
     gap: 2rem;
 }
 
-  
+
 .product-description {
     max-width: 38ch;
     text-overflow: ellipsis;
@@ -55,4 +55,179 @@
     height: 1.6rem;
     width: 1.6rem;
     margin-top: 0.1rem;
+}
+
+
+.coupons-manager {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#products-coupons-list .card-product {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+#products-coupons-list .card-list-container {
+    height: 34rem;
+    overflow-y: auto;
+}
+
+#products-coupons-list .card-coupons-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem;
+}
+
+#products-coupons-list .card-coupon {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+
+    background-color: var(--brand-color);
+    color: var(--text-colo-white);
+
+    padding: 1rem;
+    border-radius: var(--border-radius-lg);
+    max-width: 32rem;
+    width: 100%;
+
+    position: relative;
+}
+
+
+#products-coupons-list .table-container-header {
+    width: 100%;
+    padding: 1rem 0;
+}
+
+#products-coupons-list .card-coupon .card-coupon-details {
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    place-items: start;
+    gap: 1rem;
+    padding: 0 1rem;
+
+}
+
+#products-coupons-list .card-coupon .coupon-discount {
+    font-weight: bold;
+    grid-area: 2 \ 1 \ 3 \ 3;
+    place-self: start end;
+    text-wrap: nowrap;
+}
+
+
+.card-footer {
+    padding: 1rem;
+    border-top: solid 1px var(--text-colo-white);
+    color: var(--text-colo-white);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: relative;
+}
+
+.card-footer::after {
+    content: "";
+    position: absolute;
+    width: 1.8rem;
+    height: 1.8rem;
+    background-color: var(--bg-color);
+    border-radius: 99%;
+    top: 0;
+    left: 0;
+    transform: translate(-125%, -55%);
+}
+
+.card-footer::before {
+    content: "";
+    position: absolute;
+    width: 1.8rem;
+    height: 1.8rem;
+    background-color: var(--bg-color);
+    border-radius: 99%;
+    top: 0;
+    right: 0;
+    transform: translate(125%, -55%);
+}
+
+
+.card-coupon-status {
+    padding: 0.6rem;
+    border-radius: var(--border-radius-xl);
+
+    background-color: var(--status-scheduled-color);
+}
+
+.card-list-empty {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card-list-empty svg {
+    width: 4.6rem;
+    height: 4.6rem;
+}
+
+.card-coupon-remove-link {
+    all: unset;
+    cursor: pointer;
+
+    color: inherit;
+    padding: 0.6rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-md);
+    transition: background-color .3s;
+
+
+}
+
+#products-coupons-list .table-container-action-add {
+    height: 4.2rem;
+    max-width: 20rem;
+    place-self: end;
+    width: 100%;
+}
+
+#modal-container.add-coupon .modal-actions {
+    flex-direction: row;
+}
+
+#modal-container.add-coupon .modal-content {
+    max-width: 48rem;
+    max-height: 18rem;
+}
+
+#modal-container.add-coupon .modal-content:has(:disabled) {
+    height: min-content;
+}
+
+#modal-container.add-coupon .modal-content form {
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   gap: 2rem;
+}
+
+.card-coupon-remove-link:hover {
+    background-color: var(--brand-colo-hover);
+}
+
+@media (max-width:1000px) {
+    #products-coupons-list .card-coupons-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

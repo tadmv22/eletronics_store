@@ -120,13 +120,9 @@
                         <div class='field'> 
                         <label for="categoryId" class="label-default">Categorias</label>
                         <select name='categoryId' class="select-default">
-                        
                             <c:forEach var="category" items="${categories}">
-                                
                                 <option value="${category.id}">${category.name}</option>
-                            
                             </c:forEach>
-                        
                         </select>
                         </div>
                         <div class="field-actions">

@@ -56,6 +56,16 @@ public class CouponService {
         return new PagedList<>(page, size, total, coupons);
 
     }
+    
+    public List<Coupon> getCouponsByProducts(int productId) throws ClassNotFoundException {
+        return this.dao.getCouponsByProducts(productId);
+    }
+    
+      
+    public List<Coupon> getCouponsAvalibleByProducts(int productId) throws ClassNotFoundException {
+        return this.dao.getCouponsAvalibleByProducts(productId);
+    }
+    
 
     public boolean checkCodeAlreadyInUse(String code, int id) throws ClassNotFoundException {
         Coupon coupon = this.dao.getByCode(code);

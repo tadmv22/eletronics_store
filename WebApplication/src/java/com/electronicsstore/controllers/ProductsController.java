@@ -28,6 +28,8 @@ public class ProductsController extends HttpServlet {
         try {
             if (path.endsWith("/api/products/remove")) {
                 this.remove(request, response);
+            } else if (path.contains("/api/products/coupons/remove")) {
+                this.deleteCoupon(request, response);
             }
         } catch (ClassNotFoundException ex) {
         }
@@ -40,14 +42,40 @@ public class ProductsController extends HttpServlet {
         try {
             if (path.endsWith("/api/products/create")) {
                 this.create(request, response);
-            }
-            else if (path.endsWith("/api/products/update")) {
+            } else if (path.endsWith("/api/products/update")) {
                 this.update(request, response);
-                
+            } else if (path.contains("/api/products/coupons/add")) {
+                this.addCoupon(request, response);
             }
         } catch (ClassNotFoundException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void addCoupon(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
+        String path = request.getRequestURI();
+        int productId = Integer.parseInt(path.split("/")[5]);
+        int couponId = Integer.parseInt(request.getParameter("couponId"));
+
+        this.service.addCoupon(productId, couponId);
+        request.setAttribute("changeIsSucess", true);
+        request.setAttribute("changeMessage", "Cupom adicionado com sucesso!");
+
+        response.sendRedirect("/app/admin/products/coupons/list.jsp?id=" + productId);
+
+//        request.getRequestDispatcher("/app/admin/products/coupons/list.jsp?id=" + productId).forward(request, response);
+    }
+
+    private void deleteCoupon(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
+        String path = request.getRequestURI();
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        int couponId = Integer.parseInt(request.getParameter("couponId"));
+
+        this.service.deleteCoupon(productId, couponId);
+        request.setAttribute("changeIsSucess", true);
+        request.setAttribute("changeMessage", "Cupom removido com sucesso!");
+
+        response.sendRedirect("/app/admin/products/coupons/list.jsp?id=" + productId);
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
@@ -100,7 +128,7 @@ public class ProductsController extends HttpServlet {
 
         service.updateProduct(productExisist);
         request.setAttribute("updateSuccess", true);
-            request.getRequestDispatcher("/app/admin/products/update.jsp?id=" + productExisist.getId()).forward(request, response);
+        request.getRequestDispatcher("/app/admin/products/update.jsp?id=" + productExisist.getId()).forward(request, response);
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {

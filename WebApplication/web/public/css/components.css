@@ -35,6 +35,14 @@
     background-color: var(--brand-colo-hover);
 }
 
+.btn:disabled {
+    cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+    background-color: var(--brand-color);
+}
+
 .btn-outline:hover {
     background-color: var(--bg-hover);
 }

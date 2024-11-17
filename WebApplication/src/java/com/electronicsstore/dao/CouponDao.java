@@ -231,5 +231,99 @@ public class CouponDao implements BaseDao<Coupon> {
 
         return null;
     }
+    
+    public List<Coupon> getCouponsByProducts(int productId) {
+        List<Coupon> coupons = new ArrayList<>();
 
+        String sql = """
+                SELECT 
+                    *
+                FROM
+                    eletronics_store.coupons
+                WHERE
+                    id IN (SELECT 
+                            coupon_id
+                        FROM
+                            eletronics_store.product_coupon
+                        WHERE
+                            product_id = ?
+                        GROUP BY 1)
+                """;
+
+
+        try (Connection conn = new ConnectionFactory().getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, productId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                coupons.add(new Coupon(
+                        rs.getInt("id"),
+                        rs.getString("code"),
+                        rs.getString("description"),
+                        rs.getDouble("discount_value"),
+                        rs.getDate("start_at"),
+                        rs.getDate("expiration_at"),
+                        rs.getBoolean("is_active"),
+                        rs.getDate("created_at"),
+                        rs.getDate("updated_at")
+                ));
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return coupons;
+    }
+
+    public List<Coupon> getCouponsAvalibleByProducts(int productId) {
+        List<Coupon> coupons = new ArrayList<>();
+
+        String sql = """
+                SELECT 
+                    c.id, c.code,c.description,c.discount_value,c.start_at,c.expiration_at,c.is_active,c.created_at,c.updated_at
+                FROM
+                    eletronics_store.coupons c
+                        LEFT JOIN
+                    eletronics_store.product_coupon cp ON c.id = cp.coupon_id
+                WHERE
+                    c.id NOT IN (SELECT 
+                            coupon_id
+                        FROM
+                            eletronics_store.product_coupon
+                        WHERE
+                            product_id = ?
+                        GROUP BY 1)
+                """;
+
+
+        try (Connection conn = new ConnectionFactory().getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, productId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                coupons.add(new Coupon(
+                        rs.getInt("id"),
+                        rs.getString("code"),
+                        rs.getString("description"),
+                        rs.getDouble("discount_value"),
+                        rs.getDate("start_at"),
+                        rs.getDate("expiration_at"),
+                        rs.getBoolean("is_active"),
+                        rs.getDate("created_at"),
+                        rs.getDate("updated_at")
+                ));
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return coupons;
+    }
 }
+

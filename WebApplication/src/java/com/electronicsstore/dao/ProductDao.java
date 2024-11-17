@@ -1,6 +1,7 @@
 package com.electronicsstore.dao;
 
 import com.electronicsstore.database.ConnectionFactory;
+import com.electronicsstore.dto.ProductResponse;
 import com.electronicsstore.dto.ProductsAnalytics;
 import com.electronicsstore.models.Product;
 import java.sql.Connection;
@@ -39,6 +40,7 @@ public class ProductDao implements BaseDao<Product> {
 
         return null;
     }
+   
 
     @Override
     public Product update(Product input) {
@@ -117,25 +119,39 @@ public class ProductDao implements BaseDao<Product> {
 
         return products;
     }
-    
-    public List<Product> list() {
-        List<Product> products = new ArrayList<>();
 
-        String sql = "SELECT * FROM products;";
+    public List<ProductResponse> listWithCategoryName(String search, int page, int size) {
+        List<ProductResponse> products = new ArrayList<>();
+
+        String sql = """
+        SELECT 
+            p.id, p.name, p.value, p.description, p.stock_quantity, c.name as category_name
+        FROM
+            eletronics_store.products p
+                LEFT JOIN
+            eletronics_store.categories c ON p.category_id = c.id
+        WHERE p.name LIKE ? LIMIT ?,?
+        """;
+
+        String searchTerm = (search == null) ? "%%" : "%" + search + "%";
+        int offset = (page - 1) * size;
 
         try (Connection conn = new ConnectionFactory().getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, searchTerm);
+            stmt.setInt(2, offset);
+            stmt.setInt(3, size);
 
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                products.add(new Product(
+                products.add(new ProductResponse(
                         rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getDouble("value"),
                         rs.getString("description"),
+                        rs.getDouble("value"),
                         rs.getInt("stock_quantity"),
-                        rs.getInt("category_id")
+                        rs.getString("category_name")
                 ));
             }
 
@@ -258,6 +274,50 @@ public class ProductDao implements BaseDao<Product> {
         }
 
         return null;
+    }
+    
+    
+    public boolean addCoupon(int productId, int couponId) {
+        String sql = "INSERT INTO product_coupon (product_id,coupon_id) VALUES (?,?)";
+
+        try (Connection conn = new ConnectionFactory().getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, productId);
+            stmt.setInt(2, couponId);
+
+            int rs = stmt.executeUpdate();
+
+            if (rs == 1) {
+                return true;
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return false;
+    }
+    
+    
+    public boolean deleteCoupon(int productId, int couponId) {
+        String sql = "DELETE FROM product_coupon WHERE product_id = ? AND coupon_id = ?";
+
+        try (Connection conn = new ConnectionFactory().getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, productId);
+            stmt.setInt(2, couponId);
+
+            int rs = stmt.executeUpdate();
+
+            if (rs == 1) {
+                return true;
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return false;
     }
 
 }

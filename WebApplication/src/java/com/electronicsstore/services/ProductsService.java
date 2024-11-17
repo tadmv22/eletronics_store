@@ -2,11 +2,9 @@ package com.electronicsstore.services;
 
 import com.electronicsstore.dao.ProductDao;
 import com.electronicsstore.dto.PagedList;
-import com.electronicsstore.dto.UserResponse;
+import com.electronicsstore.dto.ProductResponse;
 import com.electronicsstore.models.Product;
-import com.electronicsstore.models.User;
 import jakarta.servlet.ServletException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsService {
@@ -53,7 +51,7 @@ public class ProductsService {
         return true;
     }
 
-    public PagedList<Product> getAllProductWithFilter(String search, int page) throws ClassNotFoundException {
+    public PagedList<ProductResponse> getAllProductWithFilter(String search, int page) throws ClassNotFoundException {
         int size = 5;
         int total;
 
@@ -61,7 +59,7 @@ public class ProductsService {
             page = 1;
         }
 
-        List<Product> products = this.dao.list(search, page, size);
+        List<ProductResponse> products = this.dao.listWithCategoryName(search, page, size);
 
         if (search == null) {
             total = this.dao.getTotal();
@@ -73,4 +71,11 @@ public class ProductsService {
 
     }
 
+    public boolean addCoupon(int productId, int couponId) {
+        return this.dao.addCoupon(productId, couponId);
+    }
+
+    public boolean deleteCoupon(int productId, int couponId) {
+        return this.dao.deleteCoupon(productId, couponId);
+    }
 }
