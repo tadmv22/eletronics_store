@@ -73,7 +73,8 @@
 
 #products-coupons-list .card-list-container {
     height: 34rem;
-    overflow-y: auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 #products-coupons-list .card-coupons-container {
@@ -92,7 +93,6 @@
 
     padding: 1rem;
     border-radius: var(--border-radius-lg);
-    max-width: 32rem;
     width: 100%;
 
     position: relative;
@@ -182,6 +182,7 @@
 .card-coupon-remove-link {
     all: unset;
     cursor: pointer;
+    inset: unset;
 
     color: inherit;
     padding: 0.6rem;
@@ -191,8 +192,10 @@
     justify-content: center;
     border-radius: var(--border-radius-md);
     transition: background-color .3s;
+}
 
-
+.card-coupon-remove-link svg {
+    pointer-events: none;
 }
 
 #products-coupons-list .table-container-action-add {
@@ -216,10 +219,10 @@
 }
 
 #modal-container.add-coupon .modal-content form {
-   height: 100%;
-   display: flex;
-   flex-direction: column;
-   gap: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .card-coupon-remove-link:hover {

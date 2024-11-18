@@ -44,7 +44,7 @@
     <body id="products-coupons-list">
         <div class="layout">
             <%@include file="../../../../WEB-INF/components/sidebar.jsp" %>
-            <div id="modal-container">
+            <div id="modal-container" class="remove-coupon">
                 <div class="modal-content">
                     <div class="model-info">
                         <h3 class="text-large">Confirmação de exclusão do cupom</h3>
@@ -79,8 +79,9 @@
                                         <c:forEach var="coupon" items="${couponsAvaliable}">
                                             <option 
                                                 value="${coupon.id}"
-                                                >${coupon.code}</option>
-                                        </c:forEach>
+                                                >${coupon.code} - <fmt:setLocale value="pt-BR" />
+                                                <fmt:formatNumber value="${coupon.discountValue}" minFractionDigits="2" type="currency" /></option>
+                                            </c:forEach>
                                     </select>
                                 </c:otherwise>
                             </c:choose>
@@ -215,44 +216,16 @@
             </div>
             <script>
 
-                const toastElement = document.querySelector(".toast");
 
-                function toast(open, message) {
-                    if (open) {
-                        setTimeout(() => {
-                            if (toastElement) {
-                                toastElement.innertext = message;
-                                toastElement.classList.add("active");
-                            }
-                        }, 10);
-
-                        setTimeout(() => {
-                            if (toastElement) {
-                                toastElement.innertext = "";
-                                toastElement.classList.remove("active");
-                            }
-                        }, 2500);
-
-                        setTimeout(() => {
-                            window.location.replace(window.location.origin + "/app/admin/products/coupons/list.jsp?id=${product.id}");
-                        }, 3500);
-                    }
-                }
-
-                <c:if test="${changeIsSucess}">
-                    toast(${changeIsSucess},${changeMessage});
-                </c:if>
-
-                const cardCuponRemove = document.querySelectorAll(".card-footer .card-coupon-remove-link");
-
-                const cardCupon = document.querySelector(".table-container-action-add");
+                const cardAddCupon = document.querySelector(".table-container-action-add");
                 const modalContainerAdd = document.querySelector("#modal-container.add-coupon");
                 const btnModalAddClose = document.querySelector(".add-coupon .modal-actions .close");
 
-                const modalContainer = document.getElementById("modal-container");
-                const btnModalClose = document.querySelector(".modal-actions .close");
+                const cardCuponRemove = document.querySelectorAll(".card-footer .card-coupon-remove-link");
+                const modalContainer = document.querySelector("#modal-container.remove-coupon");
+                const btnModalClose = document.querySelector(".remove-coupon .modal-actions .close");
 
-                cardCupon.addEventListener("click", (e) => {
+                cardAddCupon.addEventListener("click", (e) => {
                     modalContainerAdd.classList.add("modal-open");
                 })
 
@@ -262,14 +235,16 @@
 
 
                 function removeCouponHandler(e) {
-                    modalContainer.querySelector(".modal-details").innerText =
+                    console.log(e)
+                    modalContainer.querySelector(".remove-coupon .modal-details").innerText =
                             e.target.dataset.detail;
-                    modalContainer.querySelector(".submit-delete").href =
+                    modalContainer.querySelector(".remove-coupon .submit-delete").href =
                             "/api/products/coupons/remove?productId=${product.id}&couponId=" + e.target.dataset.id;
                     modalContainer.classList.add("modal-open");
                 }
 
                 cardCuponRemove.forEach((el) => {
+                    console.log(el)
                     el.addEventListener("click", removeCouponHandler);
                 });
 

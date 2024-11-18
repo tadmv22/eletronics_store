@@ -67,7 +67,8 @@ CREATE TABLE IF NOT EXISTS produt_image (
 INSERT INTO users (name, surname, email, password, is_active, created_at, updated_at) VALUES
 ('Alice', 'Silva', 'alice.silva@gmail.com', 'senha123', TRUE, NOW(), NOW()),
 ('Bruno', 'Souza', 'bruno.souza@yahoo.com', 'senha123', TRUE, NOW(), NOW()),
-('Carla', 'Santos', 'carla.santos@outlook.com', 'senha123', TRUE, NOW(), NOW());
+('Carla', 'Santos', 'carla.santos@outlook.com', 'senha123', TRUE, NOW(), NOW()),
+('Marcelo', 'Moreno', 'marcelo.moreno@senac.com', '12345678', TRUE, NOW(), NOW());
 
 -- Inserindo categorias de produtos eletrônicos
 INSERT INTO categories (name, description) VALUES
@@ -92,7 +93,7 @@ INSERT INTO products (name, value, description, stock_quantity, category_id) VAL
 ('Dell XPS 13', 7999.99, 'Notebook Dell XPS 13 com 8GB RAM e 256GB SSD', 12, 2),
 ('iPad Air', 4499.99, 'Tablet Apple iPad Air com tela de 10.9" e 64GB', 18, 3),
 ('Samsung Galaxy Tab S8', 3499.99, 'Tablet Samsung Galaxy Tab S8 com 128GB', 20, 3),
-('TV LG OLED 55"', 7999.99, 'Televisor LG OLED 55" 4K com AI ThinQ', 8, 4),
+('TV LG OLED 55', 7999.99, 'Televisor LG OLED 55" 4K com AI ThinQ', 8, 4),
 ('TV Samsung QLED 65"', 10999.99, 'Televisor Samsung QLED 65" 4K com HDR', 6, 4),
 ('Carregador Rápido 20W', 199.99, 'Carregador rápido de 20W compatível com smartphones e tablets', 50, NULL),
 ('Cabo USB-C para Lightning', 99.99, 'Cabo de conexão USB-C para Lightning de 1 metro', 40, NULL),
@@ -113,14 +114,19 @@ INSERT INTO products (name, value, description, stock_quantity, category_id) VAL
 ('Notebook Lenovo IdeaPad 3', 3999.99, 'Notebook Lenovo IdeaPad 3 com 8GB RAM e 256GB SSD', 10, 2);
 
 
-INSERT INTO coupons (code, description, discount_value, start_at, expiration_at, is_active)
+INSERT INTO coupons (id,code, description, discount_value, start_at, expiration_at, is_active)
 VALUES 
-    ('SUMMER2024', 'Desconto de verão', 15.00, '2024-06-01 00:00:00', '2024-08-31 23:59:59', TRUE),
-    ('WINTER2024', 'Desconto de inverno', 20.00, '2024-12-01 00:00:00', '2025-02-28 23:59:59', TRUE),
-    ('WELCOME10', 'Desconto de boas-vindas', 10.00, '2024-01-01 00:00:00', NULL, TRUE),
-    ('FREESHIP', 'Frete grátis', 5.00, '2024-01-01 00:00:00', NULL, FALSE),
-    ('BLACKFRIDAY2024', 'Desconto de Black Friday 2024', 50.00, '2024-11-25 00:00:00', '2024-11-30 23:59:59', TRUE),
-    ('CYBERMONDAY2024', 'Desconto de Cyber Monday 2024', 30.00, '2024-12-02 00:00:00', '2024-12-02 23:59:59', TRUE);
+    (1,'SUMMER2024', 'Desconto de verão', 15.00, '2024-06-01 00:00:00', '2024-08-31 23:59:59', TRUE),
+    (2,'WINTER2024', 'Desconto de inverno', 20.00, '2024-12-01 00:00:00', '2025-02-28 23:59:59', TRUE),
+    (3,'WELCOME10', 'Desconto de boas-vindas', 10.00, '2024-01-01 00:00:00', NULL, TRUE),
+    (4,'FREESHIP', 'Frete grátis', 5.00, '2024-01-01 00:00:00', NULL, FALSE),
+    (5,'BLACKFRIDAY2024', 'Desconto de Black Friday 2024', 50.00, '2024-11-25 00:00:00', '2024-11-30 23:59:59', TRUE),
+    (6,'CYBERMONDAY2024', 'Desconto de Cyber Monday 2024', 30.00, '2024-12-02 00:00:00', '2024-12-02 23:59:59', TRUE);
+
+INSERT INTO product_coupon (product_id,coupon_id) VALUES 
+(1,2),
+(1,3),
+(2,2);
 
 
 CREATE VIEW CategoryViewAnalytics AS
